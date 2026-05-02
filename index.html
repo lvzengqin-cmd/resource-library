@@ -241,11 +241,11 @@
     <h2>资源分类导航</h2>
     <nav>
       <ul>
-        <li><a href="#短剧">短剧资源</a> - 热门短剧视频资源下载，支持夸克网盘、百度网盘</li>
-        <li><a href="#教程">学习教程</a> - Python教程、Java教程、前端开发、设计教程等</li>
-        <li><a href="#软件">软件工具</a> - 实用软件工具下载，Windows软件、Mac软件</li>
-        <li><a href="#素材">设计素材</a> - PS素材、AE模板、PPT模板、图片素材</li>
-        <li><a href="#文档">文档资料</a> - 电子书、PDF资料、学习文档</li>
+        <li><a onclick="selectCategory('短剧')" href="#短剧">短剧资源</a> - 热门短剧视频资源下载，支持夸克网盘、百度网盘</li>
+        <li><a onclick="selectCategory('教程')" href="#教程">学习教程</a> - Python教程、Java教程、前端开发、设计教程等</li>
+        <li><a onclick="selectCategory('软件')" href="#软件">软件工具</a> - 实用软件工具下载，Windows软件、Mac软件</li>
+        <li><a onclick="selectCategory('素材')" href="#素材">设计素材</a> - PS素材、AE模板、PPT模板、图片素材</li>
+        <li><a onclick="selectCategory('文档')" href="#文档">文档资料</a> - 电子书、PDF资料、学习文档</li>
       </ul>
     </nav>
     <h2>热门资源推荐</h2>
@@ -359,7 +359,7 @@
     <div class="container">
       <div class="section-header">
         <h2 class="section-title"><span>🔥</span><span>精选推荐</span></h2>
-        <span class="view-all" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">查看全部 →</span>
+        <span class="view-all" onclick="scrollToSection('categories');">查看全部 →</span>
       </div>
       <div class="resources-grid" id="featuredGrid">
         <div class="loading"><div class="loading-spinner"></div><p>正在加载...</p></div>
