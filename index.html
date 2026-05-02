@@ -116,259 +116,56 @@
       color: #38bdf8;
     }
 
-    /* 移动端分类按钮 */
-    .mobile-categories-btn {
-      display: none;
-      background: rgba(30, 41, 59, 0.8);
-      border: 1px solid #334155;
-      border-radius: 10px;
-      padding: 8px 14px;
-      cursor: pointer;
-      color: #94a3b8;
-      font-size: 13px;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* 移动端菜单按钮 */
-    .mobile-menu-btn {
-      display: none;
-      background: rgba(30, 41, 59, 0.8);
-      border: 1px solid #334155;
-      border-radius: 10px;
-      padding: 8px;
-      cursor: pointer;
-      color: #94a3b8;
-    }
-
-    /* ========== 移动端菜单 ========== */
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(10, 15, 26, 0.98);
-      z-index: 200;
-      padding: 20px;
-      flex-direction: column;
-    }
-
-    .mobile-menu.active {
-      display: flex;
-    }
-
-    .mobile-menu-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 40px;
-    }
-
-    .mobile-menu-close {
-      background: none;
-      border: none;
-      color: #94a3b8;
-      font-size: 32px;
-      cursor: pointer;
-    }
-
-    .mobile-menu-links {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .mobile-menu-link {
-      color: white;
-      font-size: 18px;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    /* ========== 移动端分类弹窗 ========== */
-    .mobile-categories-modal {
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 80%;
-      max-width: 320px;
-      background: rgba(26, 35, 50, 0.98);
-      backdrop-filter: blur(20px);
-      z-index: 200;
-      padding: 20px;
-      transform: translateX(100%);
-      transition: transform 0.3s;
-      visibility: hidden;
-    }
-
-    .mobile-categories-modal.active {
-      transform: translateX(0);
-      visibility: visible;
-    }
-
-    .mobile-categories-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid #334155;
-    }
-
-    .mobile-categories-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: white;
-    }
-
-    .mobile-categories-close {
-      background: none;
-      border: none;
-      color: #94a3b8;
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    .mobile-categories-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .mobile-category-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid #1e293b;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .mobile-category-item:hover {
-      border-color: #334155;
-    }
-
-    .mobile-category-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
-
-    .mobile-category-name {
-      font-size: 15px;
-      font-weight: 500;
-      color: white;
-    }
-
-    /* ========== 主区域 ========== */
+    /* ========== Hero Section ========== */
     .hero {
-      position: relative;
-      padding: 120px 0 50px;
+      padding: 140px 0 80px;
       text-align: center;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-    }
-
-    .hero-glow {
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      filter: blur(100px);
-      opacity: 0.3;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    .hero-glow-1 {
-      top: 10%;
-      left: 20%;
-      background: #0ea5e9;
-    }
-
-    .hero-glow-2 {
-      bottom: 20%;
-      right: 15%;
-      background: #3b82f6;
-      animation-delay: -3s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-30px); }
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      background: rgba(14, 165, 233, 0.1);
-      border: 1px solid rgba(14, 165, 233, 0.2);
-      border-radius: 50px;
-      margin-bottom: 20px;
-      font-size: 13px;
-      color: #38bdf8;
     }
 
     .hero-title {
-      font-size: 44px;
+      font-size: 48px;
       font-weight: 800;
-      margin-bottom: 14px;
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9, #7dd3fc);
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 0%, #38bdf8 50%, #0ea5e9 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      line-height: 1.2;
     }
 
     .hero-subtitle {
-      font-size: 15px;
+      font-size: 18px;
       color: #94a3b8;
-      max-width: 560px;
-      margin: 0 auto 28px;
-      line-height: 1.6;
+      margin-bottom: 40px;
     }
 
-    /* 搜索框 */
+    /* ========== 搜索框 ========== */
     .search-box {
-      max-width: 640px;
-      margin: 0 auto;
-      position: relative;
+      max-width: 700px;
+      margin: 0 auto 30px;
     }
 
-    .search-input {
-      width: 100%;
-      padding: 14px 56px 14px 18px;
-      font-size: 15px;
+    .search-container {
+      display: flex;
       background: rgba(30, 41, 59, 0.8);
-      border: 2px solid #334155;
-      border-radius: 14px;
-      color: white;
-      outline: none;
+      border: 2px solid rgba(14, 165, 233, 0.3);
+      border-radius: 16px;
+      padding: 6px;
       transition: all 0.3s;
     }
 
-    .search-input:focus {
+    .search-container:focus-within {
       border-color: #0ea5e9;
       box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2);
+    }
+
+    .search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 14px 20px;
+      font-size: 16px;
+      color: #fff;
+      outline: none;
     }
 
     .search-input::placeholder {
@@ -376,33 +173,55 @@
     }
 
     .search-btn {
-      position: absolute;
-      right: 6px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 42px;
-      height: 42px;
       background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      color: #fff;
       border: none;
-      border-radius: 10px;
-      color: white;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
+      transition: all 0.3s;
     }
 
     .search-btn:hover {
-      background: linear-gradient(135deg, #0284c7, #0369a1);
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
     }
 
-    /* 统计 */
+    /* ========== 分类标签 ========== */
+    .category-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .category-tab {
+      padding: 8px 20px;
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      color: #94a3b8;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .category-tab:hover,
+    .category-tab.active {
+      background: rgba(14, 165, 233, 0.2);
+      border-color: #0ea5e9;
+      color: #0ea5e9;
+    }
+
+    /* ========== 统计信息 ========== */
     .stats {
       display: flex;
       justify-content: center;
-      gap: 40px;
-      margin-top: 36px;
+      gap: 50px;
+      margin-bottom: 50px;
     }
 
     .stat-item {
@@ -410,20 +229,17 @@
     }
 
     .stat-value {
-      font-size: 26px;
+      font-size: 32px;
       font-weight: 700;
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #38bdf8;
     }
 
     .stat-label {
-      font-size: 12px;
+      font-size: 14px;
       color: #64748b;
-      margin-top: 2px;
     }
 
-    /* 分类区域 */
+    /* ========== 资源列表 ========== */
     .section {
       padding: 50px 0;
     }
@@ -432,47 +248,25 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
 
     .section-title {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 18px;
-      font-weight: 600;
-      color: white;
+      gap: 10px;
+      font-size: 24px;
+      font-weight: 700;
     }
 
-    .section-title svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    .section-more {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 13px;
-      transition: color 0.2s;
-    }
-
-    .section-more:hover {
-      color: #38bdf8;
-    }
-
-    /* 资源网格 */
-    .resource-grid {
+    .resources-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
     }
 
-    /* 资源卡片 */
+    /* ========== 资源卡片 ========== */
     .resource-card {
-      position: relative;
       background: rgba(30, 41, 59, 0.5);
       border: 1px solid #1e293b;
       border-radius: 14px;
@@ -487,7 +281,6 @@
       transform: translateY(-2px);
     }
 
-    /* 修复标签遮挡问题 - 标签移到右上角 */
     .card-badges {
       position: absolute;
       top: 10px;
@@ -502,7 +295,6 @@
       border-radius: 6px;
       font-size: 11px;
       font-weight: 500;
-      white-space: nowrap;
     }
 
     .badge-category {
@@ -510,319 +302,136 @@
       color: #38bdf8;
     }
 
-    .badge-featured {
-      background: linear-gradient(135deg, #f59e0b, #f97316);
-      color: white;
-      display: flex;
-      align-items: center;
-      gap: 3px;
-    }
-
     .badge-hot {
-      background: linear-gradient(135deg, #ef4444, #ec4899);
-      color: white;
-      animation: pulse 2s infinite;
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
+    .badge-new {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
     }
 
     .card-content {
-      padding: 14px;
-      /* 确保内容不被标签遮挡 */
-      padding-top: 20px;
+      padding: 20px;
     }
 
     .card-title {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
-      color: white;
+      color: #f1f5f9;
+      margin-bottom: 10px;
       line-height: 1.4;
-      margin-bottom: 6px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
     }
 
     .card-desc {
-      font-size: 12px;
+      font-size: 14px;
       color: #94a3b8;
-      line-height: 1.5;
-      margin-bottom: 8px;
+      line-height: 1.6;
+      margin-bottom: 15px;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
 
-    .card-tags {
+    .card-footer {
       display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-bottom: 8px;
-    }
-
-    .card-tag {
-      padding: 2px 6px;
-      background: rgba(100, 116, 139, 0.3);
-      border-radius: 4px;
-      font-size: 10px;
-      color: #94a3b8;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .card-meta {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 11px;
-      color: #64748b;
-      margin-bottom: 10px;
-    }
-
-    .card-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-    }
-
-    .card-btn {
-      width: 100%;
-      padding: 9px;
-      border: none;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      transition: all 0.2s;
-    }
-
-    .card-btn-primary {
-      background: linear-gradient(135deg, #0ea5e9, #0284c7);
-      color: white;
-    }
-
-    .card-btn-primary:hover {
-      background: linear-gradient(135deg, #0284c7, #0369a1);
-    }
-
-    /* 分类网格 - 桌面端 */
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-
-    .category-card {
-      position: relative;
-      padding: 18px;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid #1e293b;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: all 0.3s;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .category-card:hover {
-      border-color: #334155;
-      transform: translateY(-2px);
-    }
-
-    .category-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-
-    .category-info h3 {
-      font-size: 14px;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 2px;
-    }
-
-    .category-info p {
-      font-size: 11px;
+      gap: 15px;
+      font-size: 12px;
       color: #64748b;
     }
 
-    /* ========== 引流区域 ========== */
-    .community-section {
-      padding: 50px 0;
-    }
-
-    .community-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .community-card {
-      position: relative;
-      padding: 32px;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid #1e293b;
-      border-radius: 16px;
-      text-align: center;
-      overflow: hidden;
-      transition: all 0.3s;
-    }
-
-    .community-card:hover {
-      border-color: #334155;
-      transform: translateY(-2px);
-    }
-
-    /* 群聊卡片样式 */
-    .community-card.wechat {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
-      border-color: rgba(16, 185, 129, 0.3);
-    }
-
-    .community-card.wechat:hover {
-      border-color: rgba(16, 185, 129, 0.5);
-    }
-
-    /* 公众号卡片样式 */
-    .community-card.gzh {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
-      border-color: rgba(59, 130, 246, 0.3);
-    }
-
-    .community-card.gzh:hover {
-      border-color: rgba(59, 130, 246, 0.5);
-    }
-
-    .community-icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 16px;
-      border-radius: 16px;
+    .card-meta span {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 32px;
+      gap: 4px;
     }
 
-    .community-card.wechat .community-icon {
-      background: rgba(16, 185, 129, 0.2);
-    }
-
-    .community-card.gzh .community-icon {
-      background: rgba(59, 130, 246, 0.2);
-    }
-
-    .community-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 8px;
-    }
-
-    .community-desc {
-      font-size: 13px;
-      color: #94a3b8;
-      margin-bottom: 16px;
-      line-height: 1.5;
-    }
-
-    .community-btn {
+    .card-link {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
+      padding: 8px 16px;
+      background: rgba(14, 165, 233, 0.15);
+      color: #0ea5e9;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
       text-decoration: none;
       transition: all 0.2s;
-      cursor: pointer;
     }
 
-    .community-card.wechat .community-btn {
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: white;
+    .card-link:hover {
+      background: rgba(14, 165, 233, 0.25);
     }
 
-    .community-card.wechat .community-btn:hover {
-      background: linear-gradient(135deg, #059669, #047857);
-    }
-
-    .community-card.gzh .community-btn {
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-      color: white;
-    }
-
-    .community-card.gzh .community-btn:hover {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    }
-
-    /* 二维码提示 */
-    .qrcode-hint {
-      display: none;
-      margin-top: 16px;
-      padding: 16px;
-      background: rgba(15, 23, 42, 0.8);
-      border-radius: 12px;
+    /* ========== 空状态 ========== */
+    .empty-state {
       text-align: center;
+      padding: 60px 20px;
     }
 
-    .qrcode-hint.active {
-      display: block;
+    .empty-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
     }
 
-    .qrcode-placeholder {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 12px;
-      background: rgba(30, 41, 59, 0.8);
-      border: 2px dashed #334155;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
+    .empty-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #f1f5f9;
+      margin-bottom: 10px;
+    }
+
+    .empty-desc {
+      font-size: 14px;
       color: #64748b;
     }
 
-    .qrcode-hint p {
-      font-size: 12px;
-      color: #94a3b8;
-      line-height: 1.4;
+    /* ========== 加载状态 ========== */
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #64748b;
     }
 
-    /* 在线人数显示 */
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(14, 165, 233, 0.3);
+      border-top-color: #0ea5e9;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ========== 在线人数 ========== */
     .online-users {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      margin-top: 24px;
-      padding: 8px 16px;
+      gap: 8px;
+      padding: 12px;
+      margin-top: 30px;
       background: rgba(30, 41, 59, 0.5);
       border: 1px solid rgba(14, 165, 233, 0.2);
       border-radius: 50px;
       font-size: 13px;
       color: #94a3b8;
-    }
-
-    .online-users strong {
-      color: #10b981;
-      font-weight: 600;
     }
 
     .online-indicator {
@@ -844,1056 +453,568 @@
       }
     }
 
-    /* CTA */
-    .cta-section {
-      padding: 50px 0;
-    }
-
-    .cta-box {
-      position: relative;
-      padding: 40px;
-      background: linear-gradient(135deg, #0ea5e9, #3b82f6);
-      border-radius: 20px;
-      text-align: center;
-      overflow: hidden;
-    }
-
-    .cta-box::before,
-    .cta-box::after {
-      content: '';
-      position: absolute;
-      width: 160px;
-      height: 160px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      filter: blur(60px);
-    }
-
-    .cta-box::before {
-      top: -40px;
-      left: -40px;
-    }
-
-    .cta-box::after {
-      bottom: -40px;
-      right: -40px;
-    }
-
-    .cta-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .cta-title {
-      font-size: 22px;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 10px;
-    }
-
-    .cta-desc {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 20px;
-    }
-
-    .cta-btn {
-      display: inline-block;
-      padding: 11px 26px;
-      background: white;
-      color: #0ea5e9;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-
-    .cta-btn:hover {
-      background: #f1f5f9;
-    }
-
-    /* 反馈区域 */
-    .feedback-section {
-      display: none;
-      padding: 50px 0;
-    }
-
-    .feedback-box {
-      max-width: 540px;
-      margin: 0 auto;
-      padding: 32px;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid #1e293b;
-      border-radius: 18px;
-      text-align: center;
-    }
-
-    .feedback-icon {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 16px;
-      background: rgba(14, 165, 233, 0.2);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-    }
-
-    .feedback-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 8px;
-    }
-
-    .feedback-desc {
-      font-size: 13px;
-      color: #94a3b8;
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-
-    .feedback-form {
-      text-align: left;
-    }
-
-    .form-group {
-      margin-bottom: 14px;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 12px;
-      font-weight: 500;
-      color: #94a3b8;
-      margin-bottom: 5px;
-    }
-
-    .form-input,
-    .form-textarea {
-      width: 100%;
-      padding: 11px 12px;
-      background: rgba(21, 29, 46, 0.8);
-      border: 1px solid #334155;
-      border-radius: 8px;
-      color: white;
-      font-size: 13px;
-      outline: none;
-      transition: all 0.2s;
-    }
-
-    .form-input:focus,
-    .form-textarea:focus {
-      border-color: #0ea5e9;
-    }
-
-    .form-textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
-
-    .form-submit {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(135deg, #0ea5e9, #0284c7);
-      border: none;
-      border-radius: 10px;
-      color: white;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .form-submit:hover {
-      background: linear-gradient(135deg, #0284c7, #0369a1);
-    }
-
-    /* 页脚 */
+    /* ========== 页脚 ========== */
     .footer {
-      padding: 36px 0 18px;
-      border-top: 1px solid #1e293b;
-    }
-
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 14px;
-    }
-
-    .footer-brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .footer-brand .logo-icon {
-      width: 30px;
-      height: 30px;
-      font-size: 15px;
-    }
-
-    .footer-brand .logo-text {
-      font-size: 15px;
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .footer-text {
-      font-size: 12px;
+      font-size: 14px;
       color: #64748b;
     }
 
-    .footer-links {
-      display: flex;
-      gap: 18px;
+    /* ========== 移动端适配 ========== */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 120px 0 50px;
+      }
+
+      .hero-title {
+        font-size: 32px;
+      }
+
+      .hero-subtitle {
+        font-size: 15px;
+      }
+
+      .search-container {
+        flex-direction: column;
+        padding: 8px;
+      }
+
+      .search-input {
+        padding: 12px 16px;
+      }
+
+      .search-btn {
+        width: 100%;
+        padding: 12px;
+      }
+
+      .stats {
+        gap: 30px;
+      }
+
+      .stat-value {
+        font-size: 24px;
+      }
+
+      .resources-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-tabs {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 10px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .category-tab {
+        flex-shrink: 0;
+      }
     }
 
-    .footer-links a {
-      color: #64748b;
-      text-decoration: none;
-      font-size: 12px;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover {
-      color: #38bdf8;
-    }
-
-    /* Toast */
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      padding: 11px 22px;
-      background: rgba(30, 41, 59, 0.95);
-      border: 1px solid #334155;
-      border-radius: 10px;
-      color: white;
-      font-size: 13px;
-      z-index: 1000;
-      opacity: 0;
-      transition: all 0.3s;
-    }
-
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-
-    .toast.success {
-      border-color: #10b981;
-    }
-
-    /* 遮罩层 */
-    .modal-overlay {
+    /* ========== 模态框 ========== */
+    .modal {
       display: none;
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 199;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
-    .modal-overlay.active {
-      display: block;
+    .modal.show {
+      display: flex;
     }
 
-    /* ========== 响应式 ========== */
-    @media (max-width: 1024px) {
-      .resource-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .categories-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .modal-content {
+      background: #1e293b;
+      border-radius: 16px;
+      max-width: 500px;
+      width: 100%;
+      padding: 30px;
+      position: relative;
     }
 
-    /* 修复锚点被导航栏遮挡 */
-    [id] {
-      scroll-margin-top: 80px;
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 24px;
+      cursor: pointer;
     }
 
-    @media (max-width: 768px) {
-      /* 修复移动端锚点遮挡 */
-      [id] {
-        scroll-margin-top: 70px;
-      }
+    .modal-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #f1f5f9;
+    }
 
-      /* 移动端导航 */
-      .nav-link {
-        display: none;
-      }
+    .modal-info {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
 
-      .mobile-categories-btn,
-      .mobile-menu-btn {
-        display: flex;
-      }
+    .modal-info p {
+      margin-bottom: 10px;
+      color: #94a3b8;
+      font-size: 14px;
+    }
 
-      /* 移动端资源卡片标签优化 */
-      .card-badges {
-        top: 8px;
-        right: 8px;
-        flex-direction: row;
-        flex-wrap: wrap;
-        max-width: 60%;
-      }
+    .modal-info strong {
+      color: #fff;
+    }
 
-      .card-badge {
-        padding: 2px 6px;
-        font-size: 10px;
-      }
+    .copy-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
 
-      .card-content {
-        padding: 14px;
-      }
+    .copy-btn:hover {
+      transform: scale(1.02);
+    }
 
-      .card-title {
-        font-size: 14px;
-        line-height: 1.4;
-        margin-bottom: 8px;
-      }
-
-      .card-desc {
-        font-size: 12px;
-        line-height: 1.4;
-        -webkit-line-clamp: 2;
-      }
-
-      /* 移动端社群卡片优化 */
-      .community-card {
-        padding: 18px 14px;
-      }
-
-      /* Hero */
-      .hero {
-        padding: 90px 0 36px;
-      }
-
-      .hero-title {
-        font-size: 30px;
-      }
-
-      .hero-subtitle {
-        font-size: 13px;
-      }
-
-      .stats {
-        gap: 28px;
-        margin-top: 28px;
-      }
-
-      .stat-value {
-        font-size: 22px;
-      }
-
-      .stat-label {
-        font-size: 11px;
-      }
-
-      /* 资源网格 */
-      .resource-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      /* 分类网格 - 隐藏 */
-      .categories-grid {
-        display: none;
-      }
-
-      /* 引流区域 - 移动端 */
-      .community-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .community-card {
-        padding: 18px 14px;
-      }
-
-      .community-icon {
-        font-size: 30px;
-      }
-
-      .community-title {
-        font-size: 14px;
-      }
-
-      .community-desc {
-        font-size: 12px;
-      }
-
-      .community-btn {
-        padding: 7px 12px;
-        font-size: 12px;
-      }
-
-      .qrcode-placeholder {
-        width: 100px;
-        height: 100px;
-      }
-
-      /* Section */
-      .section {
-        padding: 36px 0;
-      }
-
-      /* CTA */
-      .cta-section {
-        padding: 36px 0;
-      }
-
-      .cta-box {
-        padding: 28px 18px;
-        border-radius: 16px;
-      }
-
-      .cta-title {
-        font-size: 18px;
-      }
-
-      /* Footer */
-      .footer-content {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      /* 反馈 */
-      .feedback-section {
-        padding: 36px 0;
-      }
-
-      .feedback-box {
-        padding: 24px 16px;
-      }
+    .copy-success {
+      text-align: center;
+      color: #10b981;
+      margin-top: 15px;
+      display: none;
     }
   </style>
 </head>
 <body>
   <!-- 导航栏 -->
-  <nav class="navbar" id="navbar">
+  <nav class="navbar">
     <div class="container">
       <div class="navbar-inner">
         <a href="#" class="logo">
           <div class="logo-icon">📦</div>
           <span class="logo-text">CY资源宝库</span>
         </a>
-        
         <div class="nav-right">
-          <a href="#resources" class="nav-link">精选</a>
-          <a href="#about" class="nav-link">关于</a>
-          
-          <!-- 移动端分类按钮 -->
-          <button class="mobile-categories-btn" onclick="toggleCategoriesModal()">
-            📂 分类
-          </button>
-          
-          <!-- 移动端菜单按钮 -->
-          <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-          </button>
+          <a href="#resources" class="nav-link">精选推荐</a>
+          <a href="#community" class="nav-link">交流社群</a>
+          <a href="#categories" class="nav-link">浏览分类</a>
+          <a href="#feedback" class="nav-link">资源反馈</a>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- 移动端菜单 -->
-  <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-header">
-      <a href="#" class="logo">
-        <div class="logo-icon">📦</div>
-        <span class="logo-text">CY资源宝库</span>
-      </a>
-      <button class="mobile-menu-close" onclick="toggleMobileMenu()">×</button>
-    </div>
-    <div class="mobile-menu-links">
-      <a href="#" class="mobile-menu-link" onclick="toggleMobileMenu()">🏠 首页</a>
-      <a href="#resources" class="mobile-menu-link" onclick="toggleMobileMenu()">⭐ 精选</a>
-      <a href="#community" class="mobile-menu-link" onclick="toggleMobileMenu()">👥 加群</a>
-      <a href="#about" class="mobile-menu-link" onclick="toggleMobileMenu()">ℹ️ 关于</a>
-    </div>
-  </div>
-
-  <!-- 移动端分类弹窗 -->
-  <div class="modal-overlay" id="modalOverlay" onclick="toggleCategoriesModal()"></div>
-  <div class="mobile-categories-modal" id="categoriesModal">
-    <div class="mobile-categories-header">
-      <span class="mobile-categories-title">📂 分类浏览</span>
-      <button class="mobile-categories-close" onclick="toggleCategoriesModal()">×</button>
-    </div>
-    <div class="mobile-categories-list">
-      <div class="mobile-category-item" onclick="selectCategory('短剧')">
-        <div class="mobile-category-icon" style="background: rgba(239, 68, 68, 0.2);">🎬</div>
-        <span class="mobile-category-name">短剧</span>
-      </div>
-      <div class="mobile-category-item" onclick="selectCategory('教程')">
-        <div class="mobile-category-icon" style="background: rgba(59, 130, 246, 0.2);">📚</div>
-        <span class="mobile-category-name">教程</span>
-      </div>
-      <div class="mobile-category-item" onclick="selectCategory('软件')">
-        <div class="mobile-category-icon" style="background: rgba(16, 185, 129, 0.2);">💻</div>
-        <span class="mobile-category-name">软件</span>
-      </div>
-      <div class="mobile-category-item" onclick="selectCategory('素材')">
-        <div class="mobile-category-icon" style="background: rgba(139, 92, 246, 0.2);">🎨</div>
-        <span class="mobile-category-name">素材</span>
-      </div>
-      <div class="mobile-category-item" onclick="selectCategory('影视')">
-        <div class="mobile-category-icon" style="background: rgba(245, 158, 11, 0.2);">🎥</div>
-        <span class="mobile-category-name">影视</span>
-      </div>
-      <div class="mobile-category-item" onclick="selectCategory('音乐')">
-        <div class="mobile-category-icon" style="background: rgba(236, 72, 153, 0.2);">🎵</div>
-        <span class="mobile-category-name">音乐</span>
-      </div>
-      <div class="mobile-category-item" onclick="selectCategory('文档')">
-        <div class="mobile-category-icon" style="background: rgba(6, 182, 212, 0.2);">📄</div>
-        <span class="mobile-category-name">文档</span>
-      </div>
-      <div class="mobile-category-item" onclick="selectCategory('其他')">
-        <div class="mobile-category-icon" style="background: rgba(107, 114, 128, 0.2);">📦</div>
-        <span class="mobile-category-name">其他</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- 主区域 -->
+  <!-- Hero -->
   <section class="hero">
-    <div class="hero-bg">
-      <div class="hero-glow hero-glow-1"></div>
-      <div class="hero-glow hero-glow-2"></div>
-    </div>
     <div class="container">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-          </svg>
-          发现你想要的资源
-        </div>
-        <h1 class="hero-title">CY资源宝库</h1>
-        <p class="hero-subtitle">
-          汇集全网优质资源，支持夸克、百度、UC、迅雷等多平台网盘
-        </p>
-        
-        <div class="search-box">
-          <input type="text" class="search-input" id="searchInput" placeholder="搜索短剧、教程、软件、素材...">
-          <button class="search-btn" onclick="handleSearch()">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="8"/>
-              <path d="M21 21l-4.35-4.35"/>
-            </svg>
+      <h1 class="hero-title">发现你想要的资源</h1>
+      <p class="hero-subtitle">海量学习资料、视频教程，一键搜索，即刻获取</p>
+      
+      <!-- 搜索框 -->
+      <div class="search-box">
+        <div class="search-container">
+          <input 
+            type="text" 
+            class="search-input" 
+            id="searchInput" 
+            placeholder="搜索资源名称，如：Python入门、PS教程..."
+            onkeyup="handleSearch(event)"
+          >
+          <button class="search-btn" onclick="performSearch()">
+            🔍 搜索
           </button>
         </div>
+      </div>
 
-        <div class="stats">
-          <div class="stat-item">
-            <div class="stat-value">9999+</div>
-            <div class="stat-label">精选资源</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value">4</div>
-            <div class="stat-label">网盘平台</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value">24h</div>
-            <div class="stat-label">实时更新</div>
-          </div>
+      <!-- 分类标签 -->
+      <div class="category-tabs" id="categoryTabs">
+        <span class="category-tab active" onclick="selectCategory('全部')">全部</span>
+        <span class="category-tab" onclick="selectCategory('教程')">📚 教程</span>
+        <span class="category-tab" onclick="selectCategory('软件')">💻 软件</span>
+        <span class="category-tab" onclick="selectCategory('素材')">🎨 素材</span>
+        <span class="category-tab" onclick="selectCategory('文档')">📄 文档</span>
+        <span class="category-tab" onclick="selectCategory('视频')">🎬 视频</span>
+        <span class="category-tab" onclick="selectCategory('其他')">📦 其他</span>
+      </div>
+
+      <!-- 统计 -->
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-value" id="totalCount">--</div>
+          <div class="stat-label">精选资源</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">4</div>
+          <div class="stat-label">网盘平台</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">24h</div>
+          <div class="stat-label">实时更新</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 精选资源 -->
+  <!-- 资源列表 -->
   <section class="section" id="resources">
     <div class="container">
       <div class="section-header">
-        <div class="section-title" style="color: #fbbf24;">
-          <svg fill="currentColor" viewBox="0 0 24 24">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-          </svg>
-          精选推荐
-        </div>
-        <a href="#" class="section-more">
-          查看更多
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M9 5l7 7-7 7"/>
-          </svg>
-        </a>
+        <h2 class="section-title">
+          <span>📦</span>
+          <span id="sectionTitleText">精选推荐</span>
+        </h2>
       </div>
-      
-      <div class="resource-grid">
-        <!-- 卡片1 -->
-        <div class="resource-card">
-          <div class="card-badges">
-            <span class="card-badge badge-category">教程</span>
-            <span class="card-badge badge-featured">
-              <svg width="9" height="9" fill="currentColor" viewBox="0 0 24 24">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-              </svg>
-              精选
-            </span>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">2024最新Premiere Pro影视剪辑教程，从入门到精通</h3>
-            <p class="card-desc">包含基础操作、转场特效、调色技巧等全套教程...</p>
-            <div class="card-tags">
-              <span class="card-tag">#剪辑</span>
-              <span class="card-tag">#教程</span>
-            </div>
-            <div class="card-meta">
-              <div class="card-meta-item">
-                <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                  <circle cx="12" cy="12" r="3"/>
-                </svg>
-                2.5k
-              </div>
-              <span>2024-01-15</span>
-            </div>
-            <button class="card-btn card-btn-primary" onclick="openResource(this)">
-              <span>立即获取</span>
-              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                <polyline points="15 3 21 3 21 9"/>
-                <line x1="10" y1="14" x2="21" y2="3"/>
-              </svg>
-            </button>
-          </div>
-        </div>
 
-        <!-- 卡片2 -->
-        <div class="resource-card">
-          <div class="card-badges">
-            <span class="card-badge badge-hot">🔥 热门</span>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">【完整版】霸道总裁爱上我 - 全80集合集</h3>
-            <p class="card-desc">热门短剧合集，画质清晰，剧情精彩，持续更新...</p>
-            <div class="card-tags">
-              <span class="card-tag">#短剧</span>
-              <span class="card-tag">#霸总</span>
-            </div>
-            <div class="card-meta">
-              <div class="card-meta-item">
-                <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                  <circle cx="12" cy="12" r="3"/>
-                </svg>
-                5.8k
-              </div>
-              <span>2024-01-18</span>
-            </div>
-            <button class="card-btn card-btn-primary" onclick="openResource(this)">
-              <span>立即获取</span>
-              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                <polyline points="15 3 21 3 21 9"/>
-                <line x1="10" y1="14" x2="21" y2="3"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- 卡片3 -->
-        <div class="resource-card">
-          <div class="card-badges">
-            <span class="card-badge badge-category">软件</span>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">Adobe全家桶2024版，PS/AE/PR/AI等软件</h3>
-            <p class="card-desc">官方完整版，一键安装，永久使用，送教程...</p>
-            <div class="card-tags">
-              <span class="card-tag">#软件</span>
-              <span class="card-tag">#Adobe</span>
-            </div>
-            <div class="card-meta">
-              <div class="card-meta-item">
-                <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                  <circle cx="12" cy="12" r="3"/>
-                </svg>
-                3.2k
-              </div>
-              <span>2024-01-10</span>
-            </div>
-            <button class="card-btn card-btn-primary" onclick="openResource(this)">
-              <span>立即获取</span>
-              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                <polyline points="15 3 21 3 21 9"/>
-                <line x1="10" y1="14" x2="21" y2="3"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== 交流社群 ========== -->
-  <section class="section" id="community">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-title">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-          交流社群
+      <div class="resources-grid" id="resourcesGrid">
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <p>正在加载资源...</p>
         </div>
       </div>
 
-      <div class="community-grid" style="grid-template-columns: repeat(3, 1fr);">
-        <!-- QQ交流群 -->
-        <div class="community-card qq">
-          <div class="community-icon">💬</div>
-          <h3 class="community-title">QQ交流群</h3>
-          <p class="community-desc">加入QQ群，和更多小伙伴一起交流</p>
-          <button class="community-btn" onclick="toggleQRCode('qq')">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <rect x="7" y="7" width="3" height="3"/>
-              <rect x="14" y="7" width="3" height="3"/>
-              <rect x="7" y="14" width="3" height="3"/>
-              <rect x="14" y="14" width="3" height="3"/>
-            </svg>
-            扫码加入
-          </button>
-          <div class="qrcode-hint" id="qqQR">
-            <div class="qrcode-placeholder">
-              <!-- 后期替换为真实二维码图片 -->
-              <span>QQ群二维码</span>
-            </div>
-            <p>长按识别二维码<br>或搜索群号：123456789</p>
-          </div>
-        </div>
-
-        <!-- 微信交流群 -->
-        <div class="community-card wechat">
-          <div class="community-icon">👥</div>
-          <h3 class="community-title">微信交流群</h3>
-          <p class="community-desc">微信群聊，和2000+小伙伴一起分享资源</p>
-          <button class="community-btn" onclick="toggleQRCode('wechat')">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <rect x="7" y="7" width="3" height="3"/>
-              <rect x="14" y="7" width="3" height="3"/>
-              <rect x="7" y="14" width="3" height="3"/>
-              <rect x="14" y="14" width="3" height="3"/>
-            </svg>
-            扫码加入
-          </button>
-          <div class="qrcode-hint" id="wechatQR">
-            <div class="qrcode-placeholder">
-              <!-- 后期替换为真实二维码图片 -->
-              <span>微信群二维码</span>
-            </div>
-            <p>长按识别二维码<br>或搜索微信号：cyzbbk01</p>
-          </div>
-        </div>
-
-        <!-- 公众号 -->
-        <div class="community-card gzh">
-          <div class="community-icon">📢</div>
-          <h3 class="community-title">关注公众号</h3>
-          <p class="community-desc">第一时间获取最新资源更新推送</p>
-          <button class="community-btn" onclick="toggleQRCode('gzh')">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <rect x="7" y="7" width="3" height="3"/>
-              <rect x="14" y="7" width="3" height="3"/>
-              <rect x="7" y="14" width="3" height="3"/>
-              <rect x="14" y="14" width="3" height="3"/>
-            </svg>
-            扫码关注
-          </button>
-          <div class="qrcode-hint" id="gzhQR">
-            <div class="qrcode-placeholder">
-              <!-- 后期替换为真实二维码图片 -->
-              <span>公众号二维码</span>
-            </div>
-            <p>长按识别二维码<br>公众号名称：CY资源宝库</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 分类区域 - 桌面端 -->
-  <section class="section" id="categories-desktop">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-title">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <rect x="3" y="3" width="7" height="7"/>
-            <rect x="14" y="3" width="7" height="7"/>
-            <rect x="14" y="14" width="7" height="7"/>
-            <rect x="3" y="14" width="7" height="7"/>
-          </svg>
-          浏览分类
-        </div>
-      </div>
-      
-      <div class="categories-grid">
-        <div class="category-card" onclick="selectCategory('短剧')">
-          <div class="category-icon" style="background: rgba(239, 68, 68, 0.2);">🎬</div>
-          <div class="category-info">
-            <h3>短剧</h3>
-            <p>精彩短剧合集</p>
-          </div>
-        </div>
-        <div class="category-card" onclick="selectCategory('教程')">
-          <div class="category-icon" style="background: rgba(59, 130, 246, 0.2);">📚</div>
-          <div class="category-info">
-            <h3>教程</h3>
-            <p>各类学习教程</p>
-          </div>
-        </div>
-        <div class="category-card" onclick="selectCategory('软件')">
-          <div class="category-icon" style="background: rgba(16, 185, 129, 0.2);">💻</div>
-          <div class="category-info">
-            <h3>软件</h3>
-            <p>实用软件工具</p>
-          </div>
-        </div>
-        <div class="category-card" onclick="selectCategory('素材')">
-          <div class="category-icon" style="background: rgba(139, 92, 246, 0.2);">🎨</div>
-          <div class="category-info">
-            <h3>素材</h3>
-            <p>设计素材资源</p>
-          </div>
-        </div>
-        <div class="category-card" onclick="selectCategory('影视')">
-          <div class="category-icon" style="background: rgba(245, 158, 11, 0.2);">🎥</div>
-          <div class="category-info">
-            <h3>影视</h3>
-            <p>电影电视剧集</p>
-          </div>
-        </div>
-        <div class="category-card" onclick="selectCategory('音乐')">
-          <div class="category-icon" style="background: rgba(236, 72, 153, 0.2);">🎵</div>
-          <div class="category-info">
-            <h3>音乐</h3>
-            <p>无损音乐资源</p>
-          </div>
-        </div>
-        <div class="category-card" onclick="selectCategory('文档')">
-          <div class="category-icon" style="background: rgba(6, 182, 212, 0.2);">📄</div>
-          <div class="category-info">
-            <h3>文档</h3>
-            <p>PDF电子书等</p>
-          </div>
-        </div>
-        <div class="category-card" onclick="selectCategory('其他')">
-          <div class="category-icon" style="background: rgba(107, 114, 128, 0.2);">📦</div>
-          <div class="category-info">
-            <h3>其他</h3>
-            <p>更多资源分类</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 反馈区域 -->
-  <section class="feedback-section" id="feedbackSection">
-    <div class="container">
-      <div class="feedback-box">
-        <div class="feedback-icon">🔍</div>
-        <h3 class="feedback-title">没找到你想要的资源？</h3>
-        <p class="feedback-desc">
-          告诉我们你需要什么，我们会在24小时内帮你找到！
-        </p>
-        <form class="feedback-form" onsubmit="submitFeedback(event)">
-          <div class="form-group">
-            <label class="form-label">资源名称 *</label>
-            <input type="text" class="form-input" id="feedbackTitle" placeholder="例如：Python编程入门教程" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">联系方式</label>
-            <input type="text" class="form-input" id="feedbackContact" placeholder="微信号/邮箱/手机（选填）">
-          </div>
-          <div class="form-group">
-            <label class="form-label">详细描述</label>
-            <textarea class="form-textarea" id="feedbackDesc" placeholder="补充说明，如：需要某个具体版本、格式要求等"></textarea>
-          </div>
-          <button type="submit" class="form-submit">
-            提交反馈
-          </button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-section" id="about">
-    <div class="container">
-      <div class="cta-box">
-        <div class="cta-content">
-          <h2 class="cta-title">开始探索CY资源宝库</h2>
-          <p class="cta-desc">
-            海量资源，一键搜索。支持夸克、百度、UC、迅雷多平台网盘
-          </p>
-          <a href="#" class="cta-btn">开始搜索</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 页脚 -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <a href="#" class="logo">
-            <div class="logo-icon">📦</div>
-            <span class="logo-text">CY资源宝库</span>
-          </a>
-        </div>
-        <p class="footer-text">© 2024 CY资源宝库. All rights reserved.</p>
-        <div class="footer-links">
-          <a href="#about">关于</a>
-          <a href="#community">加群</a>
-          <a href="#feedbackSection" onclick="showFeedback()">资源反馈</a>
-        </div>
-      </div>
-      
-      <!-- 在线人数显示 -->
-      <div class="online-users" id="onlineUsers">
+      <!-- 在线人数 -->
+      <div class="online-users">
         <div class="online-indicator"></div>
         <span>当前 <strong id="onlineCount">0</strong> 人正在浏览</span>
       </div>
     </div>
+  </section>
+
+  <!-- 资源详情模态框 -->
+  <div class="modal" id="resourceModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <h3 class="modal-title" id="modalTitle">资源标题</h3>
+      <div class="modal-info">
+        <p><strong>资源分类：</strong><span id="modalCategory">教程</span></p>
+        <p><strong>网盘链接：</strong><span id="modalLink">https://...</span></p>
+        <p><strong>提取码：</strong><span id="modalCode">----</span></p>
+        <p><strong>浏览次数：</strong><span id="modalViews">0</span></p>
+      </div>
+      <button class="copy-btn" onclick="copyLink()">复制链接和提取码</button>
+      <p class="copy-success" id="copySuccess">✅ 已复制到剪贴板！</p>
+    </div>
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">© 2024 CY资源宝库 · 让资源触手可及</p>
+    </div>
   </footer>
 
-  <!-- Toast -->
-  <div class="toast" id="toast"></div>
-
   <script>
-    function showToast(message, type = 'default') {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.className = 'toast show';
-      if (type === 'success') {
-        toast.classList.add('success');
+    // ========== Supabase 配置 ==========
+    const SUPABASE_URL = 'https://musrilmjolaquhnfqjdu.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_OR14RWa1W_BkxTk160EECg_7YS7xafd';
+
+    // ========== 全局状态 ==========
+    let currentCategory = '全部';
+    let currentSearch = '';
+    let currentResource = null;
+
+    // ========== 初始化 ==========
+    document.addEventListener('DOMContentLoaded', function() {
+      loadResources();
+      updateOnlineCount();
+      
+      // 导航栏滚动效果
+      window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+    });
+
+    // ========== 加载资源 ==========
+    async function loadResources() {
+      const grid = document.getElementById('resourcesGrid');
+      grid.innerHTML = `
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <p>正在加载资源...</p>
+        </div>
+      `;
+
+      try {
+        let url = `${SUPABASE_URL}/rest/v1/resources?select=*&order=created_at.desc`;
+
+        if (currentCategory !== '全部') {
+          url += `&category=eq.${encodeURIComponent(currentCategory)}`;
+        }
+
+        const response = await fetch(url, {
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`
+          }
+        });
+
+        if (!response.ok) throw new Error('获取数据失败');
+
+        const resources = await response.json();
+
+        // 更新总数
+        document.getElementById('totalCount').textContent = resources.length || 0;
+
+        // 渲染资源
+        renderResources(resources);
+
+      } catch (error) {
+        console.error('Error:', error);
+        grid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">😅</div>
+            <h3 class="empty-title">加载失败</h3>
+            <p class="empty-desc">请检查网络连接后刷新重试</p>
+          </div>
+        `;
       }
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 3000);
     }
 
-    function toggleMobileMenu() {
-      const menu = document.getElementById('mobileMenu');
-      menu.classList.toggle('active');
-    }
+    // ========== 搜索功能 ==========
+    async function performSearch() {
+      const input = document.getElementById('searchInput');
+      currentSearch = input.value.trim();
+      
+      if (currentSearch) {
+        const grid = document.getElementById('resourcesGrid');
+        grid.innerHTML = `
+          <div class="loading">
+            <div class="loading-spinner"></div>
+            <p>正在搜索...</p>
+          </div>
+        `;
 
-    function toggleCategoriesModal() {
-      const modal = document.getElementById('categoriesModal');
-      const overlay = document.getElementById('modalOverlay');
-      modal.classList.toggle('active');
-      overlay.classList.toggle('active');
-    }
+        try {
+          const response = await fetch(
+            `${SUPABASE_URL}/rest/v1/resources?title=ilike.*${encodeURIComponent(currentSearch)}*&order=created_at.desc`,
+            {
+              headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`
+              }
+            }
+          );
 
-    function selectCategory(name) {
-      toggleCategoriesModal();
-      showToast('演示模式：实际会显示' + name + '分类资源');
-    }
+          const resources = await response.json();
+          document.getElementById('totalCount').textContent = resources.length || 0;
+          renderResources(resources);
 
-    // 显示/隐藏二维码
-    function toggleQRCode(type) {
-      const qrcode = document.getElementById(type + 'QR');
-      qrcode.classList.toggle('active');
-    }
-
-    window.addEventListener('scroll', () => {
-      const navbar = document.getElementById('navbar');
-      if (window.scrollY > 20) {
-        navbar.classList.add('scrolled');
+        } catch (error) {
+          console.error('Search error:', error);
+        }
       } else {
-        navbar.classList.remove('scrolled');
+        loadResources();
+      }
+    }
+
+    function handleSearch(event) {
+      if (event.key === 'Enter') {
+        performSearch();
+      }
+    }
+
+    // ========== 分类选择 ==========
+    function selectCategory(category) {
+      currentCategory = category;
+      
+      // 更新标签样式
+      document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.textContent.includes(category) || (category === '全部' && tab.textContent === '全部')) {
+          tab.classList.add('active');
+        }
+      });
+
+      // 更新标题
+      document.getElementById('sectionTitleText').textContent = 
+        category === '全部' ? '精选推荐' : category + '资源';
+
+      // 清空搜索
+      document.getElementById('searchInput').value = '';
+      currentSearch = '';
+
+      // 重新加载
+      loadResources();
+    }
+
+    // ========== 渲染资源 ==========
+    function renderResources(resources) {
+      const grid = document.getElementById('resourcesGrid');
+
+      if (!resources || resources.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🔍</div>
+            <h3 class="empty-title">暂无相关资源</h3>
+            <p class="empty-desc">试试其他关键词，或联系管理员添加</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = resources.map(resource => `
+        <div class="resource-card" onclick="showResourceDetail(${resource.id})">
+          <div class="card-badges">
+            <span class="card-badge badge-category">${resource.category}</span>
+            ${resource.views > 100 ? '<span class="card-badge badge-hot">🔥 热门</span>' : ''}
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">${escapeHtml(resource.title)}</h3>
+            <p class="card-desc">${escapeHtml(resource.description || '暂无描述')}</p>
+            <div class="card-footer">
+              <div class="card-meta">
+                <span>👁 ${resource.views || 0}</span>
+                <span>📅 ${formatDate(resource.created_at)}</span>
+              </div>
+              <span class="card-link">查看详情 →</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ========== 显示资源详情 ==========
+    async function showResourceDetail(id) {
+      try {
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/resources?id=eq.${id}`,
+          {
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`
+            }
+          }
+        );
+
+        const resources = await response.json();
+        if (resources && resources.length > 0) {
+          currentResource = resources[0];
+          
+          document.getElementById('modalTitle').textContent = currentResource.title;
+          document.getElementById('modalCategory').textContent = currentResource.category;
+          document.getElementById('modalLink').textContent = currentResource.pan_link;
+          document.getElementById('modalCode').textContent = currentResource.extract_code || '无';
+          document.getElementById('modalViews').textContent = currentResource.views || 0;
+          
+          document.getElementById('resourceModal').classList.add('show');
+          
+          // 增加浏览次数
+          incrementViews(id);
+        }
+      } catch (error) {
+        console.error('Error loading resource:', error);
+      }
+    }
+
+    // ========== 增加浏览次数 ==========
+    async function incrementViews(id) {
+      try {
+        await fetch(
+          `${SUPABASE_URL}/rest/v1/resources?id=eq.${id}`,
+          {
+            method: 'PATCH',
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              views: (currentResource?.views || 0) + 1
+            })
+          }
+        );
+      } catch (error) {
+        console.error('Error updating views:', error);
+      }
+    }
+
+    // ========== 复制链接 ==========
+    function copyLink() {
+      if (!currentResource) return;
+      
+      const text = `链接：${currentResource.pan_link}\n提取码：${currentResource.extract_code || '无'}`;
+      navigator.clipboard.writeText(text).then(() => {
+        document.getElementById('copySuccess').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('copySuccess').style.display = 'none';
+        }, 2000);
+      });
+    }
+
+    // ========== 关闭模态框 ==========
+    function closeModal() {
+      document.getElementById('resourceModal').classList.remove('show');
+      currentResource = null;
+    }
+
+    // 点击背景关闭
+    document.getElementById('resourceModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
       }
     });
 
-    function handleSearch() {
-      const query = document.getElementById('searchInput').value.trim();
-      if (query) {
-        showToast('搜索功能将在部署后启用');
-        showFeedback();
-      }
-    }
-
-    document.getElementById('searchInput').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        handleSearch();
-      }
-    });
-
-    function showFeedback() {
-      const feedbackSection = document.getElementById('feedbackSection');
-      feedbackSection.style.display = 'block';
-      feedbackSection.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function submitFeedback(e) {
-      e.preventDefault();
-      const title = document.getElementById('feedbackTitle').value;
-      const contact = document.getElementById('feedbackContact').value;
-      const desc = document.getElementById('feedbackDesc').value;
-      
-      console.log('Feedback submitted:', { title, contact, desc });
-      
-      showToast('反馈已提交，24小时内处理！', 'success');
-      
-      document.getElementById('feedbackTitle').value = '';
-      document.getElementById('feedbackContact').value = '';
-      document.getElementById('feedbackDesc').value = '';
-    }
-
-    function openResource(btn) {
-      showToast('演示模式：实际会跳转到网盘链接');
-    }
-    // 模拟在线人数（真实数据需要后端支持）
+    // ========== 在线人数 ==========
     function updateOnlineCount() {
-      // 获取基础在线人数（存储在localStorage中）
       let baseCount = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
-      // 添加小幅随机波动 (±15人)
       const randomOffset = Math.floor(Math.random() * 30) - 15;
       const onlineCount = Math.max(50, baseCount + randomOffset);
-      // 乘以100倍显示
       document.getElementById('onlineCount').textContent = (onlineCount * 100).toLocaleString();
     }
-    
-    // 初始化在线人数
-    updateOnlineCount();
-    // 每5秒更新一次
+
     setInterval(updateOnlineCount, 5000);
-    
-    // 页面离开时减少在线人数
+
     document.addEventListener('visibilitychange', function() {
+      let baseCount = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
       if (document.hidden) {
-        let baseCount = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
         baseCount = Math.max(50, baseCount - 1);
-        localStorage.setItem('onlineBaseCount', baseCount);
       } else {
-        let baseCount = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
         baseCount = Math.min(300, baseCount + 1);
-        localStorage.setItem('onlineBaseCount', baseCount);
       }
+      localStorage.setItem('onlineBaseCount', baseCount);
       updateOnlineCount();
     });
+
+    // ========== 工具函数 ==========
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function formatDate(dateString) {
+      if (!dateString) return '--';
+      const date = new Date(dateString);
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      return `${month}月${day}日`;
+    }
   </script>
 </body>
 </html>
