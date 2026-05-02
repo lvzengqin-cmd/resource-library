@@ -1119,6 +1119,9 @@ function returnToHomepage() {
   
   // 延迟加载数据，确保 UI 先更新
   setTimeout(() => {
+    // 加载精选推荐
+    loadFeaturedResources();
+    // 加载短剧分类
     loadCategoryResources('短剧');
   }, 100);
   
