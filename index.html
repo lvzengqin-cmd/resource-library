@@ -490,96 +490,212 @@
     let currentSearch = '';
     let currentResource = null;
     let currentCommunityInfo = '';
-    let allResources = [];
-    let categoryResources = {};
+    let currentPage = 1;
     let isLoading = false;
+    let hasMoreData = true;
+    const PAGE_SIZE = 12;  // 每次加载12条
+    let cachedResources = {};  // 缓存已加载的数据
 
     document.addEventListener('DOMContentLoaded', function() {
-      loadAllResources();
+      // 初始加载：只加载热门资源（6条）
+      loadFeaturedResources();
+      // 获取总数（轻量级请求）
+      fetchTotalCount();
       updateOnlineCount();
       window.addEventListener('scroll', function() {
         const navbar = document.querySelector('.navbar');
         navbar.classList.toggle('scrolled', window.scrollY > 50);
+        // 滚动加载更多
+        handleScrollLoad();
       });
     });
 
-    async function loadAllResources() {
+    // 获取资源总数（轻量级count请求）
+    async function fetchTotalCount() {
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/resources?select=id&limit=1&offset=0`, {
+          headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+        });
+        // 从header获取总数
+        const total = response.headers.get('content-range')?.split('/')[1] || '5万+';
+        document.getElementById('totalCount').textContent = total.includes('/') ? parseInt(total.split('/')[1]).toLocaleString() : total;
+      } catch (e) {
+        document.getElementById('totalCount').textContent = '5万+';
+      }
+    }
+
+    // 加载热门推荐（初始只加载6条）
+    async function loadFeaturedResources() {
+      try {
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/resources?select=*&order=views.desc&limit=6&offset=0`,
+          { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+        );
+        const data = await response.json();
+        if (data && data.length > 0) {
+          renderResources(data, 'featuredGrid');
+        } else {
+          document.getElementById('featuredGrid').innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">📦</div><h3 class="empty-title">暂无推荐资源</h3></div>';
+        }
+      } catch (error) {
+        document.getElementById('featuredGrid').innerHTML = '<div class="empty-state"><div class="empty-icon">😅</div><h3 class="empty-title">加载失败</h3><p class="empty-desc">请检查网络连接</p></div>';
+      }
+    }
+
+    // 按需加载分类资源（服务端过滤）
+    async function loadCategoryResources(category, page = 1, append = false) {
       if (isLoading) return;
       isLoading = true;
       
-      document.getElementById('featuredGrid').innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>正在加载资源...</p></div>';
+      const container = document.getElementById('categoryGrid');
+      if (!append) {
+        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>正在加载...</p></div>';
+      }
       
       try {
-        let allData = [];
-        let page = 0;
-        let hasMore = true;
+        const offset = (page - 1) * PAGE_SIZE;
+        let url = `${SUPABASE_URL}/rest/v1/resources?select=*&order=created_at.desc&limit=${PAGE_SIZE}&offset=${offset}`;
         
-        while (hasMore) {
-          const response = await fetch(`${SUPABASE_URL}/rest/v1/resources?select=*&order=views.desc&limit=1000&offset=${page * 1000}`, {
-            headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
-          });
-          
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          
-          const data = await response.json();
-          
-          if (data && data.length > 0) {
-            allData = allData.concat(data);
-            page++;
-            if (data.length < 1000) hasMore = false;
-          } else {
-            hasMore = false;
-          }
-        }
+        // 服务端过滤：只获取指定分类
+        url += `&category=eq.${encodeURIComponent(category)}`;
         
-        allResources = allData;
-        
-        categoryResources = {};
-        const categories = ['短剧', '教程', '软件', '素材', '文档'];
-        categories.forEach(cat => {
-          categoryResources[cat] = allResources.filter(r => r.category === cat).slice(0, 8);
+        const response = await fetch(url, {
+          headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
         });
         
-        document.getElementById('totalCount').textContent = allResources.length.toLocaleString();
-        renderResources(allResources.slice(0, 6), 'featuredGrid');
-        renderResources(categoryResources['短剧'] || [], 'categoryGrid');
-        document.getElementById('categoryTitle').textContent = '🎬 短剧资源';
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        const data = await response.json();
+        const hasMore = data && data.length === PAGE_SIZE;
+        
+        if (data && data.length > 0) {
+          if (append) {
+            // 追加模式
+            appendResources(data, 'categoryGrid');
+          } else {
+            renderResources(data, 'categoryGrid');
+          }
+          hasMoreData = hasMore;
+          currentPage = page;
+        } else if (!append) {
+          container.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">📂</div><h3 class="empty-title">该分类暂无资源</h3><p class="empty-desc">试试其他分类</p></div>';
+        }
         
       } catch (error) {
-        console.error('加载资源失败:', error);
-        const emptyHtml = '<div class="empty-state"><div class="empty-icon">😅</div><h3 class="empty-title">加载失败</h3><p class="empty-desc">请检查网络连接后刷新重试</p></div>';
-        document.getElementById('featuredGrid').innerHTML = emptyHtml;
-        document.getElementById('categoryGrid').innerHTML = emptyHtml;
-        document.getElementById('totalCount').textContent = '?';
+        console.error('加载失败:', error);
+        if (!append) {
+          container.innerHTML = '<div class="empty-state"><div class="empty-icon">😅</div><h3 class="empty-title">加载失败</h3><p class="empty-desc">请检查网络连接</p></div>';
+        }
       } finally {
         isLoading = false;
       }
     }
 
+    // 搜索资源（服务端过滤，支持模糊搜索）
+    async function searchResources(keyword, page = 1, append = false) {
+      if (isLoading) return;
+      isLoading = true;
+      
+      const container = document.getElementById('categoryGrid');
+      if (!append) {
+        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>搜索中...</p></div>';
+      }
+      
+      try {
+        const offset = (page - 1) * PAGE_SIZE;
+        // 使用ilike进行模糊搜索（服务端过滤）
+        const url = `${SUPABASE_URL}/rest/v1/resources?select=*&title=ilike.*${encodeURIComponent(keyword)}*&order=views.desc&limit=${PAGE_SIZE}&offset=${offset}`;
+        
+        const response = await fetch(url, {
+          headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+        });
+        
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        const data = await response.json();
+        const hasMore = data && data.length === PAGE_SIZE;
+        
+        if (data && data.length > 0) {
+          if (append) {
+            appendResources(data, 'categoryGrid');
+          } else {
+            renderResources(data, 'categoryGrid');
+          }
+          hasMoreData = hasMore;
+          currentPage = page;
+          document.getElementById('totalCount').textContent = data.length + (append ? '+' : '');
+        } else if (!append) {
+          container.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">🔍</div><h3 class="empty-title">未找到相关资源</h3><p class="empty-desc">试试其他关键词</p></div>';
+        }
+        
+      } catch (error) {
+        console.error('搜索失败:', error);
+        if (!append) {
+          container.innerHTML = '<div class="empty-state"><div class="empty-icon">😅</div><h3 class="empty-title">搜索失败</h3><p class="empty-desc">请检查网络连接</p></div>';
+        }
+      } finally {
+        isLoading = false;
+      }
+    }
+
+    // 滚动加载处理
+    let scrollLoadTimer = null;
+    function handleScrollLoad() {
+      if (scrollLoadTimer) return;
+      scrollLoadTimer = setTimeout(() => {
+        scrollLoadTimer = null;
+        
+        if (hasMoreData && !isLoading) {
+          const container = document.getElementById('categoryGrid');
+          const rect = container.getBoundingClientRect();
+          const isVisible = rect.top < window.innerHeight + 200;
+          
+          if (isVisible && (currentSearch || currentCategory !== '全部')) {
+            loadMore();
+          }
+        }
+      }, 100);
+    }
+
+    // 加载更多
+    function loadMore() {
+      if (currentSearch) {
+        searchResources(currentSearch, currentPage + 1, true);
+      } else if (currentCategory !== '全部') {
+        loadCategoryResources(currentCategory, currentPage + 1, true);
+      }
+    }
+
+    // 执行搜索
     function performSearch() {
-      const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
+      const keyword = document.getElementById('searchInput').value.trim();
       currentSearch = keyword;
+      currentCategory = '全部';
+      currentPage = 1;
       
       if (!keyword) {
-        loadAllResources();
+        // 空搜索：显示短剧分类
+        selectCategory('短剧');
         return;
       }
-
-      const results = allResources.filter(r => 
-        r.title && r.title.toLowerCase().includes(keyword)
-      );
-
-      document.getElementById('totalCount').textContent = results.length.toLocaleString();
-      renderResources(results, 'featuredGrid');
-      renderResources(results, 'categoryGrid');
-      document.getElementById('categoryTitle').textContent = `搜索"${escapeHtml(keyword)}"的结果 (${results.length}条)`;
+      
+      // 清空分类高亮
+      document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
+      
+      document.getElementById('categoryTitle').textContent = `搜索"${escapeHtml(keyword)}"`;
       document.getElementById('resources').scrollIntoView({ behavior: 'smooth' });
+      
+      searchResources(keyword);
     }
 
     function handleSearch(event) { if (event.key === 'Enter') performSearch(); }
 
+    // 选择分类
     function selectCategory(category) {
       currentCategory = category;
+      currentSearch = '';
+      currentPage = 1;
+      hasMoreData = true;
       
       document.querySelectorAll('.category-tab').forEach(tab => {
         tab.classList.remove('active');
@@ -587,7 +703,6 @@
       });
       
       document.getElementById('searchInput').value = '';
-      currentSearch = '';
       document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
       
       const categoryNames = {
@@ -600,11 +715,11 @@
       };
       document.getElementById('categoryTitle').textContent = categoryNames[category] || category;
       
+      // 根据分类加载数据
       if (category === '全部') {
-        renderResources(categoryResources['短剧'] || [], 'categoryGrid');
+        loadCategoryResources('短剧');  // 默认显示短剧
       } else {
-        const catResources = categoryResources[category] || allResources.filter(r => r.category === category).slice(0, 8);
-        renderResources(catResources, 'categoryGrid');
+        loadCategoryResources(category);
       }
     }
 
@@ -639,39 +754,79 @@
         return;
       }
       
-      container.innerHTML = resources.map(r => {
-        const p = getPlatformInfo(r.pan_link);
-        const hot = r.views > 100;
-        const title = escapeHtml(r.title || '无标题');
-        const desc = escapeHtml(r.description || '暂无描述');
-        const views = r.views || 0;
-        const date = formatDate(r.created_at);
-        
-        return `<div class="resource-card" onclick="showResourceDetail(${r.id})">
-          <div class="card-badges">
-            <span class="card-badge badge-platform" style="background:${p.color}20;color:${p.color};">${p.icon} ${p.name}</span>
-            <span class="card-badge badge-category">${escapeHtml(r.category || '其他')}</span>
-            ${hot ? '<span class="card-badge badge-hot">🔥 热门</span>' : ''}
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">${title}</h3>
-            <p class="card-desc">${desc}</p>
-            <div class="card-footer">
-              <div class="card-meta">
-                <span>👁 ${views}</span>
-                <span>📅 ${date}</span>
-              </div>
-              <span class="card-link">查看详情 →</span>
+      container.innerHTML = resources.map(r => createResourceCard(r)).join('');
+      
+      // 添加加载更多提示
+      if (hasMoreData) {
+        container.innerHTML += '<div class="load-more-hint" id="loadMoreHint" style="grid-column: 1/-1; text-align: center; padding: 20px; color: #64748b; font-size: 13px;">向下滚动加载更多 ↓</div>';
+      }
+    }
+
+    // 追加资源（用于滚动加载）
+    function appendResources(resources, containerId) {
+      const container = document.getElementById(containerId);
+      const hint = document.getElementById('loadMoreHint');
+      if (hint) hint.remove();
+      
+      const cardsHtml = resources.map(r => createResourceCard(r)).join('');
+      container.insertAdjacentHTML('beforeend', cardsHtml);
+      
+      if (hasMoreData) {
+        container.innerHTML += '<div class="load-more-hint" id="loadMoreHint" style="grid-column: 1/-1; text-align: center; padding: 20px; color: #64748b; font-size: 13px;">向下滚动加载更多 ↓</div>';
+      }
+    }
+
+    // 创建资源卡片HTML
+    function createResourceCard(r) {
+      const p = getPlatformInfo(r.pan_link);
+      const hot = r.views > 100;
+      const title = escapeHtml(r.title || '无标题');
+      const desc = escapeHtml(r.description || '暂无描述');
+      const views = r.views || 0;
+      const date = formatDate(r.created_at);
+      
+      return `<div class="resource-card" onclick="showResourceDetail(${r.id})">
+        <div class="card-badges">
+          <span class="card-badge badge-platform" style="background:${p.color}20;color:${p.color};">${p.icon} ${p.name}</span>
+          <span class="card-badge badge-category">${escapeHtml(r.category || '其他')}</span>
+          ${hot ? '<span class="card-badge badge-hot">🔥 热门</span>' : ''}
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">${title}</h3>
+          <p class="card-desc">${desc}</p>
+          <div class="card-footer">
+            <div class="card-meta">
+              <span>👁 ${views}</span>
+              <span>📅 ${date}</span>
             </div>
+            <span class="card-link">查看详情 →</span>
           </div>
-        </div>`;
-      }).join('');
+        </div>
+      </div>`;
     }
 
     function showResourceDetail(id) {
-      const r = allResources.find(x => x.id === id);
-      if (!r) return;
-      
+      // 点击时实时获取详情（而不是从缓存读取）
+      fetchResourceDetail(id);
+    }
+
+    // 获取资源详情
+    async function fetchResourceDetail(id) {
+      try {
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/resources?id=eq.${id}&select=*`,
+          { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+        );
+        const data = await response.json();
+        if (data && data.length > 0) {
+          showResourceModal(data[0], id);
+        }
+      } catch (error) {
+        console.error('获取详情失败:', error);
+      }
+    }
+
+    function showResourceModal(r, id) {
       currentResource = r;
       const p = getPlatformInfo(r.pan_link);
       
@@ -687,15 +842,11 @@
       document.getElementById('jumpBtn').style.background = `linear-gradient(135deg, ${p.color}, ${adjustColor(p.color, -20)})`;
       
       document.getElementById('resourceModal').classList.add('show');
-      incrementViews(id);
+      incrementViews(id || r.id);
     }
 
     async function incrementViews(id) {
-      const r = allResources.find(x => x.id === id);
-      if (!r) return;
-      
-      r.views = (r.views || 0) + 1;
-      
+      // 只更新浏览量，不操作本地缓存
       try {
         await fetch(`${SUPABASE_URL}/rest/v1/resources?id=eq.${id}`, {
           method: 'PATCH',
@@ -704,7 +855,7 @@
             'Authorization': `Bearer ${SUPABASE_KEY}`, 
             'Content-Type': 'application/json' 
           },
-          body: JSON.stringify({ views: r.views })
+          body: JSON.stringify({ views: (currentResource?.views || 0) + 1 })
         });
       } catch (e) { console.error('更新浏览次数失败:', e); }
     }
