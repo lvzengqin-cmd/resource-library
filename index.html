@@ -1075,6 +1075,54 @@
       const b = Math.min(255, Math.max(0, (num & 0x0000FF) + amount));
       return '#' + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
     }
-  </script>
+  
+// 返回首页
+function returnToHomepage() {
+  currentCategory = '短剧';
+  currentSearch = '';
+  currentPage = 1;
+  hasMoreData = true;
+  isLoading = false;
+  
+  // 恢复首页区域显示
+  const resourcesSec = document.getElementById('resources');
+  const communitySec = document.getElementById('community');
+  if (resourcesSec) resourcesSec.style.display = '';
+  if (communitySec) communitySec.style.display = '';
+  
+  // 恢复统计信息显示
+  const stats = document.getElementById('pageStats');
+  if (stats) stats.style.display = '';
+  
+  // 清空搜索框
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) searchInput.value = '';
+  
+  // 恢复分类选择 - 激活"短剧"标签
+  document.querySelectorAll('.category-tab').forEach(tab => {
+    tab.classList.remove('active');
+    if (tab.textContent.includes('短剧')) tab.classList.add('active');
+  });
+  
+  // 更新标题
+  const categoryTitle = document.getElementById('categoryTitle');
+  if (categoryTitle) categoryTitle.textContent = '🎬 短剧资源';
+  
+  // 清空分类网格的加载状态
+  const categoryGrid = document.getElementById('categoryGrid');
+  if (categoryGrid) categoryGrid.innerHTML = '';
+  
+  // 滚动到顶部
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  // 延迟加载数据，确保 UI 先更新
+  setTimeout(() => {
+    loadCategoryResources('短剧');
+  }, 100);
+  
+  return false;
+}
+
+</script>
 </body>
 </html>
