@@ -1080,7 +1080,8 @@
 function returnToHomepage() {
   console.log('🔔 returnToHomepage 被调用!');
   
-  currentCategory = '短剧';
+  // 重置所有状态变量
+  currentCategory = '';
   currentSearch = '';
   currentPage = 1;
   hasMoreData = true;
@@ -1100,19 +1101,20 @@ function returnToHomepage() {
   const searchInput = document.getElementById('searchInput');
   if (searchInput) searchInput.value = '';
   
-  // 恢复分类选择 - 激活"短剧"标签
+  // 恢复分类选择为默认状态（不选中任何分类）
   document.querySelectorAll('.category-tab').forEach(tab => {
     tab.classList.remove('active');
-    if (tab.textContent.includes('短剧')) tab.classList.add('active');
   });
   
-  // 更新标题
+  // 更新标题为默认
   const categoryTitle = document.getElementById('categoryTitle');
-  if (categoryTitle) categoryTitle.textContent = '🎬 短剧资源';
+  if (categoryTitle) categoryTitle.textContent = '📁 资源分类';
   
-  // 清空分类网格的加载状态
+  // 清空分类网格的加载状态，设置为初始提示
   const categoryGrid = document.getElementById('categoryGrid');
-  if (categoryGrid) categoryGrid.innerHTML = '';
+  if (categoryGrid) {
+    categoryGrid.innerHTML = '<div class="empty-state"><div class="empty-icon">👆</div><h3 class="empty-title">选择上方分类</h3><p class="empty-desc">点击分类标签查看对应资源</p></div>';
+  }
   
   // 滚动到顶部
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1121,15 +1123,6 @@ function returnToHomepage() {
   setTimeout(() => {
     // 加载精选推荐
     loadFeaturedResources();
-    // 恢复浏览分类为初始提示状态
-    const categoryGrid = document.getElementById('categoryGrid');
-    if (categoryGrid) {
-      categoryGrid.innerHTML = '<div class="empty-state"><div class="empty-icon">👆</div><h3 class="empty-title">选择上方分类</h3><p class="empty-desc">点击分类标签查看对应资源</p></div>';
-    }
-    // 恢复分类选择为默认状态
-    document.querySelectorAll('.category-tab').forEach(tab => {
-      tab.classList.remove('active');
-    });
   }, 100);
   
   return false;
