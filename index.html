@@ -306,7 +306,7 @@
   <nav class="navbar">
     <div class="container">
       <div class="navbar-inner">
-        <a href="#" class="logo">
+        <a href="#" class="logo" onclick="returnToHomepage();">
           <div class="logo-icon">📦</div>
           <span class="logo-text">CY资源宝库</span>
         </a>
@@ -338,7 +338,7 @@
         <span class="category-tab" onclick="selectCategory('素材')">🎨 素材</span>
         <span class="category-tab" onclick="selectCategory('文档')">📄 文档</span>
       </div>
-      <div class="stats">
+      <div class="stats" id="pageStats">
         <div class="stat-item">
           <div class="stat-value" id="totalCount">--</div>
           <div class="stat-label">精选资源</div>
@@ -355,7 +355,7 @@
     </div>
   </section>
 
-  <section class="section" id="resources">
+  <section class="section" id="resources" data-section="featured">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title"><span>🔥</span><span>精选推荐</span></h2>
@@ -367,7 +367,7 @@
     </div>
   </section>
 
-  <section class="community-section" id="community">
+  <section class="community-section" id="community" data-section="community">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title"><span>👥</span><span>交流社群</span></h2>
@@ -716,8 +716,19 @@
       // 清空分类高亮
       document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
       
+      // 隐藏首页区域（精选推荐、交流社群）
+      document.getElementById('resources').style.display = 'none';
+      document.getElementById('community').style.display = 'none';
+      
+      // 隐藏统计信息
+      const stats = document.getElementById('pageStats');
+      if (stats) stats.style.display = 'none';
+      
+      // 更新标题
       document.getElementById('categoryTitle').textContent = `搜索"${escapeHtml(keyword)}"`;
-      document.getElementById('resources').scrollIntoView({ behavior: 'smooth' });
+      
+      // 滚动到分类区域显示搜索结果
+      document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
       
       searchResources(keyword);
     }
@@ -730,6 +741,14 @@
       currentSearch = '';
       currentPage = 1;
       hasMoreData = true;
+      
+      // 恢复首页区域显示
+      document.getElementById('resources').style.display = '';
+      document.getElementById('community').style.display = '';
+      
+      // 恢复统计信息显示
+      const stats = document.getElementById('pageStats');
+      if (stats) stats.style.display = '';
       
       document.querySelectorAll('.category-tab').forEach(tab => {
         tab.classList.remove('active');
@@ -1059,3 +1078,38 @@
   </script>
 </body>
 </html>
+    
+    // 返回首页
+    function returnToHomepage() {
+      currentCategory = '短剧';
+      currentSearch = '';
+      currentPage = 1;
+      
+      // 恢复首页区域显示
+      document.getElementById('resources').style.display = '';
+      document.getElementById('community').style.display = '';
+      
+      // 恢复统计信息显示
+      const stats = document.getElementById('pageStats');
+      if (stats) stats.style.display = '';
+      
+      // 清空搜索框
+      document.getElementById('searchInput').value = '';
+      
+      // 恢复分类选择
+      document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.textContent.includes('短剧')) tab.classList.add('active');
+      });
+      
+      // 更新标题
+      document.getElementById('categoryTitle').textContent = '🎬 短剧资源';
+      
+      // 滚动到顶部
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // 加载短剧分类
+      loadCategoryResources('短剧');
+      
+      return false;
+    }
