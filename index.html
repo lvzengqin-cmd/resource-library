@@ -321,11 +321,28 @@
 
     async function loadAllResources() {
       try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/resources?select=*&order=views.desc`, {
-          headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
-        });
-        if (!response.ok) throw new Error('获取数据失败');
-        allResources = await response.json();
+        // 加载所有数据（分批加载，每批1000条）
+        let allData = [];
+        let page = 0;
+        let hasMore = true;
+        
+        while (hasMore) {
+          const response = await fetch(`${SUPABASE_URL}/rest/v1/resources?select=*&order=views.desc&limit=1000&offset=${page * 1000}`, {
+            headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+          });
+          if (!response.ok) throw new Error('获取数据失败');
+          const data = await response.json();
+          
+          if (data.length > 0) {
+            allData = allData.concat(data);
+            page++;
+            if (data.length < 1000) hasMore = false;
+          } else {
+            hasMore = false;
+          }
+        }
+        
+        allResources = allData;
         
         // 按分类整理资源
         categoryResources = {};
