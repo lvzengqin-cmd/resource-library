@@ -514,14 +514,15 @@
 
     // 获取资源总数
     async function fetchResourceCount() {
+      // 默认显示5万+
+      document.getElementById('totalCount').textContent = '5万+';
+      
       try {
-        // 使用count聚合获取总数
         const response = await fetch(
-          `${SUPABASE_URL}/rest/v1/resources?select=id`,
+          `${SUPABASE_URL}/rest/v1/resources?select=id&limit=1`,
           { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
         );
         
-        // 从header获取总数
         const contentRange = response.headers.get('content-range');
         if (contentRange) {
           const match = contentRange.match(/\/(\d+)/);
@@ -529,18 +530,11 @@
             const total = parseInt(match[1]);
             if (total > 0) {
               document.getElementById('totalCount').textContent = total.toLocaleString();
-              return;
             }
           }
         }
-        
-        // 如果解析失败，从返回数据获取
-        const data = await response.json();
-        if (Array.isArray(data)) {
-          document.getElementById('totalCount').textContent = '5万+';
-        }
       } catch (e) {
-        document.getElementById('totalCount').textContent = '5万+';
+        // 使用默认值
       }
     }
 
