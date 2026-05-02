@@ -311,10 +311,10 @@
           <span class="logo-text">CY资源宝库</span>
         </a>
         <div class="nav-right">
-          <a href="#resources" class="nav-link">精选推荐</a>
-          <a href="#community" class="nav-link">交流社群</a>
-          <a href="#categories" class="nav-link">浏览分类</a>
-          <a href="#feedback" class="nav-link">资源反馈</a>
+          <a href="#resources" class="nav-link" onclick="returnToHomepage();">精选推荐</a>
+          <a href="#community" class="nav-link" onclick="returnToHomepage();">交流社群</a>
+          <a href="#categories" class="nav-link" onclick="returnToHomepage();">浏览分类</a>
+          <a href="#feedback" class="nav-link" onclick="returnToHomepage();">资源反馈</a>
         </div>
       </div>
     </div>
@@ -331,7 +331,7 @@
         </div>
       </div>
       <div class="category-tabs" id="categoryTabs">
-        <span class="category-tab active" onclick="selectCategory('全部')">全部</span>
+        <span class="category-tab active" onclick="returnToHomepage();">全部</span>
         <span class="category-tab" onclick="selectCategory('短剧')">🎬 短剧</span>
         <span class="category-tab" onclick="selectCategory('教程')">📚 教程</span>
         <span class="category-tab" onclick="selectCategory('软件')">💻 软件</span>
