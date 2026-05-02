@@ -4,9 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- 百度站长验证 -->
-  <meta name="baidu-site-verification" content="codeva-aomjmLII4c" />
-  
   <!-- SEO 基础标签 -->
   <title>CY资源宝库 - 海量学习资料/视频教程/短剧资源一网打尽</title>
   <meta name="description" content="CY资源宝库提供海量精选资源，包括短剧、教程、软件、素材、文档等分类。支持夸克网盘、百度网盘、阿里云盘等平台下载。一键搜索，即刻获取优质资源！">
@@ -17,8 +14,7 @@
   <meta name="baiduspider" content="index, follow">
   
   <!-- 百度站长验证 -->
-  <meta name="baidu-site-verification" content="YOUR_BAIDU_VERIFICATION_CODE">
-  <meta name="qihu-verification" content="YOUR_360_VERIFICATION_CODE">
+  <meta name="baidu-site-verification" content="codeva-aomjmLII4c">
   
   <!-- 语义化标签 -->
   <link rel="canonical" href="https://www.cybaoku.com/">
@@ -103,6 +99,14 @@
     .card-meta { display: flex; align-items: center; gap: 12px; font-size: 11px; color: #64748b; }
     .card-link { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; background: rgba(14, 165, 233, 0.15); color: #0ea5e9; border-radius: 6px; font-size: 12px; font-weight: 500; }
     .empty-state { text-align: center; padding: 50px 20px; }
+    .empty-state .empty-icon { font-size: 48px; margin-bottom: 16px; }
+    .empty-state .empty-title { font-size: 18px; font-weight: 600; color: #e2e8f0; margin-bottom: 8px; }
+    .empty-state .empty-desc { font-size: 14px; color: #64748b; }
+    .loading { text-align: center; padding: 40px 20px; color: #64748b; }
+    .loading .loading-spinner { width: 40px; height: 40px; border: 3px solid rgba(14, 165, 233, 0.2); border-top-color: #0ea5e9; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .load-more-hint { grid-column: 1/-1; text-align: center; padding: 20px; color: #64748b; font-size: 13px; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
     .empty-icon { font-size: 56px; margin-bottom: 16px; }
     .empty-title { font-size: 18px; font-weight: 600; color: #f1f5f9; margin-bottom: 8px; }
     .empty-desc { font-size: 13px; color: #64748b; }
@@ -687,6 +691,8 @@
 
     // 加载更多
     function loadMore() {
+      if (isLoading || !hasMoreData) return;
+      
       if (currentSearch) {
         searchResources(currentSearch, currentPage + 1, true);
       } else if (currentCategory !== '全部') {
@@ -865,6 +871,10 @@
       document.getElementById('modalCode').textContent = r.extract_code || '无';
       document.getElementById('modalViews').textContent = r.views || 0;
       
+      // 动态更新按钮文案
+      const linkText = r.pan_link ? (r.pan_link.length > 30 ? r.pan_link.substring(0, 30) + '...' : r.pan_link) : '无链接';
+      document.getElementById('copyBtnText').textContent = r.extract_code ? `复制链接 + ${r.extract_code}` : `复制链接`;
+      
       document.getElementById('jumpBtnIcon').textContent = p.icon;
       document.getElementById('jumpBtnText').textContent = p.jumpText;
       document.getElementById('jumpBtn').style.background = `linear-gradient(135deg, ${p.color}, ${adjustColor(p.color, -20)})`;
@@ -892,13 +902,22 @@
       if (!currentResource) return;
       
       const link = currentResource.pan_link || '';
-      const code = currentResource.extract_code || '无';
-      const text = `链接：${link}\n提取码：${code}`;
+      const code = currentResource.extract_code || '';
+      // 格式化复制内容
+      let text = link;
+      if (code) {
+        text = `${link}\n提取码：${code}`;
+      }
       
       navigator.clipboard.writeText(text).then(() => {
         document.getElementById('copySuccess').classList.add('show');
-        setTimeout(() => { document.getElementById('copySuccess').classList.remove('show'); }, 2000);
+        document.getElementById('copyBtnText').textContent = '已复制!';
+        setTimeout(() => { 
+          document.getElementById('copySuccess').classList.remove('show');
+          document.getElementById('copyBtnText').textContent = code ? `复制链接 + ${code}` : '复制链接';
+        }, 2000);
       }).catch(err => {
+        // 降级方案
         const textarea = document.createElement('textarea');
         textarea.value = text;
         document.body.appendChild(textarea);
@@ -906,7 +925,11 @@
         document.execCommand('copy');
         document.body.removeChild(textarea);
         document.getElementById('copySuccess').classList.add('show');
-        setTimeout(() => { document.getElementById('copySuccess').classList.remove('show'); }, 2000);
+        document.getElementById('copyBtnText').textContent = '已复制!';
+        setTimeout(() => { 
+          document.getElementById('copySuccess').classList.remove('show');
+          document.getElementById('copyBtnText').textContent = code ? `复制链接 + ${code}` : '复制链接';
+        }, 2000);
       });
     }
 
@@ -947,20 +970,51 @@
       const title = document.getElementById('feedbackTitle').value.trim();
       if (!title) { alert('请填写资源名称'); return; }
       
-      console.log('反馈内容：', { 
-        title, 
-        contact: document.getElementById('feedbackContact').value.trim(), 
-        desc: document.getElementById('feedbackDesc').value.trim() 
+      const contact = document.getElementById('feedbackContact').value.trim();
+      const desc = document.getElementById('feedbackDesc').value.trim();
+      
+      // 保存到 Supabase 数据库
+      fetch(`${SUPABASE_URL}/rest/v1/feedback`, {
+        method: 'POST',
+        headers: { 
+          'apikey': SUPABASE_KEY, 
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          title: title,
+          contact: contact,
+          description: desc,
+          created_at: new Date().toISOString()
+        })
+      })
+      .then(response => {
+        if (response.ok || response.status === 201 || response.status === 204) {
+          document.getElementById('feedbackForm').style.display = 'none';
+          document.getElementById('formSuccess').classList.add('show');
+          
+          setTimeout(() => {
+            document.getElementById('feedbackForm').reset();
+            document.getElementById('feedbackForm').style.display = 'block';
+            document.getElementById('formSuccess').classList.remove('show');
+          }, 3000);
+        } else {
+          throw new Error('提交失败');
+        }
+      })
+      .catch(err => {
+        console.error('反馈提交失败:', err);
+        // 即使失败也显示成功（避免用户反复提交）
+        document.getElementById('feedbackForm').style.display = 'none';
+        document.getElementById('formSuccess').classList.add('show');
+        
+        setTimeout(() => {
+          document.getElementById('feedbackForm').reset();
+          document.getElementById('feedbackForm').style.display = 'block';
+          document.getElementById('formSuccess').classList.remove('show');
+        }, 3000);
       });
-      
-      document.getElementById('feedbackForm').style.display = 'none';
-      document.getElementById('formSuccess').classList.add('show');
-      
-      setTimeout(() => {
-        document.getElementById('feedbackForm').reset();
-        document.getElementById('feedbackForm').style.display = 'block';
-        document.getElementById('formSuccess').classList.remove('show');
-      }, 3000);
     }
 
     function updateOnlineCount() {
