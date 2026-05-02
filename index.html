@@ -1121,8 +1121,15 @@ function returnToHomepage() {
   setTimeout(() => {
     // 加载精选推荐
     loadFeaturedResources();
-    // 加载短剧分类
-    loadCategoryResources('短剧');
+    // 恢复浏览分类为初始提示状态
+    const categoryGrid = document.getElementById('categoryGrid');
+    if (categoryGrid) {
+      categoryGrid.innerHTML = '<div class="empty-state"><div class="empty-icon">👆</div><h3 class="empty-title">选择上方分类</h3><p class="empty-desc">点击分类标签查看对应资源</p></div>';
+    }
+    // 恢复分类选择为默认状态
+    document.querySelectorAll('.category-tab').forEach(tab => {
+      tab.classList.remove('active');
+    });
   }, 100);
   
   return false;
