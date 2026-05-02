@@ -3,7 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CY资源宝库 - 发现你想要的资源</title>
+  
+  <!-- SEO 基础标签 -->
+  <title>CY资源宝库 - 海量学习资料/视频教程/短剧资源一网打尽</title>
+  <meta name="description" content="CY资源宝库提供海量精选资源，包括短剧、教程、软件、素材、文档等分类。支持夸克网盘、百度网盘、阿里云盘等平台下载。一键搜索，即刻获取优质资源！">
+  <meta name="keywords" content="资源下载,短剧资源,学习教程,软件工具,设计素材,网盘资源,夸克资源,百度网盘,阿里云盘,资料分享">
+  <meta name="author" content="CY资源宝库">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="baiduspider" content="index, follow">
+  
+  <!-- 百度站长验证 -->
+  <meta name="baidu-site-verification" content="YOUR_BAIDU_VERIFICATION_CODE">
+  <meta name="qihu-verification" content="YOUR_360_VERIFICATION_CODE">
+  
+  <!-- 语义化标签 -->
+  <link rel="canonical" href="https://www.cybaoku.com/">
+  <link rel="alternate" href="https://www.cybaoku.com/" hreflang="zh-CN">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.cybaoku.com/">
+  <meta property="og:title" content="CY资源宝库 - 发现你想要的资源">
+  <meta property="og:description" content="海量精选资源，包括短剧、教程、软件、素材、文档。支持夸克、百度、阿里云等多平台。">
+  <meta property="og:site_name" content="CY资源宝库">
+  <meta property="og:locale" content="zh_CN">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="CY资源宝库 - 发现你想要的资源">
+  <meta name="twitter:description" content="海量精选资源，一键搜索，即刻获取。">
+  
+  <!-- 网站图标 -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+  
+  <!-- 站点地图 -->
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+  
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -110,7 +146,6 @@
     .modal-info p { margin-bottom: 10px; color: #94a3b8; font-size: 13px; line-height: 1.5; word-break: break-all; }
     .modal-info p:last-child { margin-bottom: 0; }
     .modal-info strong { color: #fff; }
-    /* 新样式：双按钮布局 */
     .modal-buttons { display: flex; gap: 12px; margin-top: 18px; }
     .btn-copy { flex: 1; padding: 14px; background: linear-gradient(135deg, #475569, #334155); color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .btn-copy:hover { background: linear-gradient(135deg, #64748b, #475569); transform: scale(1.02); }
@@ -118,11 +153,10 @@
     .btn-jump:hover { transform: scale(1.02); box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4); }
     .copy-success { text-align: center; color: #10b981; margin-top: 12px; font-size: 13px; display: none; }
     .copy-success.show { display: block; }
-    /* 移动端适配 */
-    .modal-buttons { flex-direction: column; }
-    @media (min-width: 480px) {
-      .modal-buttons { flex-direction: row; }
-    }
+    
+    /* SEO优化：隐藏的内容（仅供爬虫） */
+    .seo-content { position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    
     @media (max-width: 768px) {
       .hero { padding: 100px 0 40px; }
       .hero-title { font-size: 28px; }
@@ -139,8 +173,129 @@
       .btn-copy, .btn-jump { padding: 12px; font-size: 13px; }
     }
   </style>
+  
+  <!-- 结构化数据 Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "CY资源宝库",
+    "alternateName": ["CY资源", "资源宝库"],
+    "url": "https://www.cybaoku.com",
+    "description": "海量精选资源下载平台，包含短剧、教程、软件、素材、文档等分类资源",
+    "keywords": "资源下载,短剧资源,学习教程,软件工具,设计素材,网盘资源",
+    "inLanguage": "zh-CN",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.cybaoku.com/?search={search_term_string}",
+      "query-input": "required name=search_term_string",
+      "description": "搜索网站资源"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "资源分类",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "短剧资源", "description": "热门短剧视频资源"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "学习教程", "description": "各类学习视频教程"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "软件工具", "description": "实用软件工具下载"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "设计素材", "description": "设计素材资源包"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "文档资料", "description": "文档资料电子书"}}
+      ]
+    }
+  }
+  </script>
+  
+  <!-- 面包屑结构化数据 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "首页",
+        "item": "https://www.cybaoku.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "资源分类",
+        "item": "https://www.cybaoku.com/#categories"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
+  <!-- SEO优化：隐藏的预渲染内容（供爬虫抓取动态数据） -->
+  <div class="seo-content" aria-hidden="true">
+    <h1>CY资源宝库 - 海量精选资源下载</h1>
+    <h2>资源分类导航</h2>
+    <nav>
+      <ul>
+        <li><a href="#短剧">短剧资源</a> - 热门短剧视频资源下载，支持夸克网盘、百度网盘</li>
+        <li><a href="#教程">学习教程</a> - Python教程、Java教程、前端开发、设计教程等</li>
+        <li><a href="#软件">软件工具</a> - 实用软件工具下载，Windows软件、Mac软件</li>
+        <li><a href="#素材">设计素材</a> - PS素材、AE模板、PPT模板、图片素材</li>
+        <li><a href="#文档">文档资料</a> - 电子书、PDF资料、学习文档</li>
+      </ul>
+    </nav>
+    <h2>热门资源推荐</h2>
+    <article>
+      <h3>Python编程入门教程 - Python基础教程视频</h3>
+      <p>Python从入门到精通全套视频教程，适合零基础学习编程</p>
+      <p>标签：Python教程、编程入门、软件开发</p>
+    </article>
+    <article>
+      <h3>前端开发实战课程 - Web前端教程</h3>
+      <p>HTML、CSS、JavaScript前端三件套完整教程</p>
+      <p>标签：前端教程、Web开发、HTML5、CSS3</p>
+    </article>
+    <article>
+      <h3>热门短剧合集 - 短剧资源</h3>
+      <p>最新最热短剧视频资源，高清无水印</p>
+      <p>标签：短剧、视频、追剧</p>
+    </article>
+    <article>
+      <h3>Adobe全家桶教程 - PS/PR/AE教程</h3>
+      <p>Photoshop、Premiere、After Effects完整教程</p>
+      <p>标签：设计教程、视频剪辑、AE教程、PR教程</p>
+    </article>
+    <article>
+      <h3>小红书运营教程 - 自媒体教程</h3>
+      <p>小红书账号运营、内容创作、涨粉变现教程</p>
+      <p>标签：运营教程、自媒体、涨粉</p>
+    </article>
+    <article>
+      <h3>AI人工智能教程 - 机器学习深度学习</h3>
+      <p>机器学习、深度学习、TensorFlow教程</p>
+      <p>标签：AI教程、机器学习、人工智能</p>
+    </article>
+    <article>
+      <h3>跨境电商教程 - 亚马逊运营</h3>
+      <p>亚马逊开店、选品、物流、运营全流程教程</p>
+      <p>标签：跨境电商、亚马逊、电商运营</p>
+    </article>
+    <article>
+      <h3>短视频制作教程 - 抖音快手教程</h3>
+      <p>短视频拍摄、剪辑、运营全攻略</p>
+      <p>标签：短视频、抖音教程、视频剪辑</p>
+    </article>
+    <h2>网盘资源平台</h2>
+    <ul>
+      <li>夸克网盘资源 - https://pan.quark.cn</li>
+      <li>百度网盘资源 - https://pan.baidu.com</li>
+      <li>阿里云盘资源 - https://www.aliyundrive.com</li>
+      <li>迅雷网盘资源 - https://pan.xunlei.com</li>
+    </ul>
+    <h2>联系我们</h2>
+    <p>网站名称：CY资源宝库</p>
+    <p>网址：https://www.cybaoku.com</p>
+    <p>描述：CY资源宝库提供海量精选资源下载，包括短剧、教程、软件、素材、文档等分类。支持多网盘平台，一键搜索即刻获取。</p>
+    <p>关键词：资源下载,短剧,教程,软件,素材,文档,百度网盘,夸克网盘,阿里云盘,学习资料</p>
+  </div>
+
   <nav class="navbar">
     <div class="container">
       <div class="navbar-inner">
@@ -345,12 +500,10 @@
       });
     });
 
-    // 加载所有资源（分批加载）
     async function loadAllResources() {
       if (isLoading) return;
       isLoading = true;
       
-      // 显示加载状态
       document.getElementById('featuredGrid').innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>正在加载资源...</p></div>';
       
       try {
@@ -363,18 +516,14 @@
             headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
           });
           
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-          }
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
           
           const data = await response.json();
           
           if (data && data.length > 0) {
             allData = allData.concat(data);
             page++;
-            if (data.length < 1000) {
-              hasMore = false;
-            }
+            if (data.length < 1000) hasMore = false;
           } else {
             hasMore = false;
           }
@@ -382,7 +531,6 @@
         
         allResources = allData;
         
-        // 按分类整理资源
         categoryResources = {};
         const categories = ['短剧', '教程', '软件', '素材', '文档'];
         categories.forEach(cat => {
@@ -390,11 +538,7 @@
         });
         
         document.getElementById('totalCount').textContent = allResources.length.toLocaleString();
-        
-        // 精选推荐显示前6个
         renderResources(allResources.slice(0, 6), 'featuredGrid');
-        
-        // 浏览分类默认显示"短剧"分类
         renderResources(categoryResources['短剧'] || [], 'categoryGrid');
         document.getElementById('categoryTitle').textContent = '🎬 短剧资源';
         
@@ -409,7 +553,6 @@
       }
     }
 
-    // 搜索功能（模糊匹配）
     function performSearch() {
       const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
       currentSearch = keyword;
@@ -419,7 +562,6 @@
         return;
       }
 
-      // 模糊搜索：标题任意位置包含关键词即匹配
       const results = allResources.filter(r => 
         r.title && r.title.toLowerCase().includes(keyword)
       );
@@ -431,20 +573,14 @@
       document.getElementById('resources').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function handleSearch(event) { 
-      if (event.key === 'Enter') performSearch(); 
-    }
+    function handleSearch(event) { if (event.key === 'Enter') performSearch(); }
 
-    // 分类选择
     function selectCategory(category) {
       currentCategory = category;
       
-      // 更新标签样式
       document.querySelectorAll('.category-tab').forEach(tab => {
         tab.classList.remove('active');
-        if (tab.textContent.includes(category) || (category === '全部' && tab.textContent === '全部')) {
-          tab.classList.add('active');
-        }
+        if (tab.textContent.includes(category) || (category === '全部' && tab.textContent === '全部')) tab.classList.add('active');
       });
       
       document.getElementById('searchInput').value = '';
@@ -461,7 +597,6 @@
       };
       document.getElementById('categoryTitle').textContent = categoryNames[category] || category;
       
-      // 显示该分类的热门资源
       if (category === '全部') {
         renderResources(categoryResources['短剧'] || [], 'categoryGrid');
       } else {
@@ -470,7 +605,6 @@
       }
     }
 
-    // 获取网盘信息
     function getPlatformInfo(link) {
       if (!link) return { name: '网盘', color: '#64748b', icon: '📦', jumpText: '直接跳转' };
       
@@ -495,7 +629,6 @@
       return { name: '夸克网盘', color: '#10b981', icon: '🚀', jumpText: '直接跳转' };
     }
 
-    // 渲染资源列表
     function renderResources(resources, containerId) {
       const container = document.getElementById(containerId);
       if (!resources || resources.length === 0) {
@@ -532,7 +665,6 @@
       }).join('');
     }
 
-    // 显示资源详情
     function showResourceDetail(id) {
       const r = allResources.find(x => x.id === id);
       if (!r) return;
@@ -547,19 +679,14 @@
       document.getElementById('modalCode').textContent = r.extract_code || '无';
       document.getElementById('modalViews').textContent = r.views || 0;
       
-      // 更新跳转按钮样式和文字
       document.getElementById('jumpBtnIcon').textContent = p.icon;
       document.getElementById('jumpBtnText').textContent = p.jumpText;
       document.getElementById('jumpBtn').style.background = `linear-gradient(135deg, ${p.color}, ${adjustColor(p.color, -20)})`;
       
-      // 显示弹窗
       document.getElementById('resourceModal').classList.add('show');
-      
-      // 增加浏览次数
       incrementViews(id);
     }
 
-    // 增加浏览次数
     async function incrementViews(id) {
       const r = allResources.find(x => x.id === id);
       if (!r) return;
@@ -576,12 +703,9 @@
           },
           body: JSON.stringify({ views: r.views })
         });
-      } catch (e) { 
-        console.error('更新浏览次数失败:', e); 
-      }
+      } catch (e) { console.error('更新浏览次数失败:', e); }
     }
 
-    // 复制链接
     function copyLink() {
       if (!currentResource) return;
       
@@ -591,11 +715,8 @@
       
       navigator.clipboard.writeText(text).then(() => {
         document.getElementById('copySuccess').classList.add('show');
-        setTimeout(() => {
-          document.getElementById('copySuccess').classList.remove('show');
-        }, 2000);
+        setTimeout(() => { document.getElementById('copySuccess').classList.remove('show'); }, 2000);
       }).catch(err => {
-        // 降级方案
         const textarea = document.createElement('textarea');
         textarea.value = text;
         document.body.appendChild(textarea);
@@ -603,43 +724,25 @@
         document.execCommand('copy');
         document.body.removeChild(textarea);
         document.getElementById('copySuccess').classList.add('show');
-        setTimeout(() => {
-          document.getElementById('copySuccess').classList.remove('show');
-        }, 2000);
+        setTimeout(() => { document.getElementById('copySuccess').classList.remove('show'); }, 2000);
       });
     }
 
-    // 跳转到网盘链接
     function jumpToLink() {
       if (!currentResource || !currentResource.pan_link) return;
-      
-      const link = currentResource.pan_link;
-      
-      // 直接在新标签页打开链接
-      window.open(link, '_blank');
-      
-      // 关闭弹窗
+      window.open(currentResource.pan_link, '_blank');
       closeModal();
     }
 
-    // 关闭弹窗
-    function closeModal() { 
-      document.getElementById('resourceModal').classList.remove('show'); 
-      currentResource = null; 
-    }
+    function closeModal() { document.getElementById('resourceModal').classList.remove('show'); currentResource = null; }
 
-    // 处理弹窗点击（点击背景关闭）
     function handleModalClick(event) {
       if (event.target.classList.contains('modal')) {
-        if (event.target.id === 'resourceModal') {
-          closeModal();
-        } else if (event.target.id === 'communityModal') {
-          closeCommunityModal();
-        }
+        if (event.target.id === 'resourceModal') closeModal();
+        else if (event.target.id === 'communityModal') closeCommunityModal();
       }
     }
 
-    // 社群弹窗
     function showCommunityModal(title, content) {
       currentCommunityInfo = content;
       document.getElementById('communityModalTitle').textContent = title;
@@ -647,40 +750,30 @@
       document.getElementById('communityModal').classList.add('show');
     }
     
-    function closeCommunityModal() { 
-      document.getElementById('communityModal').classList.remove('show'); 
-      currentCommunityInfo = ''; 
-    }
+    function closeCommunityModal() { document.getElementById('communityModal').classList.remove('show'); currentCommunityInfo = ''; }
     
     function copyCommunityInfo() {
       navigator.clipboard.writeText(currentCommunityInfo).then(() => {
         document.getElementById('communityCopySuccess').classList.add('show');
-        setTimeout(() => {
-          document.getElementById('communityCopySuccess').classList.remove('show');
-        }, 2000);
+        setTimeout(() => { document.getElementById('communityCopySuccess').classList.remove('show'); }, 2000);
       });
     }
 
-    // 提交反馈
     function submitFeedback(event) {
       event.preventDefault();
       
       const title = document.getElementById('feedbackTitle').value.trim();
-      if (!title) { 
-        alert('请填写资源名称'); 
-        return; 
-      }
+      if (!title) { alert('请填写资源名称'); return; }
       
-      const contact = document.getElementById('feedbackContact').value.trim();
-      const desc = document.getElementById('feedbackDesc').value.trim();
+      console.log('反馈内容：', { 
+        title, 
+        contact: document.getElementById('feedbackContact').value.trim(), 
+        desc: document.getElementById('feedbackDesc').value.trim() 
+      });
       
-      console.log('反馈内容：', { title, contact, desc });
-      
-      // 显示成功提示
       document.getElementById('feedbackForm').style.display = 'none';
       document.getElementById('formSuccess').classList.add('show');
       
-      // 重置表单
       setTimeout(() => {
         document.getElementById('feedbackForm').reset();
         document.getElementById('feedbackForm').style.display = 'block';
@@ -688,7 +781,6 @@
       }, 3000);
     }
 
-    // 更新在线人数
     function updateOnlineCount() {
       let base = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
       const offset = Math.floor(Math.random() * 30) - 15;
@@ -705,7 +797,6 @@
       updateOnlineCount();
     });
 
-    // 工具函数
     function escapeHtml(text) {
       if (!text) return '';
       const div = document.createElement('div');
@@ -718,12 +809,9 @@
       try {
         const d = new Date(ds);
         return (d.getMonth() + 1) + '月' + d.getDate() + '日';
-      } catch (e) {
-        return '--';
-      }
+      } catch (e) { return '--'; }
     }
     
-    // 颜色调整函数
     function adjustColor(color, amount) {
       const hex = color.replace('#', '');
       const num = parseInt(hex, 16);
