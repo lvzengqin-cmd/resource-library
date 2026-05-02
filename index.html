@@ -47,7 +47,7 @@
     .section { padding: 40px 0; }
     .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
     .section-title { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; }
-    .view-all { color: #0ea5e9; font-size: 13px; text-decoration: none; }
+    .view-all { color: #0ea5e9; font-size: 13px; text-decoration: none; cursor: pointer; }
     .view-all:hover { color: #38bdf8; }
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
     .resource-card { position: relative; background: rgba(30, 41, 59, 0.5); border: 1px solid #1e293b; border-radius: 12px; overflow: hidden; transition: all 0.3s; cursor: pointer; }
@@ -183,7 +183,7 @@
     <div class="container">
       <div class="section-header">
         <h2 class="section-title"><span>🔥</span><span>精选推荐</span></h2>
-        <a href="#categories" class="view-all">查看全部 →</a>
+        <span class="view-all" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">查看全部 →</span>
       </div>
       <div class="resources-grid" id="featuredGrid">
         <div class="loading"><div class="loading-spinner"></div><p>正在加载...</p></div>
@@ -308,6 +308,7 @@
     let currentResource = null;
     let currentCommunityInfo = '';
     let allResources = [];
+    let categoryResources = {};
 
     document.addEventListener('DOMContentLoaded', function() {
       loadAllResources();
@@ -325,10 +326,23 @@
         });
         if (!response.ok) throw new Error('获取数据失败');
         allResources = await response.json();
+        
+        // 按分类整理资源
+        categoryResources = {};
+        const categories = ['短剧', '教程', '软件', '素材', '文档'];
+        categories.forEach(cat => {
+          categoryResources[cat] = allResources.filter(r => r.category === cat).slice(0, 8);
+        });
+        
         document.getElementById('totalCount').textContent = allResources.length;
+        
+        // 精选推荐显示前6个
         renderResources(allResources.slice(0, 6), 'featuredGrid');
-        renderResources(allResources.slice(0, 20), 'categoryGrid');
-        document.getElementById('categoryTitle').textContent = '浏览分类';
+        
+        // 浏览分类默认显示"短剧"分类
+        renderResources(categoryResources['短剧'] || [], 'categoryGrid');
+        document.getElementById('categoryTitle').textContent = '🎬 短剧资源';
+        
       } catch (error) {
         console.error('加载资源失败:', error);
         const emptyHtml = '<div class="empty-state"><div class="empty-icon">😅</div><h3 class="empty-title">加载失败</h3><p class="empty-desc">请检查网络连接后刷新重试</p></div>';
@@ -337,15 +351,25 @@
       }
     }
 
+    // 优化搜索：模糊匹配（标题任意位置包含关键词即可）
     function performSearch() {
       const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
       currentSearch = keyword;
-      if (!keyword) { loadAllResources(); return; }
-      const results = allResources.filter(r => r.title && r.title.toLowerCase().includes(keyword));
+      
+      if (!keyword) {
+        loadAllResources();
+        return;
+      }
+
+      // 模糊搜索：标题任意位置包含关键词即匹配
+      const results = allResources.filter(r => 
+        r.title && r.title.toLowerCase().includes(keyword)
+      );
+
       document.getElementById('totalCount').textContent = results.length;
       renderResources(results, 'featuredGrid');
-      renderResources(results.slice(0, 20), 'categoryGrid');
-      document.getElementById('categoryTitle').textContent = '搜索"' + keyword + '"的结果';
+      renderResources(results, 'categoryGrid');
+      document.getElementById('categoryTitle').textContent = `搜索"${keyword}"的结果 (${results.length}条)`;
       document.getElementById('resources').scrollIntoView({ behavior: 'smooth' });
     }
 
@@ -360,10 +384,24 @@
       document.getElementById('searchInput').value = '';
       currentSearch = '';
       document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
-      const categoryNames = { '全部': '浏览分类', '短剧': '🎬 短剧资源', '教程': '📚 学习教程', '软件': '💻 软件工具', '素材': '🎨 设计素材', '文档': '📄 文档资料' };
+      
+      const categoryNames = {
+        '全部': '浏览分类',
+        '短剧': '🎬 短剧资源',
+        '教程': '📚 学习教程',
+        '软件': '💻 软件工具',
+        '素材': '🎨 设计素材',
+        '文档': '📄 文档资料'
+      };
       document.getElementById('categoryTitle').textContent = categoryNames[category] || category;
-      if (category === '全部') renderResources(allResources.slice(0, 20), 'categoryGrid');
-      else renderResources(allResources.filter(r => r.category === category), 'categoryGrid');
+      
+      // 显示该分类的热门资源
+      if (category === '全部') {
+        renderResources(categoryResources['短剧'] || [], 'categoryGrid');
+      } else {
+        const catResources = categoryResources[category] || allResources.filter(r => r.category === category).slice(0, 8);
+        renderResources(catResources, 'categoryGrid');
+      }
     }
 
     function getPlatformInfo(link) {
