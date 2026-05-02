@@ -898,15 +898,8 @@
           <p>正在加载...</p>
         </div>
       </div>
-
-      <div class="online-users">
-        <div class="online-indicator"></div>
-        <span>当前 <strong id="onlineCount">0</strong> 人正在浏览</span>
-      </div>
     </div>
   </section>
-
-  <!-- 交流社群 -->
   <section class="community-section" id="community">
     <div class="container">
       <div class="section-header">
@@ -1006,7 +999,11 @@
   <!-- 页脚 -->
   <footer class="footer">
     <div class="container">
-      <p class="footer-text">© 2024 CY资源宝库 · 让资源触手可及</p>
+      <div class="online-users" style="margin-bottom: 16px;">
+        <div class="online-indicator"></div>
+        <span>当前 <strong id="onlineCountFooter">0</strong> 人正在浏览</span>
+      </div>
+      <p class="footer-text">© 2026 CY资源宝库 · 让资源触手可及</p>
     </div>
   </footer>
 
@@ -1380,6 +1377,7 @@
       const randomOffset = Math.floor(Math.random() * 30) - 15;
       const onlineCount = Math.max(50, baseCount + randomOffset);
       document.getElementById('onlineCount').textContent = (onlineCount * 100).toLocaleString();
+      document.getElementById('onlineCountFooter').textContent = (onlineCount * 100).toLocaleString();
     }
 
     setInterval(updateOnlineCount, 5000);
