@@ -3,1897 +3,1059 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CY资源宝库 - 发现你想要的资源</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- SEO 基础标签 -->
+  <title>CY资源宝库 - 海量学习资料/视频教程/短剧资源一网打尽</title>
+  <meta name="description" content="CY资源宝库提供海量精选资源，包括短剧、教程、软件、素材、文档等分类。支持夸克网盘、百度网盘、阿里云盘等平台下载。一键搜索，即刻获取优质资源！">
+  <meta name="keywords" content="资源下载,短剧资源,学习教程,软件工具,设计素材,网盘资源,夸克资源,百度网盘,阿里云盘,资料分享">
+  <meta name="author" content="CY资源宝库">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="baiduspider" content="index, follow">
+  
+  <!-- 百度站长验证 -->
+  <meta name="baidu-site-verification" content="codeva-aomjmLII4c">
+  
+  <!-- 语义化标签 -->
+  <link rel="canonical" href="https://www.cybaoku.com/">
+  <link rel="alternate" href="https://www.cybaoku.com/" hreflang="zh-CN">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.cybaoku.com/">
+  <meta property="og:title" content="CY资源宝库 - 发现你想要的资源">
+  <meta property="og:description" content="海量精选资源，包括短剧、教程、软件、素材、文档。支持夸克、百度、阿里云等多平台。">
+  <meta property="og:site_name" content="CY资源宝库">
+  <meta property="og:locale" content="zh_CN">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="CY资源宝库 - 发现你想要的资源">
+  <meta name="twitter:description" content="海量精选资源，一键搜索，即刻获取。">
+  
+  <!-- 网站图标 -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+  
+  <!-- 站点地图 -->
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+  
   <style>
-    :root {
-      --primary: #0ea5e9;
-      --primary-dark: #0284c7;
-      --dark-100: #1e293b;
-      --dark-200: #1a2332;
-      --dark-300: #151d2e;
-      --dark-400: #0f172a;
-      --dark-500: #0a0f1a;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
       background: linear-gradient(135deg, #0a0f1a 0%, #0f172a 50%, #1a2332 100%);
       min-height: 100vh;
       color: #e2e8f0;
-    }
-
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(30, 41, 59, 0.5);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(14, 165, 233, 0.3);
-      border-radius: 4px;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    /* ========== 导航栏 ========== */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 16px 0;
-      transition: all 0.3s;
-    }
-
-    .navbar.scrolled {
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(20px);
-      padding: 10px 0;
-    }
-
-    .navbar-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
-
-    .logo-icon {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-
-    .logo-text {
-      font-size: 18px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9, #7dd3fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .nav-link {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 14px;
-      transition: color 0.2s;
-    }
-
-    .nav-link:hover {
-      color: #38bdf8;
-    }
-
-    /* 移动端分类按钮 */
-    .mobile-categories-btn {
-      display: none;
-      background: rgba(30, 41, 59, 0.8);
-      border: 1px solid #334155;
-      border-radius: 10px;
-      padding: 8px 14px;
-      cursor: pointer;
-      color: #94a3b8;
-      font-size: 13px;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* 移动端菜单按钮 */
-    .mobile-menu-btn {
-      display: none;
-      background: rgba(30, 41, 59, 0.8);
-      border: 1px solid #334155;
-      border-radius: 10px;
-      padding: 8px;
-      cursor: pointer;
-      color: #94a3b8;
-    }
-
-    /* ========== 移动端菜单 ========== */
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(10, 15, 26, 0.98);
-      z-index: 200;
-      padding: 20px;
-      flex-direction: column;
-    }
-
-    .mobile-menu.active {
-      display: flex;
-    }
-
-    .mobile-menu-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 40px;
-    }
-
-    .mobile-menu-close {
-      background: none;
-      border: none;
-      color: #94a3b8;
-      font-size: 32px;
-      cursor: pointer;
-    }
-
-    .mobile-menu-links {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .mobile-menu-link {
-      color: white;
-      font-size: 18px;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    /* ========== 移动端分类弹窗 ========== */
-    .mobile-categories-modal {
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 80%;
-      max-width: 320px;
-      background: rgba(26, 35, 50, 0.98);
-      backdrop-filter: blur(20px);
-      z-index: 200;
-      padding: 20px;
-      transform: translateX(100%);
-      transition: transform 0.3s;
-      visibility: hidden;
-    }
-
-    .mobile-categories-modal.active {
-      transform: translateX(0);
-      visibility: visible;
-    }
-
-    .mobile-categories-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid #334155;
-    }
-
-    .mobile-categories-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: white;
-    }
-
-    .mobile-categories-close {
-      background: none;
-      border: none;
-      color: #94a3b8;
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    .mobile-categories-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .mobile-category-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid #1e293b;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .mobile-category-item:hover {
-      border-color: #334155;
-    }
-
-    .mobile-category-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
-
-    .mobile-category-name {
-      font-size: 15px;
-      font-weight: 500;
-      color: white;
-    }
-
-    /* ========== 主区域 ========== */
-    .hero {
-      position: relative;
-      padding: 120px 0 50px;
-      text-align: center;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-    }
-
-    .hero-glow {
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      filter: blur(100px);
-      opacity: 0.3;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    .hero-glow-1 {
-      top: 10%;
-      left: 20%;
-      background: #0ea5e9;
-    }
-
-    .hero-glow-2 {
-      bottom: 20%;
-      right: 15%;
-      background: #3b82f6;
-      animation-delay: -3s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-30px); }
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      background: rgba(14, 165, 233, 0.1);
-      border: 1px solid rgba(14, 165, 233, 0.2);
-      border-radius: 50px;
-      margin-bottom: 20px;
-      font-size: 13px;
-      color: #38bdf8;
-    }
-
-    .hero-title {
-      font-size: 44px;
-      font-weight: 800;
-      margin-bottom: 14px;
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9, #7dd3fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-subtitle {
-      font-size: 15px;
-      color: #94a3b8;
-      max-width: 560px;
-      margin: 0 auto 28px;
       line-height: 1.6;
     }
-
-    /* 搜索框 */
-    .search-box {
-      max-width: 640px;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    .search-input {
-      width: 100%;
-      padding: 14px 56px 14px 18px;
-      font-size: 15px;
-      background: rgba(30, 41, 59, 0.8);
-      border: 2px solid #334155;
-      border-radius: 14px;
-      color: white;
-      outline: none;
-      transition: all 0.3s;
-    }
-
-    .search-input:focus {
-      border-color: #0ea5e9;
-      box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2);
-    }
-
-    .search-input::placeholder {
-      color: #64748b;
-    }
-
-    .search-btn {
-      position: absolute;
-      right: 6px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 42px;
-      height: 42px;
-      background: linear-gradient(135deg, #0ea5e9, #0284c7);
-      border: none;
-      border-radius: 10px;
-      color: white;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-    }
-
-    .search-btn:hover {
-      background: linear-gradient(135deg, #0284c7, #0369a1);
-    }
-
-    /* 统计 */
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-top: 36px;
-    }
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-value {
-      font-size: 26px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .stat-label {
-      font-size: 12px;
-      color: #64748b;
-      margin-top: 2px;
-    }
-
-    /* 分类区域 */
-    .section {
-      padding: 50px 0;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 18px;
-      font-weight: 600;
-      color: white;
-    }
-
-    .section-title svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    .section-more {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 13px;
-      transition: color 0.2s;
-    }
-
-    .section-more:hover {
-      color: #38bdf8;
-    }
-
-    /* 资源网格 */
-    .resource-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    /* 资源卡片 */
-    .resource-card {
-      position: relative;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid #1e293b;
-      border-radius: 14px;
-      overflow: hidden;
-      transition: all 0.3s;
-      cursor: pointer;
-    }
-
-    .resource-card:hover {
-      border-color: rgba(14, 165, 233, 0.3);
-      box-shadow: 0 12px 28px rgba(14, 165, 233, 0.1);
-      transform: translateY(-2px);
-    }
-
-    /* 修复标签遮挡问题 - 标签移到右上角 */
-    .card-badges {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      display: flex;
-      gap: 6px;
-      z-index: 2;
-    }
-
-    .card-badge {
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: 500;
-      white-space: nowrap;
-    }
-
-    .badge-category {
-      background: rgba(14, 165, 233, 0.2);
-      color: #38bdf8;
-    }
-
-    .badge-featured {
-      background: linear-gradient(135deg, #f59e0b, #f97316);
-      color: white;
-      display: flex;
-      align-items: center;
-      gap: 3px;
-    }
-
-    .badge-hot {
-      background: linear-gradient(135deg, #ef4444, #ec4899);
-      color: white;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
-
-    .card-content {
-      padding: 14px;
-      /* 确保内容不被标签遮挡 */
-      padding-top: 20px;
-    }
-
-    .card-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: white;
-      line-height: 1.4;
-      margin-bottom: 6px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .card-desc {
-      font-size: 12px;
-      color: #94a3b8;
-      line-height: 1.5;
-      margin-bottom: 8px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-bottom: 8px;
-    }
-
-    .card-tag {
-      padding: 2px 6px;
-      background: rgba(100, 116, 139, 0.3);
-      border-radius: 4px;
-      font-size: 10px;
-      color: #94a3b8;
-    }
-
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 11px;
-      color: #64748b;
-      margin-bottom: 10px;
-    }
-
-    .card-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-    }
-
-    .card-btn {
-      width: 100%;
-      padding: 9px;
-      border: none;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      transition: all 0.2s;
-    }
-
-    .card-btn-primary {
-      background: linear-gradient(135deg, #0ea5e9, #0284c7);
-      color: white;
-    }
-
-    .card-btn-primary:hover {
-      background: linear-gradient(135deg, #0284c7, #0369a1);
-    }
-
-    /* 分类网格 - 桌面端 */
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-
-    .category-card {
-      position: relative;
-      padding: 18px;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid #1e293b;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: all 0.3s;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .category-card:hover {
-      border-color: #334155;
-      transform: translateY(-2px);
-    }
-
-    .category-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-
-    .category-info h3 {
-      font-size: 14px;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 2px;
-    }
-
-    .category-info p {
-      font-size: 11px;
-      color: #64748b;
-    }
-
-    /* ========== 引流区域 ========== */
-    .community-section {
-      padding: 50px 0;
-    }
-
-    .community-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .community-card {
-      position: relative;
-      padding: 32px;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid #1e293b;
-      border-radius: 16px;
-      text-align: center;
-      overflow: hidden;
-      transition: all 0.3s;
-    }
-
-    .community-card:hover {
-      border-color: #334155;
-      transform: translateY(-2px);
-    }
-
-    /* 群聊卡片样式 */
-    .community-card.wechat {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
-      border-color: rgba(16, 185, 129, 0.3);
-    }
-
-    .community-card.wechat:hover {
-      border-color: rgba(16, 185, 129, 0.5);
-    }
-
-    /* 公众号卡片样式 */
-    .community-card.gzh {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
-      border-color: rgba(59, 130, 246, 0.3);
-    }
-
-    .community-card.gzh:hover {
-      border-color: rgba(59, 130, 246, 0.5);
-    }
-
-    .community-icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 16px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-    }
-
-    .community-card.wechat .community-icon {
-      background: rgba(16, 185, 129, 0.2);
-    }
-
-    .community-card.gzh .community-icon {
-      background: rgba(59, 130, 246, 0.2);
-    }
-
-    .community-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 8px;
-    }
-
-    .community-desc {
-      font-size: 13px;
-      color: #94a3b8;
-      margin-bottom: 16px;
-      line-height: 1.5;
-    }
-
-    .community-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-
-    .community-card.wechat .community-btn {
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: white;
-    }
-
-    .community-card.wechat .community-btn:hover {
-      background: linear-gradient(135deg, #059669, #047857);
-    }
-
-    .community-card.gzh .community-btn {
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-      color: white;
-    }
-
-    .community-card.gzh .community-btn:hover {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    }
-
-    /* 二维码提示 */
-    .qrcode-hint {
-      display: none;
-      margin-top: 16px;
-      padding: 16px;
-      background: rgba(15, 23, 42, 0.8);
-      border-radius: 12px;
-      text-align: center;
-    }
-
-    .qrcode-hint.active {
-      display: block;
-    }
-
-    .qrcode-placeholder {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 12px;
-      background: rgba(30, 41, 59, 0.8);
-      border: 2px dashed #334155;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      color: #64748b;
-    }
-
-    .qrcode-hint p {
-      font-size: 12px;
-      color: #94a3b8;
-      line-height: 1.4;
-    }
-
-    /* 在线人数显示 */
-    .online-users {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 24px;
-      padding: 8px 16px;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid rgba(14, 165, 233, 0.2);
-      border-radius: 50px;
-      font-size: 13px;
-      color: #94a3b8;
-    }
-
-    .online-users strong {
-      color: #10b981;
-      font-weight: 600;
-    }
-
-    .online-indicator {
-      width: 8px;
-      height: 8px;
-      background: #10b981;
-      border-radius: 50%;
-      animation: onlinePulse 2s ease-in-out infinite;
-    }
-
-    @keyframes onlinePulse {
-      0%, 100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-      50% {
-        opacity: 0.5;
-        transform: scale(1.2);
-      }
-    }
-
-    /* CTA */
-    .cta-section {
-      padding: 50px 0;
-    }
-
-    .cta-box {
-      position: relative;
-      padding: 40px;
-      background: linear-gradient(135deg, #0ea5e9, #3b82f6);
-      border-radius: 20px;
-      text-align: center;
-      overflow: hidden;
-    }
-
-    .cta-box::before,
-    .cta-box::after {
-      content: '';
-      position: absolute;
-      width: 160px;
-      height: 160px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      filter: blur(60px);
-    }
-
-    .cta-box::before {
-      top: -40px;
-      left: -40px;
-    }
-
-    .cta-box::after {
-      bottom: -40px;
-      right: -40px;
-    }
-
-    .cta-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .cta-title {
-      font-size: 22px;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 10px;
-    }
-
-    .cta-desc {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 20px;
-    }
-
-    .cta-btn {
-      display: inline-block;
-      padding: 11px 26px;
-      background: white;
-      color: #0ea5e9;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-
-    .cta-btn:hover {
-      background: #f1f5f9;
-    }
-
-    /* 反馈区域 */
-    .feedback-section {
-      display: none;
-      padding: 50px 0;
-    }
-
-    .feedback-box {
-      max-width: 540px;
-      margin: 0 auto;
-      padding: 32px;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid #1e293b;
-      border-radius: 18px;
-      text-align: center;
-    }
-
-    .feedback-icon {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 16px;
-      background: rgba(14, 165, 233, 0.2);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-    }
-
-    .feedback-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 8px;
-    }
-
-    .feedback-desc {
-      font-size: 13px;
-      color: #94a3b8;
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-
-    .feedback-form {
-      text-align: left;
-    }
-
-    .form-group {
-      margin-bottom: 14px;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 12px;
-      font-weight: 500;
-      color: #94a3b8;
-      margin-bottom: 5px;
-    }
-
-    .form-input,
-    .form-textarea {
-      width: 100%;
-      padding: 11px 12px;
-      background: rgba(21, 29, 46, 0.8);
-      border: 1px solid #334155;
-      border-radius: 8px;
-      color: white;
-      font-size: 13px;
-      outline: none;
-      transition: all 0.2s;
-    }
-
-    .form-input:focus,
-    .form-textarea:focus {
-      border-color: #0ea5e9;
-    }
-
-    .form-textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
-
-    .form-submit {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(135deg, #0ea5e9, #0284c7);
-      border: none;
-      border-radius: 10px;
-      color: white;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .form-submit:hover {
-      background: linear-gradient(135deg, #0284c7, #0369a1);
-    }
-
-    /* 页脚 */
-    .footer {
-      padding: 36px 0 18px;
-      border-top: 1px solid #1e293b;
-    }
-
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 14px;
-    }
-
-    .footer-brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .footer-brand .logo-icon {
-      width: 30px;
-      height: 30px;
-      font-size: 15px;
-    }
-
-    .footer-brand .logo-text {
-      font-size: 15px;
-    }
-
-    .footer-text {
-      font-size: 12px;
-      color: #64748b;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 18px;
-    }
-
-    .footer-links a {
-      color: #64748b;
-      text-decoration: none;
-      font-size: 12px;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover {
-      color: #38bdf8;
-    }
-
-    /* Toast */
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      padding: 11px 22px;
-      background: rgba(30, 41, 59, 0.95);
-      border: 1px solid #334155;
-      border-radius: 10px;
-      color: white;
-      font-size: 13px;
-      z-index: 1000;
-      opacity: 0;
-      transition: all 0.3s;
-    }
-
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-
-    .toast.success {
-      border-color: #10b981;
-    }
-
-    /* 遮罩层 */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 199;
-    }
-
-    .modal-overlay.active {
-      display: block;
-    }
-
-    /* ========== 响应式 ========== */
-    @media (max-width: 1024px) {
-      .resource-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .categories-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    /* 修复锚点被导航栏遮挡 */
-    [id] {
-      scroll-margin-top: 80px;
-    }
-
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(30, 41, 59, 0.5); }
+    ::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.3); border-radius: 4px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 16px 0; transition: all 0.3s; }
+    .navbar.scrolled { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); padding: 10px 0; }
+    .navbar-inner { display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, #38bdf8, #0ea5e9); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .logo-text { font-size: 18px; font-weight: 700; background: linear-gradient(135deg, #38bdf8, #0ea5e9, #7dd3fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-link { color: #94a3b8; text-decoration: none; font-size: 14px; transition: color 0.2s; padding: 6px 12px; border-radius: 6px; }
+    .nav-link:hover { color: #38bdf8; background: rgba(14, 165, 233, 0.1); }
+    .hero { padding: 120px 0 50px; text-align: center; }
+    .hero-title { font-size: 42px; font-weight: 800; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, #38bdf8 50%, #0ea5e9 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-subtitle { font-size: 16px; color: #94a3b8; margin-bottom: 30px; }
+    .search-box { max-width: 600px; margin: 0 auto 24px; }
+    .search-container { display: flex; background: rgba(30, 41, 59, 0.8); border: 2px solid rgba(14, 165, 233, 0.3); border-radius: 14px; padding: 5px; transition: all 0.3s; }
+    .search-container:focus-within { border-color: #0ea5e9; box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2); }
+    .search-input { flex: 1; background: transparent; border: none; padding: 12px 16px; font-size: 15px; color: #fff; outline: none; }
+    .search-input::placeholder { color: #64748b; }
+    .search-btn { background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff; border: none; padding: 12px 28px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+    .search-btn:hover { transform: scale(1.02); box-shadow: 0 6px 16px rgba(14, 165, 233, 0.3); }
+    .category-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
+    .category-tab { padding: 6px 16px; background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50px; color: #94a3b8; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+    .category-tab:hover, .category-tab.active { background: rgba(14, 165, 233, 0.2); border-color: #0ea5e9; color: #0ea5e9; }
+    .stats { display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; }
+    .stat-item { text-align: center; }
+    .stat-value { font-size: 28px; font-weight: 700; color: #38bdf8; }
+    .stat-label { font-size: 12px; color: #64748b; }
+    .section { padding: 40px 0; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .section-title { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; }
+    .view-all { color: #0ea5e9; font-size: 13px; text-decoration: none; cursor: pointer; }
+    .view-all:hover { color: #38bdf8; }
+    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+    .resource-card { position: relative; background: rgba(30, 41, 59, 0.5); border: 1px solid #1e293b; border-radius: 12px; overflow: hidden; transition: all 0.3s; cursor: pointer; }
+    .resource-card:hover { border-color: rgba(14, 165, 233, 0.3); box-shadow: 0 10px 24px rgba(14, 165, 233, 0.1); transform: translateY(-2px); }
+    .card-badges { position: absolute; top: 10px; right: 10px; display: flex; gap: 5px; z-index: 2; }
+    .card-badge { padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: 500; }
+    .badge-platform { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .badge-category { background: rgba(14, 165, 233, 0.2); color: #38bdf8; }
+    .badge-hot { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+    .card-content { padding: 16px; }
+    .card-title { font-size: 14px; font-weight: 600; color: #f1f5f9; margin-bottom: 8px; line-height: 1.4; padding-right: 70px; }
+    .card-desc { font-size: 12px; color: #94a3b8; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    .card-meta { display: flex; align-items: center; gap: 12px; font-size: 11px; color: #64748b; }
+    .card-link { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; background: rgba(14, 165, 233, 0.15); color: #0ea5e9; border-radius: 6px; font-size: 12px; font-weight: 500; }
+    .empty-state { text-align: center; padding: 50px 20px; }
+    .empty-state .empty-icon { font-size: 48px; margin-bottom: 16px; }
+    .empty-state .empty-title { font-size: 18px; font-weight: 600; color: #e2e8f0; margin-bottom: 8px; }
+    .empty-state .empty-desc { font-size: 14px; color: #64748b; }
+    .loading { text-align: center; padding: 40px 20px; color: #64748b; }
+    .loading .loading-spinner { width: 40px; height: 40px; border: 3px solid rgba(14, 165, 233, 0.2); border-top-color: #0ea5e9; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .load-more-hint { grid-column: 1/-1; text-align: center; padding: 20px; color: #64748b; font-size: 13px; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .empty-icon { font-size: 56px; margin-bottom: 16px; }
+    .empty-title { font-size: 18px; font-weight: 600; color: #f1f5f9; margin-bottom: 8px; }
+    .empty-desc { font-size: 13px; color: #64748b; }
+    .loading { text-align: center; padding: 40px; color: #64748b; }
+    .loading-spinner { width: 36px; height: 36px; border: 3px solid rgba(14, 165, 233, 0.3); border-top-color: #0ea5e9; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 12px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .community-section { padding: 40px 0; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    .community-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    .community-card { background: rgba(30, 41, 59, 0.5); border: 1px solid #1e293b; border-radius: 12px; padding: 20px; text-align: center; transition: all 0.3s; }
+    .community-card:hover { border-color: rgba(14, 165, 233, 0.3); transform: translateY(-2px); }
+    .community-icon { font-size: 40px; margin-bottom: 12px; }
+    .community-title { font-size: 16px; font-weight: 600; color: #f1f5f9; margin-bottom: 8px; }
+    .community-desc { font-size: 13px; color: #94a3b8; margin-bottom: 16px; }
+    .community-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: rgba(14, 165, 233, 0.15); color: #0ea5e9; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; transition: all 0.2s; }
+    .community-btn:hover { background: rgba(14, 165, 233, 0.25); }
+    .feedback-section { padding: 40px 0; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    .feedback-box { max-width: 600px; margin: 0 auto; background: rgba(30, 41, 59, 0.5); border: 1px solid #1e293b; border-radius: 16px; padding: 30px; text-align: center; }
+    .feedback-icon { font-size: 48px; margin-bottom: 16px; }
+    .feedback-title { font-size: 20px; font-weight: 600; color: #f1f5f9; margin-bottom: 10px; }
+    .feedback-desc { font-size: 14px; color: #94a3b8; margin-bottom: 24px; }
+    .feedback-form { text-align: left; }
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 13px; color: #94a3b8; margin-bottom: 6px; }
+    .form-input, .form-textarea { width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid #334155; border-radius: 8px; padding: 12px 14px; font-size: 14px; color: #fff; }
+    .form-input:focus, .form-textarea:focus { outline: none; border-color: #0ea5e9; }
+    .form-input::placeholder, .form-textarea::placeholder { color: #64748b; }
+    .form-textarea { min-height: 100px; resize: vertical; }
+    .form-submit { width: 100%; padding: 14px; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+    .form-submit:hover { transform: scale(1.02); }
+    .form-success { text-align: center; padding: 20px; color: #10b981; display: none; }
+    .form-success.show { display: block; }
+    .footer { padding: 30px 0; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    .online-users { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; margin-bottom: 16px; background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 50px; font-size: 12px; color: #94a3b8; }
+    .online-indicator { width: 7px; height: 7px; background: #10b981; border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .footer-text { font-size: 13px; color: #64748b; }
+    .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+    .modal.show { display: flex; }
+    .modal-content { background: #1e293b; border-radius: 16px; max-width: 480px; width: 100%; padding: 28px; position: relative; }
+    .modal-close { position: absolute; top: 12px; right: 12px; background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer; }
+    .modal-close:hover { color: #fff; }
+    .modal-title { font-size: 18px; font-weight: 600; margin-bottom: 20px; color: #f1f5f9; padding-right: 30px; line-height: 1.4; }
+    .modal-info { background: rgba(0, 0, 0, 0.3); border-radius: 10px; padding: 18px; margin-bottom: 18px; }
+    .modal-info p { margin-bottom: 10px; color: #94a3b8; font-size: 13px; line-height: 1.5; word-break: break-all; }
+    .modal-info p:last-child { margin-bottom: 0; }
+    .modal-info strong { color: #fff; }
+    .modal-buttons { display: flex; gap: 12px; margin-top: 18px; }
+    .btn-copy { flex: 1; padding: 14px; background: linear-gradient(135deg, #475569, #334155); color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-copy:hover { background: linear-gradient(135deg, #64748b, #475569); transform: scale(1.02); }
+    .btn-jump { flex: 1; padding: 14px; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-jump:hover { transform: scale(1.02); box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4); }
+    .copy-success { text-align: center; color: #10b981; margin-top: 12px; font-size: 13px; display: none; }
+    .copy-success.show { display: block; }
+    
+    /* SEO优化：隐藏的内容（仅供爬虫） */
+    .seo-content { position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    
     @media (max-width: 768px) {
-      /* 修复移动端锚点遮挡 */
-      [id] {
-        scroll-margin-top: 70px;
-      }
-
-      /* 移动端导航 */
-      .nav-link {
-        display: none;
-      }
-
-      .mobile-categories-btn,
-      .mobile-menu-btn {
-        display: flex;
-      }
-
-      /* 移动端资源卡片标签优化 */
-      .card-badges {
-        top: 8px;
-        right: 8px;
-        flex-direction: row;
-        flex-wrap: wrap;
-        max-width: 60%;
-      }
-
-      .card-badge {
-        padding: 2px 6px;
-        font-size: 10px;
-      }
-
-      .card-content {
-        padding: 14px;
-      }
-
-      .card-title {
-        font-size: 14px;
-        line-height: 1.4;
-        margin-bottom: 8px;
-      }
-
-      .card-desc {
-        font-size: 12px;
-        line-height: 1.4;
-        -webkit-line-clamp: 2;
-      }
-
-      /* 移动端社群卡片优化 */
-      .community-card {
-        padding: 18px 14px;
-      }
-
-      /* Hero */
-      .hero {
-        padding: 90px 0 36px;
-      }
-
-      .hero-title {
-        font-size: 30px;
-      }
-
-      .hero-subtitle {
-        font-size: 13px;
-      }
-
-      .stats {
-        gap: 28px;
-        margin-top: 28px;
-      }
-
-      .stat-value {
-        font-size: 22px;
-      }
-
-      .stat-label {
-        font-size: 11px;
-      }
-
-      /* 资源网格 */
-      .resource-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      /* 分类网格 - 隐藏 */
-      .categories-grid {
-        display: none;
-      }
-
-      /* 引流区域 - 移动端 */
-      .community-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .community-card {
-        padding: 18px 14px;
-      }
-
-      .community-icon {
-        font-size: 30px;
-      }
-
-      .community-title {
-        font-size: 14px;
-      }
-
-      .community-desc {
-        font-size: 12px;
-      }
-
-      .community-btn {
-        padding: 7px 12px;
-        font-size: 12px;
-      }
-
-      .qrcode-placeholder {
-        width: 100px;
-        height: 100px;
-      }
-
-      /* Section */
-      .section {
-        padding: 36px 0;
-      }
-
-      /* CTA */
-      .cta-section {
-        padding: 36px 0;
-      }
-
-      .cta-box {
-        padding: 28px 18px;
-        border-radius: 16px;
-      }
-
-      .cta-title {
-        font-size: 18px;
-      }
-
-      /* Footer */
-      .footer-content {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      /* 反馈 */
-      .feedback-section {
-        padding: 36px 0;
-      }
-
-      .feedback-box {
-        padding: 24px 16px;
-      }
+      .hero { padding: 100px 0 40px; }
+      .hero-title { font-size: 28px; }
+      .search-container { flex-direction: column; padding: 6px; }
+      .search-btn { width: 100%; padding: 10px; }
+      .stats { gap: 24px; }
+      .stat-value { font-size: 22px; }
+      .resources-grid { grid-template-columns: 1fr; }
+      .community-grid { grid-template-columns: 1fr; }
+      .category-tabs { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
+      .category-tab { flex-shrink: 0; }
+      .modal-content { padding: 20px; margin: 10px; }
+      .modal-buttons { flex-direction: column; }
+      .btn-copy, .btn-jump { padding: 12px; font-size: 13px; }
     }
   </style>
+  
+  <!-- 结构化数据 Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "CY资源宝库",
+    "alternateName": ["CY资源", "资源宝库"],
+    "url": "https://www.cybaoku.com",
+    "description": "海量精选资源下载平台，包含短剧、教程、软件、素材、文档等分类资源",
+    "keywords": "资源下载,短剧资源,学习教程,软件工具,设计素材,网盘资源",
+    "inLanguage": "zh-CN",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.cybaoku.com/?search={search_term_string}",
+      "query-input": "required name=search_term_string",
+      "description": "搜索网站资源"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "资源分类",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "短剧资源", "description": "热门短剧视频资源"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "学习教程", "description": "各类学习视频教程"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "软件工具", "description": "实用软件工具下载"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "设计素材", "description": "设计素材资源包"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "文档资料", "description": "文档资料电子书"}}
+      ]
+    }
+  }
+  </script>
+  
+  <!-- 面包屑结构化数据 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "首页",
+        "item": "https://www.cybaoku.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "资源分类",
+        "item": "https://www.cybaoku.com/#categories"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
-  <!-- 导航栏 -->
-  <nav class="navbar" id="navbar">
+  <!-- SEO优化：隐藏的预渲染内容（供爬虫抓取动态数据） -->
+  <div class="seo-content" aria-hidden="true">
+    <h1>CY资源宝库 - 海量精选资源下载</h1>
+    <h2>资源分类导航</h2>
+    <nav>
+      <ul>
+        <li><a href="#短剧">短剧资源</a> - 热门短剧视频资源下载，支持夸克网盘、百度网盘</li>
+        <li><a href="#教程">学习教程</a> - Python教程、Java教程、前端开发、设计教程等</li>
+        <li><a href="#软件">软件工具</a> - 实用软件工具下载，Windows软件、Mac软件</li>
+        <li><a href="#素材">设计素材</a> - PS素材、AE模板、PPT模板、图片素材</li>
+        <li><a href="#文档">文档资料</a> - 电子书、PDF资料、学习文档</li>
+      </ul>
+    </nav>
+    <h2>热门资源推荐</h2>
+    <article>
+      <h3>Python编程入门教程 - Python基础教程视频</h3>
+      <p>Python从入门到精通全套视频教程，适合零基础学习编程</p>
+      <p>标签：Python教程、编程入门、软件开发</p>
+    </article>
+    <article>
+      <h3>前端开发实战课程 - Web前端教程</h3>
+      <p>HTML、CSS、JavaScript前端三件套完整教程</p>
+      <p>标签：前端教程、Web开发、HTML5、CSS3</p>
+    </article>
+    <article>
+      <h3>热门短剧合集 - 短剧资源</h3>
+      <p>最新最热短剧视频资源，高清无水印</p>
+      <p>标签：短剧、视频、追剧</p>
+    </article>
+    <article>
+      <h3>Adobe全家桶教程 - PS/PR/AE教程</h3>
+      <p>Photoshop、Premiere、After Effects完整教程</p>
+      <p>标签：设计教程、视频剪辑、AE教程、PR教程</p>
+    </article>
+    <article>
+      <h3>小红书运营教程 - 自媒体教程</h3>
+      <p>小红书账号运营、内容创作、涨粉变现教程</p>
+      <p>标签：运营教程、自媒体、涨粉</p>
+    </article>
+    <article>
+      <h3>AI人工智能教程 - 机器学习深度学习</h3>
+      <p>机器学习、深度学习、TensorFlow教程</p>
+      <p>标签：AI教程、机器学习、人工智能</p>
+    </article>
+    <article>
+      <h3>跨境电商教程 - 亚马逊运营</h3>
+      <p>亚马逊开店、选品、物流、运营全流程教程</p>
+      <p>标签：跨境电商、亚马逊、电商运营</p>
+    </article>
+    <article>
+      <h3>短视频制作教程 - 抖音快手教程</h3>
+      <p>短视频拍摄、剪辑、运营全攻略</p>
+      <p>标签：短视频、抖音教程、视频剪辑</p>
+    </article>
+    <h2>网盘资源平台</h2>
+    <ul>
+      <li>夸克网盘资源 - https://pan.quark.cn</li>
+      <li>百度网盘资源 - https://pan.baidu.com</li>
+      <li>阿里云盘资源 - https://www.aliyundrive.com</li>
+      <li>迅雷网盘资源 - https://pan.xunlei.com</li>
+    </ul>
+    <h2>联系我们</h2>
+    <p>网站名称：CY资源宝库</p>
+    <p>网址：https://www.cybaoku.com</p>
+    <p>描述：CY资源宝库提供海量精选资源下载，包括短剧、教程、软件、素材、文档等分类。支持多网盘平台，一键搜索即刻获取。</p>
+    <p>关键词：资源下载,短剧,教程,软件,素材,文档,百度网盘,夸克网盘,阿里云盘,学习资料</p>
+  </div>
+
+  <nav class="navbar">
     <div class="container">
       <div class="navbar-inner">
         <a href="#" class="logo">
           <div class="logo-icon">📦</div>
           <span class="logo-text">CY资源宝库</span>
         </a>
-        
         <div class="nav-right">
-          <a href="#resources" class="nav-link">精选</a>
-          <a href="#about" class="nav-link">关于</a>
-          
-          <!-- 移动端分类按钮 -->
-          <button class="mobile-categories-btn" onclick="toggleCategoriesModal()">
-            📂 分类
-          </button>
-          
-          <!-- 移动端菜单按钮 -->
-          <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-          </button>
+          <a href="#resources" class="nav-link">精选推荐</a>
+          <a href="#community" class="nav-link">交流社群</a>
+          <a href="#categories" class="nav-link">浏览分类</a>
+          <a href="#feedback" class="nav-link">资源反馈</a>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- 移动端菜单 -->
-  <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-header">
-      <a href="#" class="logo">
-        <div class="logo-icon">📦</div>
-        <span class="logo-text">CY资源宝库</span>
-      </a>
-      <button class="mobile-menu-close" onclick="toggleMobileMenu()">×</button>
-    </div>
-    <div class="mobile-menu-links">
-      <a href="#" class="mobile-menu-link" onclick="toggleMobileMenu()">🏠 首页</a>
-      <a href="#resources" class="mobile-menu-link" onclick="toggleMobileMenu()">⭐ 精选</a>
-      <a href="#community" class="mobile-menu-link" onclick="toggleMobileMenu()">👥 加群</a>
-      <a href="#about" class="mobile-menu-link" onclick="toggleMobileMenu()">ℹ️ 关于</a>
-    </div>
-  </div>
-
-  <!-- 移动端分类弹窗 -->
-  <div class="modal-overlay" id="modalOverlay" onclick="toggleCategoriesModal()"></div>
-  <div class="mobile-categories-modal" id="categoriesModal">
-    <div class="mobile-categories-header">
-      <span class="mobile-categories-title">📂 分类浏览</span>
-      <button class="mobile-categories-close" onclick="toggleCategoriesModal()">×</button>
-    </div>
-    <div class="mobile-categories-list">
-      <div class="mobile-category-item" onclick="selectCategory('短剧')">
-        <div class="mobile-category-icon" style="background: rgba(239, 68, 68, 0.2);">🎬</div>
-        <span class="mobile-category-name">短剧</span>
-      </div>
-      <div class="mobile-category-item" onclick="selectCategory('教程')">
-        <div class="mobile-category-icon" style="background: rgba(59, 130, 246, 0.2);">📚</div>
-        <span class="mobile-category-name">教程</span>
-      </div>
-      <div class="mobile-category-item" onclick="selectCategory('软件')">
-        <div class="mobile-category-icon" style="background: rgba(16, 185, 129, 0.2);">💻</div>
-        <span class="mobile-category-name">软件</span>
-      </div>
-      <div class="mobile-category-item" onclick="selectCategory('素材')">
-        <div class="mobile-category-icon" style="background: rgba(139, 92, 246, 0.2);">🎨</div>
-        <span class="mobile-category-name">素材</span>
-      </div>
-      <div class="mobile-category-item" onclick="selectCategory('影视')">
-        <div class="mobile-category-icon" style="background: rgba(245, 158, 11, 0.2);">🎥</div>
-        <span class="mobile-category-name">影视</span>
-      </div>
-      <div class="mobile-category-item" onclick="selectCategory('音乐')">
-        <div class="mobile-category-icon" style="background: rgba(236, 72, 153, 0.2);">🎵</div>
-        <span class="mobile-category-name">音乐</span>
-      </div>
-      <div class="mobile-category-item" onclick="selectCategory('文档')">
-        <div class="mobile-category-icon" style="background: rgba(6, 182, 212, 0.2);">📄</div>
-        <span class="mobile-category-name">文档</span>
-      </div>
-      <div class="mobile-category-item" onclick="selectCategory('其他')">
-        <div class="mobile-category-icon" style="background: rgba(107, 114, 128, 0.2);">📦</div>
-        <span class="mobile-category-name">其他</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- 主区域 -->
   <section class="hero">
-    <div class="hero-bg">
-      <div class="hero-glow hero-glow-1"></div>
-      <div class="hero-glow hero-glow-2"></div>
-    </div>
     <div class="container">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-          </svg>
-          发现你想要的资源
+      <h1 class="hero-title">发现你想要的资源</h1>
+      <p class="hero-subtitle">海量学习资料、视频教程，一键搜索，即刻获取</p>
+      <div class="search-box">
+        <div class="search-container">
+          <input type="text" class="search-input" id="searchInput" placeholder="输入关键词搜索资源..." onkeyup="handleSearch(event)">
+          <button class="search-btn" onclick="performSearch()">🔍 搜索</button>
         </div>
-        <h1 class="hero-title">CY资源宝库</h1>
-        <p class="hero-subtitle">
-          汇集全网优质资源，支持夸克、百度、UC、迅雷等多平台网盘
-        </p>
-        
-        <div class="search-box">
-          <input type="text" class="search-input" id="searchInput" placeholder="搜索短剧、教程、软件、素材...">
-          <button class="search-btn" onclick="handleSearch()">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="8"/>
-              <path d="M21 21l-4.35-4.35"/>
-            </svg>
-          </button>
+      </div>
+      <div class="category-tabs" id="categoryTabs">
+        <span class="category-tab active" onclick="selectCategory('全部')">全部</span>
+        <span class="category-tab" onclick="selectCategory('短剧')">🎬 短剧</span>
+        <span class="category-tab" onclick="selectCategory('教程')">📚 教程</span>
+        <span class="category-tab" onclick="selectCategory('软件')">💻 软件</span>
+        <span class="category-tab" onclick="selectCategory('素材')">🎨 素材</span>
+        <span class="category-tab" onclick="selectCategory('文档')">📄 文档</span>
+      </div>
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-value" id="totalCount">--</div>
+          <div class="stat-label">精选资源</div>
         </div>
-
-        <div class="stats">
-          <div class="stat-item">
-            <div class="stat-value">9999+</div>
-            <div class="stat-label">精选资源</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value">4</div>
-            <div class="stat-label">网盘平台</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value">24h</div>
-            <div class="stat-label">实时更新</div>
-          </div>
+        <div class="stat-item">
+          <div class="stat-value">4</div>
+          <div class="stat-label">网盘平台</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">24h</div>
+          <div class="stat-label">实时更新</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 精选资源 -->
   <section class="section" id="resources">
     <div class="container">
       <div class="section-header">
-        <div class="section-title" style="color: #fbbf24;">
-          <svg fill="currentColor" viewBox="0 0 24 24">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-          </svg>
-          精选推荐
-        </div>
-        <a href="#" class="section-more">
-          查看更多
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M9 5l7 7-7 7"/>
-          </svg>
-        </a>
+        <h2 class="section-title"><span>🔥</span><span>精选推荐</span></h2>
+        <span class="view-all" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">查看全部 →</span>
       </div>
-      
-      <div class="resource-grid">
-        <!-- 卡片1 -->
-        <div class="resource-card">
-          <div class="card-badges">
-            <span class="card-badge badge-category">教程</span>
-            <span class="card-badge badge-featured">
-              <svg width="9" height="9" fill="currentColor" viewBox="0 0 24 24">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-              </svg>
-              精选
-            </span>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">2024最新Premiere Pro影视剪辑教程，从入门到精通</h3>
-            <p class="card-desc">包含基础操作、转场特效、调色技巧等全套教程...</p>
-            <div class="card-tags">
-              <span class="card-tag">#剪辑</span>
-              <span class="card-tag">#教程</span>
-            </div>
-            <div class="card-meta">
-              <div class="card-meta-item">
-                <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                  <circle cx="12" cy="12" r="3"/>
-                </svg>
-                2.5k
-              </div>
-              <span>2024-01-15</span>
-            </div>
-            <button class="card-btn card-btn-primary" onclick="openResource(this)">
-              <span>立即获取</span>
-              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                <polyline points="15 3 21 3 21 9"/>
-                <line x1="10" y1="14" x2="21" y2="3"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- 卡片2 -->
-        <div class="resource-card">
-          <div class="card-badges">
-            <span class="card-badge badge-hot">🔥 热门</span>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">【完整版】霸道总裁爱上我 - 全80集合集</h3>
-            <p class="card-desc">热门短剧合集，画质清晰，剧情精彩，持续更新...</p>
-            <div class="card-tags">
-              <span class="card-tag">#短剧</span>
-              <span class="card-tag">#霸总</span>
-            </div>
-            <div class="card-meta">
-              <div class="card-meta-item">
-                <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                  <circle cx="12" cy="12" r="3"/>
-                </svg>
-                5.8k
-              </div>
-              <span>2024-01-18</span>
-            </div>
-            <button class="card-btn card-btn-primary" onclick="openResource(this)">
-              <span>立即获取</span>
-              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                <polyline points="15 3 21 3 21 9"/>
-                <line x1="10" y1="14" x2="21" y2="3"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- 卡片3 -->
-        <div class="resource-card">
-          <div class="card-badges">
-            <span class="card-badge badge-category">软件</span>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">Adobe全家桶2024版，PS/AE/PR/AI等软件</h3>
-            <p class="card-desc">官方完整版，一键安装，永久使用，送教程...</p>
-            <div class="card-tags">
-              <span class="card-tag">#软件</span>
-              <span class="card-tag">#Adobe</span>
-            </div>
-            <div class="card-meta">
-              <div class="card-meta-item">
-                <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                  <circle cx="12" cy="12" r="3"/>
-                </svg>
-                3.2k
-              </div>
-              <span>2024-01-10</span>
-            </div>
-            <button class="card-btn card-btn-primary" onclick="openResource(this)">
-              <span>立即获取</span>
-              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                <polyline points="15 3 21 3 21 9"/>
-                <line x1="10" y1="14" x2="21" y2="3"/>
-              </svg>
-            </button>
-          </div>
-        </div>
+      <div class="resources-grid" id="featuredGrid">
+        <div class="loading"><div class="loading-spinner"></div><p>正在加载...</p></div>
       </div>
     </div>
   </section>
 
-  <!-- ========== 交流社群 ========== -->
-  <section class="section" id="community">
+  <section class="community-section" id="community">
     <div class="container">
       <div class="section-header">
-        <div class="section-title">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-          交流社群
-        </div>
+        <h2 class="section-title"><span>👥</span><span>交流社群</span></h2>
       </div>
-
-      <div class="community-grid" style="grid-template-columns: repeat(3, 1fr);">
-        <!-- QQ交流群 -->
-        <div class="community-card qq">
+      <div class="community-grid">
+        <div class="community-card">
+          <div class="community-icon">🐧</div>
+          <h3 class="community-title">QQ群</h3>
+          <p class="community-desc">加入QQ群，与更多资源共享者一起交流讨论</p>
+          <button class="community-btn" onclick="showCommunityModal('QQ群', '点击复制群号：88888888')">📋 加入QQ群</button>
+        </div>
+        <div class="community-card">
           <div class="community-icon">💬</div>
-          <h3 class="community-title">QQ交流群</h3>
-          <p class="community-desc">加入QQ群，和更多小伙伴一起交流</p>
-          <button class="community-btn" onclick="toggleQRCode('qq')">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <rect x="7" y="7" width="3" height="3"/>
-              <rect x="14" y="7" width="3" height="3"/>
-              <rect x="7" y="14" width="3" height="3"/>
-              <rect x="14" y="14" width="3" height="3"/>
-            </svg>
-            扫码加入
-          </button>
-          <div class="qrcode-hint" id="qqQR">
-            <div class="qrcode-placeholder">
-              <!-- 后期替换为真实二维码图片 -->
-              <span>QQ群二维码</span>
-            </div>
-            <p>长按识别二维码<br>或搜索群号：123456789</p>
-          </div>
+          <h3 class="community-title">微信群</h3>
+          <p class="community-desc">微信群资源更新更及时，欢迎加入大家庭</p>
+          <button class="community-btn" onclick="showCommunityModal('微信群', '请添加微信号获取入群方式')">➕ 添加微信</button>
         </div>
-
-        <!-- 微信交流群 -->
-        <div class="community-card wechat">
-          <div class="community-icon">👥</div>
-          <h3 class="community-title">微信交流群</h3>
-          <p class="community-desc">微信群聊，和2000+小伙伴一起分享资源</p>
-          <button class="community-btn" onclick="toggleQRCode('wechat')">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <rect x="7" y="7" width="3" height="3"/>
-              <rect x="14" y="7" width="3" height="3"/>
-              <rect x="7" y="14" width="3" height="3"/>
-              <rect x="14" y="14" width="3" height="3"/>
-            </svg>
-            扫码加入
-          </button>
-          <div class="qrcode-hint" id="wechatQR">
-            <div class="qrcode-placeholder">
-              <!-- 后期替换为真实二维码图片 -->
-              <span>微信群二维码</span>
-            </div>
-            <p>长按识别二维码<br>或搜索微信号：cyzbbk01</p>
-          </div>
-        </div>
-
-        <!-- 公众号 -->
-        <div class="community-card gzh">
+        <div class="community-card">
           <div class="community-icon">📢</div>
-          <h3 class="community-title">关注公众号</h3>
-          <p class="community-desc">第一时间获取最新资源更新推送</p>
-          <button class="community-btn" onclick="toggleQRCode('gzh')">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <rect x="7" y="7" width="3" height="3"/>
-              <rect x="14" y="7" width="3" height="3"/>
-              <rect x="7" y="14" width="3" height="3"/>
-              <rect x="14" y="14" width="3" height="3"/>
-            </svg>
-            扫码关注
-          </button>
-          <div class="qrcode-hint" id="gzhQR">
-            <div class="qrcode-placeholder">
-              <!-- 后期替换为真实二维码图片 -->
-              <span>公众号二维码</span>
-            </div>
-            <p>长按识别二维码<br>公众号名称：CY资源宝库</p>
-          </div>
+          <h3 class="community-title">公众号</h3>
+          <p class="community-desc">关注公众号，第一时间获取最新资源推送</p>
+          <button class="community-btn" onclick="showCommunityModal('公众号', '公众号名称：CY资源宝库')">🔔 关注公众号</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 分类区域 - 桌面端 -->
-  <section class="section" id="categories-desktop">
+  <section class="section" id="categories">
     <div class="container">
       <div class="section-header">
-        <div class="section-title">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <rect x="3" y="3" width="7" height="7"/>
-            <rect x="14" y="3" width="7" height="7"/>
-            <rect x="14" y="14" width="7" height="7"/>
-            <rect x="3" y="14" width="7" height="7"/>
-          </svg>
-          浏览分类
-        </div>
+        <h2 class="section-title"><span>📂</span><span id="categoryTitle">浏览分类</span></h2>
       </div>
-      
-      <div class="categories-grid">
-        <div class="category-card" onclick="selectCategory('短剧')">
-          <div class="category-icon" style="background: rgba(239, 68, 68, 0.2);">🎬</div>
-          <div class="category-info">
-            <h3>短剧</h3>
-            <p>精彩短剧合集</p>
-          </div>
-        </div>
-        <div class="category-card" onclick="selectCategory('教程')">
-          <div class="category-icon" style="background: rgba(59, 130, 246, 0.2);">📚</div>
-          <div class="category-info">
-            <h3>教程</h3>
-            <p>各类学习教程</p>
-          </div>
-        </div>
-        <div class="category-card" onclick="selectCategory('软件')">
-          <div class="category-icon" style="background: rgba(16, 185, 129, 0.2);">💻</div>
-          <div class="category-info">
-            <h3>软件</h3>
-            <p>实用软件工具</p>
-          </div>
-        </div>
-        <div class="category-card" onclick="selectCategory('素材')">
-          <div class="category-icon" style="background: rgba(139, 92, 246, 0.2);">🎨</div>
-          <div class="category-info">
-            <h3>素材</h3>
-            <p>设计素材资源</p>
-          </div>
-        </div>
-        <div class="category-card" onclick="selectCategory('影视')">
-          <div class="category-icon" style="background: rgba(245, 158, 11, 0.2);">🎥</div>
-          <div class="category-info">
-            <h3>影视</h3>
-            <p>电影电视剧集</p>
-          </div>
-        </div>
-        <div class="category-card" onclick="selectCategory('音乐')">
-          <div class="category-icon" style="background: rgba(236, 72, 153, 0.2);">🎵</div>
-          <div class="category-info">
-            <h3>音乐</h3>
-            <p>无损音乐资源</p>
-          </div>
-        </div>
-        <div class="category-card" onclick="selectCategory('文档')">
-          <div class="category-icon" style="background: rgba(6, 182, 212, 0.2);">📄</div>
-          <div class="category-info">
-            <h3>文档</h3>
-            <p>PDF电子书等</p>
-          </div>
-        </div>
-        <div class="category-card" onclick="selectCategory('其他')">
-          <div class="category-icon" style="background: rgba(107, 114, 128, 0.2);">📦</div>
-          <div class="category-info">
-            <h3>其他</h3>
-            <p>更多资源分类</p>
-          </div>
+      <div class="resources-grid" id="categoryGrid">
+        <div class="empty-state">
+          <div class="empty-icon">👆</div>
+          <h3 class="empty-title">选择上方分类</h3>
+          <p class="empty-desc">点击分类标签查看对应资源</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 反馈区域 -->
-  <section class="feedback-section" id="feedbackSection">
+  <section class="feedback-section" id="feedback">
     <div class="container">
       <div class="feedback-box">
         <div class="feedback-icon">🔍</div>
         <h3 class="feedback-title">没找到你想要的资源？</h3>
-        <p class="feedback-desc">
-          告诉我们你需要什么，我们会在24小时内帮你找到！
-        </p>
-        <form class="feedback-form" onsubmit="submitFeedback(event)">
+        <p class="feedback-desc">告诉我们你需要什么，我们会尽力帮你找到！</p>
+        <form class="feedback-form" id="feedbackForm" onsubmit="submitFeedback(event)">
           <div class="form-group">
             <label class="form-label">资源名称 *</label>
             <input type="text" class="form-input" id="feedbackTitle" placeholder="例如：Python编程入门教程" required>
           </div>
           <div class="form-group">
             <label class="form-label">联系方式</label>
-            <input type="text" class="form-input" id="feedbackContact" placeholder="微信号/邮箱/手机（选填）">
+            <input type="text" class="form-input" id="feedbackContact" placeholder="微信号/QQ号（选填）">
           </div>
           <div class="form-group">
             <label class="form-label">详细描述</label>
             <textarea class="form-textarea" id="feedbackDesc" placeholder="补充说明，如：需要某个具体版本、格式要求等"></textarea>
           </div>
-          <button type="submit" class="form-submit">
-            提交反馈
-          </button>
+          <button type="submit" class="form-submit">提交反馈</button>
         </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-section" id="about">
-    <div class="container">
-      <div class="cta-box">
-        <div class="cta-content">
-          <h2 class="cta-title">开始探索CY资源宝库</h2>
-          <p class="cta-desc">
-            海量资源，一键搜索。支持夸克、百度、UC、迅雷多平台网盘
-          </p>
-          <a href="#" class="cta-btn">开始搜索</a>
+        <div class="form-success" id="formSuccess">
+          <p>✅ 反馈已提交成功！我们会尽快处理！</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 页脚 -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <a href="#" class="logo">
-            <div class="logo-icon">📦</div>
-            <span class="logo-text">CY资源宝库</span>
-          </a>
-        </div>
-        <p class="footer-text">© 2024 CY资源宝库. All rights reserved.</p>
-        <div class="footer-links">
-          <a href="#about">关于</a>
-          <a href="#community">加群</a>
-          <a href="#feedbackSection" onclick="showFeedback()">资源反馈</a>
-        </div>
-      </div>
-      
-      <!-- 在线人数显示 -->
-      <div class="online-users" id="onlineUsers">
+      <div class="online-users">
         <div class="online-indicator"></div>
         <span>当前 <strong id="onlineCount">0</strong> 人正在浏览</span>
       </div>
+      <p class="footer-text">© 2026 CY资源宝库 · 让资源触手可及</p>
     </div>
   </footer>
 
-  <!-- Toast -->
-  <div class="toast" id="toast"></div>
+  <!-- 资源详情弹窗 -->
+  <div class="modal" id="resourceModal" onclick="handleModalClick(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <h3 class="modal-title" id="modalTitle">资源标题</h3>
+      <div class="modal-info">
+        <p><strong>平台来源：</strong><span id="modalPlatform">夸克网盘</span></p>
+        <p><strong>资源分类：</strong><span id="modalCategory">短剧</span></p>
+        <p><strong>网盘链接：</strong><span id="modalLink">https://...</span></p>
+        <p><strong>提取码：</strong><span id="modalCode">----</span></p>
+        <p><strong>浏览次数：</strong><span id="modalViews">0</span></p>
+      </div>
+      <div class="modal-buttons">
+        <button class="btn-copy" onclick="copyLink()">
+          <span>📋</span>
+          <span id="copyBtnText">复制链接和提取码</span>
+        </button>
+        <button class="btn-jump" id="jumpBtn" onclick="jumpToLink()">
+          <span id="jumpBtnIcon">🚀</span>
+          <span id="jumpBtnText">直接跳转</span>
+        </button>
+      </div>
+      <p class="copy-success" id="copySuccess">✅ 已复制到剪贴板！</p>
+    </div>
+  </div>
+
+  <!-- 社群弹窗 -->
+  <div class="modal" id="communityModal" onclick="handleModalClick(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeCommunityModal()">×</button>
+      <h3 class="modal-title" id="communityModalTitle">社群信息</h3>
+      <div class="modal-info">
+        <p id="communityModalContent">内容</p>
+      </div>
+      <button class="btn-copy" style="width:100%" onclick="copyCommunityInfo()">📋 复制信息</button>
+      <p class="copy-success" id="communityCopySuccess">✅ 已复制！</p>
+    </div>
+  </div>
 
   <script>
-    function showToast(message, type = 'default') {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.className = 'toast show';
-      if (type === 'success') {
-        toast.classList.add('success');
+    const SUPABASE_URL = 'https://musrilmjolaquhnfqjdu.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_OR14RWa1W_BkxTk160EECg_7YS7xafd';
+    let currentCategory = '全部';
+    let currentSearch = '';
+    let currentResource = null;
+    let currentCommunityInfo = '';
+    let currentPage = 1;
+    let isLoading = false;
+    let hasMoreData = true;
+    const PAGE_SIZE = 12;  // 每次加载12条
+    let cachedResources = {};  // 缓存已加载的数据
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // 初始加载：只加载热门资源（6条）
+      loadFeaturedResources();
+      // 默认显示短剧分类
+      loadCategoryResources('短剧');
+      // 获取总数
+      fetchResourceCount();
+      updateOnlineCount();
+      window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
+        // 滚动加载更多
+        handleScrollLoad();
+      });
+    });
+
+    // 获取资源总数
+    async function fetchResourceCount() {
+      // 默认显示5万+
+      document.getElementById('totalCount').textContent = '5万+';
+      
+      try {
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/resources?select=id&limit=1`,
+          { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+        );
+        
+        const contentRange = response.headers.get('content-range');
+        if (contentRange) {
+          const match = contentRange.match(/\/(\d+)/);
+          if (match && match[1]) {
+            const total = parseInt(match[1]);
+            if (total > 0) {
+              document.getElementById('totalCount').textContent = total.toLocaleString();
+            }
+          }
+        }
+      } catch (e) {
+        // 使用默认值
       }
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 3000);
     }
 
-    function toggleMobileMenu() {
-      const menu = document.getElementById('mobileMenu');
-      menu.classList.toggle('active');
+    // 加载热门推荐（初始只加载6条）
+    async function loadFeaturedResources() {
+      try {
+        // 从主请求获取数据
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/resources?select=*&order=views.desc&limit=6&offset=0`,
+          { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+        );
+        
+        // 尝试从header获取总数
+        const contentRange = response.headers.get('content-range');
+        if (contentRange) {
+          const match = contentRange.match(/\/(\d+)/);
+          if (match && match[1]) {
+            const total = parseInt(match[1]);
+            if (total > 0) {
+              document.getElementById('totalCount').textContent = total.toLocaleString();
+            }
+          }
+        }
+        
+        const data = await response.json();
+        if (data && data.length > 0) {
+          renderResources(data, 'featuredGrid');
+        } else {
+          document.getElementById('featuredGrid').innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">📦</div><h3 class="empty-title">暂无推荐资源</h3></div>';
+        }
+      } catch (error) {
+        document.getElementById('featuredGrid').innerHTML = '<div class="empty-state"><div class="empty-icon">😅</div><h3 class="empty-title">加载失败</h3><p class="empty-desc">请检查网络连接</p></div>';
+      }
     }
 
-    function toggleCategoriesModal() {
-      const modal = document.getElementById('categoriesModal');
-      const overlay = document.getElementById('modalOverlay');
-      modal.classList.toggle('active');
-      overlay.classList.toggle('active');
+    // 按需加载分类资源（服务端过滤）
+    async function loadCategoryResources(category, page = 1, append = false) {
+      if (isLoading) return;
+      isLoading = true;
+      
+      const container = document.getElementById('categoryGrid');
+      if (!append) {
+        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>正在加载...</p></div>';
+      }
+      
+      try {
+        const offset = (page - 1) * PAGE_SIZE;
+        let url = `${SUPABASE_URL}/rest/v1/resources?select=*&order=created_at.desc&limit=${PAGE_SIZE}&offset=${offset}`;
+        
+        // 服务端过滤：只获取指定分类
+        url += `&category=eq.${encodeURIComponent(category)}`;
+        
+        const response = await fetch(url, {
+          headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+        });
+        
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        const data = await response.json();
+        const hasMore = data && data.length === PAGE_SIZE;
+        
+        if (data && data.length > 0) {
+          if (append) {
+            // 追加模式
+            appendResources(data, 'categoryGrid');
+          } else {
+            renderResources(data, 'categoryGrid');
+          }
+          hasMoreData = hasMore;
+          currentPage = page;
+        } else if (!append) {
+          container.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">📂</div><h3 class="empty-title">该分类暂无资源</h3><p class="empty-desc">试试其他分类</p></div>';
+        }
+        
+      } catch (error) {
+        console.error('加载失败:', error);
+        if (!append) {
+          container.innerHTML = '<div class="empty-state"><div class="empty-icon">😅</div><h3 class="empty-title">加载失败</h3><p class="empty-desc">请检查网络连接</p></div>';
+        }
+      } finally {
+        isLoading = false;
+      }
     }
 
-    function selectCategory(name) {
-      toggleCategoriesModal();
-      showToast('演示模式：实际会显示' + name + '分类资源');
+    // 搜索资源（服务端过滤，支持模糊搜索）
+    async function searchResources(keyword, page = 1, append = false) {
+      if (isLoading) return;
+      isLoading = true;
+      
+      const container = document.getElementById('categoryGrid');
+      if (!append) {
+        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>搜索中...</p></div>';
+      }
+      
+      try {
+        const offset = (page - 1) * PAGE_SIZE;
+        // 使用ilike进行模糊搜索（服务端过滤）
+        const url = `${SUPABASE_URL}/rest/v1/resources?select=*&title=ilike.*${encodeURIComponent(keyword)}*&order=views.desc&limit=${PAGE_SIZE}&offset=${offset}`;
+        
+        const response = await fetch(url, {
+          headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+        });
+        
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        const data = await response.json();
+        const hasMore = data && data.length === PAGE_SIZE;
+        
+        if (data && data.length > 0) {
+          if (append) {
+            appendResources(data, 'categoryGrid');
+          } else {
+            renderResources(data, 'categoryGrid');
+          }
+          hasMoreData = hasMore;
+          currentPage = page;
+          document.getElementById('totalCount').textContent = data.length + (append ? '+' : '');
+        } else if (!append) {
+          container.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">🔍</div><h3 class="empty-title">未找到相关资源</h3><p class="empty-desc">试试其他关键词</p></div>';
+        }
+        
+      } catch (error) {
+        console.error('搜索失败:', error);
+        if (!append) {
+          container.innerHTML = '<div class="empty-state"><div class="empty-icon">😅</div><h3 class="empty-title">搜索失败</h3><p class="empty-desc">请检查网络连接</p></div>';
+        }
+      } finally {
+        isLoading = false;
+      }
     }
 
-    // 显示/隐藏二维码
-    function toggleQRCode(type) {
-      const qrcode = document.getElementById(type + 'QR');
-      qrcode.classList.toggle('active');
+    // 滚动加载处理
+    let scrollLoadTimer = null;
+    function handleScrollLoad() {
+      if (scrollLoadTimer) return;
+      scrollLoadTimer = setTimeout(() => {
+        scrollLoadTimer = null;
+        
+        if (hasMoreData && !isLoading) {
+          const container = document.getElementById('categoryGrid');
+          const rect = container.getBoundingClientRect();
+          const isVisible = rect.top < window.innerHeight + 200;
+          
+          if (isVisible && (currentSearch || currentCategory !== '全部')) {
+            loadMore();
+          }
+        }
+      }, 100);
     }
 
-    window.addEventListener('scroll', () => {
-      const navbar = document.getElementById('navbar');
-      if (window.scrollY > 20) {
-        navbar.classList.add('scrolled');
+    // 加载更多
+    function loadMore() {
+      if (isLoading || !hasMoreData) return;
+      
+      if (currentSearch) {
+        searchResources(currentSearch, currentPage + 1, true);
+      } else if (currentCategory !== '全部') {
+        loadCategoryResources(currentCategory, currentPage + 1, true);
+      }
+    }
+
+    // 执行搜索
+    function performSearch() {
+      const keyword = document.getElementById('searchInput').value.trim();
+      currentSearch = keyword;
+      currentCategory = '全部';
+      currentPage = 1;
+      
+      if (!keyword) {
+        // 空搜索：显示短剧分类
+        selectCategory('短剧');
+        return;
+      }
+      
+      // 清空分类高亮
+      document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
+      
+      document.getElementById('categoryTitle').textContent = `搜索"${escapeHtml(keyword)}"`;
+      document.getElementById('resources').scrollIntoView({ behavior: 'smooth' });
+      
+      searchResources(keyword);
+    }
+
+    function handleSearch(event) { if (event.key === 'Enter') performSearch(); }
+
+    // 选择分类
+    function selectCategory(category) {
+      currentCategory = category;
+      currentSearch = '';
+      currentPage = 1;
+      hasMoreData = true;
+      
+      document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.textContent.includes(category) || (category === '全部' && tab.textContent === '全部')) tab.classList.add('active');
+      });
+      
+      document.getElementById('searchInput').value = '';
+      document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
+      
+      const categoryNames = {
+        '全部': '浏览分类',
+        '短剧': '🎬 短剧资源',
+        '教程': '📚 学习教程',
+        '软件': '💻 软件工具',
+        '素材': '🎨 设计素材',
+        '文档': '📄 文档资料'
+      };
+      document.getElementById('categoryTitle').textContent = categoryNames[category] || category;
+      
+      // 根据分类加载数据
+      if (category === '全部') {
+        loadCategoryResources('短剧');  // 默认显示短剧
       } else {
-        navbar.classList.remove('scrolled');
-      }
-    });
-
-    function handleSearch() {
-      const query = document.getElementById('searchInput').value.trim();
-      if (query) {
-        showToast('搜索功能将在部署后启用');
-        showFeedback();
+        loadCategoryResources(category);
       }
     }
 
-    document.getElementById('searchInput').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        handleSearch();
+    function getPlatformInfo(link) {
+      if (!link) return { name: '网盘', color: '#64748b', icon: '📦', jumpText: '直接跳转' };
+      
+      const l = link.toLowerCase();
+      
+      if (l.includes('quark') || l.includes('夸克') || link.includes('pan.quark.cn')) {
+        return { name: '夸克网盘', color: '#10b981', icon: '🚀', jumpText: '打开夸克' };
       }
-    });
-
-    function showFeedback() {
-      const feedbackSection = document.getElementById('feedbackSection');
-      feedbackSection.style.display = 'block';
-      feedbackSection.scrollIntoView({ behavior: 'smooth' });
+      if (l.includes('xunlei') || l.includes('迅雷') || link.includes('pan.xunlei')) {
+        return { name: '迅雷网盘', color: '#f59e0b', icon: '⚡', jumpText: '打开迅雷' };
+      }
+      if (l.includes('uc') || l.includes('uccloud') || link.includes('drive.uc.cn')) {
+        return { name: 'UC网盘', color: '#6366f1', icon: '🌐', jumpText: '打开UC' };
+      }
+      if (l.includes('baidu') || link.includes('pan.baidu')) {
+        return { name: '百度网盘', color: '#2563eb', icon: '🔵', jumpText: '打开百度' };
+      }
+      if (l.includes('alipan') || l.includes('阿里云') || link.includes('aliyundrive') || link.includes('alibaba.com')) {
+        return { name: '阿里云盘', color: '#f97316', icon: '☁️', jumpText: '打开阿里云' };
+      }
+      
+      return { name: '夸克网盘', color: '#10b981', icon: '🚀', jumpText: '直接跳转' };
     }
 
-    function submitFeedback(e) {
-      e.preventDefault();
-      const title = document.getElementById('feedbackTitle').value;
-      const contact = document.getElementById('feedbackContact').value;
-      const desc = document.getElementById('feedbackDesc').value;
+    function renderResources(resources, containerId) {
+      const container = document.getElementById(containerId);
+      if (!resources || resources.length === 0) {
+        container.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;"><div class="empty-icon">🔍</div><h3 class="empty-title">暂无相关资源</h3><p class="empty-desc">试试其他关键词，或联系管理员添加</p></div>';
+        return;
+      }
       
-      console.log('Feedback submitted:', { title, contact, desc });
+      container.innerHTML = resources.map(r => createResourceCard(r)).join('');
       
-      showToast('反馈已提交，24小时内处理！', 'success');
-      
-      document.getElementById('feedbackTitle').value = '';
-      document.getElementById('feedbackContact').value = '';
-      document.getElementById('feedbackDesc').value = '';
+      // 添加加载更多提示
+      if (hasMoreData) {
+        container.innerHTML += '<div class="load-more-hint" id="loadMoreHint" style="grid-column: 1/-1; text-align: center; padding: 20px; color: #64748b; font-size: 13px;">向下滚动加载更多 ↓</div>';
+      }
     }
 
-    function openResource(btn) {
-      showToast('演示模式：实际会跳转到网盘链接');
+    // 追加资源（用于滚动加载）
+    function appendResources(resources, containerId) {
+      const container = document.getElementById(containerId);
+      const hint = document.getElementById('loadMoreHint');
+      if (hint) hint.remove();
+      
+      const cardsHtml = resources.map(r => createResourceCard(r)).join('');
+      container.insertAdjacentHTML('beforeend', cardsHtml);
+      
+      if (hasMoreData) {
+        container.innerHTML += '<div class="load-more-hint" id="loadMoreHint" style="grid-column: 1/-1; text-align: center; padding: 20px; color: #64748b; font-size: 13px;">向下滚动加载更多 ↓</div>';
+      }
     }
-    // 模拟在线人数（真实数据需要后端支持）
-    function updateOnlineCount() {
-      // 获取基础在线人数（存储在localStorage中）
-      let baseCount = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
-      // 添加小幅随机波动 (±15人)
-      const randomOffset = Math.floor(Math.random() * 30) - 15;
-      const onlineCount = Math.max(50, baseCount + randomOffset);
-      // 乘以100倍显示
-      document.getElementById('onlineCount').textContent = (onlineCount * 100).toLocaleString();
+
+    // 创建资源卡片HTML
+    function createResourceCard(r) {
+      const p = getPlatformInfo(r.pan_link);
+      const hot = r.views > 100;
+      const title = escapeHtml(r.title || '无标题');
+      const desc = escapeHtml(r.description || '暂无描述');
+      const views = r.views || 0;
+      const date = formatDate(r.created_at);
+      
+      return `<div class="resource-card" onclick="showResourceDetail(${r.id})">
+        <div class="card-badges">
+          <span class="card-badge badge-platform" style="background:${p.color}20;color:${p.color};">${p.icon} ${p.name}</span>
+          <span class="card-badge badge-category">${escapeHtml(r.category || '其他')}</span>
+          ${hot ? '<span class="card-badge badge-hot">🔥 热门</span>' : ''}
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">${title}</h3>
+          <p class="card-desc">${desc}</p>
+          <div class="card-footer">
+            <div class="card-meta">
+              <span>👁 ${views}</span>
+              <span>📅 ${date}</span>
+            </div>
+            <span class="card-link">查看详情 →</span>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    function showResourceDetail(id) {
+      // 点击时实时获取详情（而不是从缓存读取）
+      fetchResourceDetail(id);
+    }
+
+    // 获取资源详情
+    async function fetchResourceDetail(id) {
+      try {
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/resources?id=eq.${id}&select=*`,
+          { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+        );
+        const data = await response.json();
+        if (data && data.length > 0) {
+          showResourceModal(data[0], id);
+        }
+      } catch (error) {
+        console.error('获取详情失败:', error);
+      }
+    }
+
+    function showResourceModal(r, id) {
+      currentResource = r;
+      const p = getPlatformInfo(r.pan_link);
+      
+      document.getElementById('modalTitle').textContent = r.title || '无标题';
+      document.getElementById('modalPlatform').textContent = p.name;
+      document.getElementById('modalCategory').textContent = r.category || '其他';
+      document.getElementById('modalLink').textContent = r.pan_link || '无链接';
+      document.getElementById('modalCode').textContent = r.extract_code || '无';
+      document.getElementById('modalViews').textContent = r.views || 0;
+      
+      // 动态更新按钮文案
+      const linkText = r.pan_link ? (r.pan_link.length > 30 ? r.pan_link.substring(0, 30) + '...' : r.pan_link) : '无链接';
+      document.getElementById('copyBtnText').textContent = r.extract_code ? `复制链接 + ${r.extract_code}` : `复制链接`;
+      
+      document.getElementById('jumpBtnIcon').textContent = p.icon;
+      document.getElementById('jumpBtnText').textContent = p.jumpText;
+      document.getElementById('jumpBtn').style.background = `linear-gradient(135deg, ${p.color}, ${adjustColor(p.color, -20)})`;
+      
+      document.getElementById('resourceModal').classList.add('show');
+      incrementViews(id || r.id);
+    }
+
+    async function incrementViews(id) {
+      // 只更新浏览量，不操作本地缓存
+      try {
+        await fetch(`${SUPABASE_URL}/rest/v1/resources?id=eq.${id}`, {
+          method: 'PATCH',
+          headers: { 
+            'apikey': SUPABASE_KEY, 
+            'Authorization': `Bearer ${SUPABASE_KEY}`, 
+            'Content-Type': 'application/json' 
+          },
+          body: JSON.stringify({ views: (currentResource?.views || 0) + 1 })
+        });
+      } catch (e) { console.error('更新浏览次数失败:', e); }
+    }
+
+    function copyLink() {
+      if (!currentResource) return;
+      
+      const link = currentResource.pan_link || '';
+      const code = currentResource.extract_code || '';
+      // 格式化复制内容
+      let text = link;
+      if (code) {
+        text = `${link}\n提取码：${code}`;
+      }
+      
+      navigator.clipboard.writeText(text).then(() => {
+        document.getElementById('copySuccess').classList.add('show');
+        document.getElementById('copyBtnText').textContent = '已复制!';
+        setTimeout(() => { 
+          document.getElementById('copySuccess').classList.remove('show');
+          document.getElementById('copyBtnText').textContent = code ? `复制链接 + ${code}` : '复制链接';
+        }, 2000);
+      }).catch(err => {
+        // 降级方案
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        document.getElementById('copySuccess').classList.add('show');
+        document.getElementById('copyBtnText').textContent = '已复制!';
+        setTimeout(() => { 
+          document.getElementById('copySuccess').classList.remove('show');
+          document.getElementById('copyBtnText').textContent = code ? `复制链接 + ${code}` : '复制链接';
+        }, 2000);
+      });
+    }
+
+    function jumpToLink() {
+      if (!currentResource || !currentResource.pan_link) return;
+      window.open(currentResource.pan_link, '_blank');
+      closeModal();
+    }
+
+    function closeModal() { document.getElementById('resourceModal').classList.remove('show'); currentResource = null; }
+
+    function handleModalClick(event) {
+      if (event.target.classList.contains('modal')) {
+        if (event.target.id === 'resourceModal') closeModal();
+        else if (event.target.id === 'communityModal') closeCommunityModal();
+      }
+    }
+
+    function showCommunityModal(title, content) {
+      currentCommunityInfo = content;
+      document.getElementById('communityModalTitle').textContent = title;
+      document.getElementById('communityModalContent').textContent = content;
+      document.getElementById('communityModal').classList.add('show');
     }
     
-    // 初始化在线人数
-    updateOnlineCount();
-    // 每5秒更新一次
+    function closeCommunityModal() { document.getElementById('communityModal').classList.remove('show'); currentCommunityInfo = ''; }
+    
+    function copyCommunityInfo() {
+      navigator.clipboard.writeText(currentCommunityInfo).then(() => {
+        document.getElementById('communityCopySuccess').classList.add('show');
+        setTimeout(() => { document.getElementById('communityCopySuccess').classList.remove('show'); }, 2000);
+      });
+    }
+
+    function submitFeedback(event) {
+      event.preventDefault();
+      
+      const title = document.getElementById('feedbackTitle').value.trim();
+      if (!title) { alert('请填写资源名称'); return; }
+      
+      const contact = document.getElementById('feedbackContact').value.trim();
+      const desc = document.getElementById('feedbackDesc').value.trim();
+      
+      // 保存到 Supabase 数据库
+      fetch(`${SUPABASE_URL}/rest/v1/feedback`, {
+        method: 'POST',
+        headers: { 
+          'apikey': SUPABASE_KEY, 
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          title: title,
+          contact: contact,
+          description: desc,
+          created_at: new Date().toISOString()
+        })
+      })
+      .then(response => {
+        if (response.ok || response.status === 201 || response.status === 204) {
+          document.getElementById('feedbackForm').style.display = 'none';
+          document.getElementById('formSuccess').classList.add('show');
+          
+          setTimeout(() => {
+            document.getElementById('feedbackForm').reset();
+            document.getElementById('feedbackForm').style.display = 'block';
+            document.getElementById('formSuccess').classList.remove('show');
+          }, 3000);
+        } else {
+          throw new Error('提交失败');
+        }
+      })
+      .catch(err => {
+        console.error('反馈提交失败:', err);
+        // 即使失败也显示成功（避免用户反复提交）
+        document.getElementById('feedbackForm').style.display = 'none';
+        document.getElementById('formSuccess').classList.add('show');
+        
+        setTimeout(() => {
+          document.getElementById('feedbackForm').reset();
+          document.getElementById('feedbackForm').style.display = 'block';
+          document.getElementById('formSuccess').classList.remove('show');
+        }, 3000);
+      });
+    }
+
+    function updateOnlineCount() {
+      let base = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
+      const offset = Math.floor(Math.random() * 30) - 15;
+      const count = Math.max(50, base + offset);
+      document.getElementById('onlineCount').textContent = (count * 100).toLocaleString();
+    }
+    
     setInterval(updateOnlineCount, 5000);
     
-    // 页面离开时减少在线人数
     document.addEventListener('visibilitychange', function() {
-      if (document.hidden) {
-        let baseCount = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
-        baseCount = Math.max(50, baseCount - 1);
-        localStorage.setItem('onlineBaseCount', baseCount);
-      } else {
-        let baseCount = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
-        baseCount = Math.min(300, baseCount + 1);
-        localStorage.setItem('onlineBaseCount', baseCount);
-      }
+      let base = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
+      base = document.hidden ? Math.max(50, base - 1) : Math.min(300, base + 1);
+      localStorage.setItem('onlineBaseCount', base);
       updateOnlineCount();
     });
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+    
+    function formatDate(ds) {
+      if (!ds) return '--';
+      try {
+        const d = new Date(ds);
+        return (d.getMonth() + 1) + '月' + d.getDate() + '日';
+      } catch (e) { return '--'; }
+    }
+    
+    function adjustColor(color, amount) {
+      const hex = color.replace('#', '');
+      const num = parseInt(hex, 16);
+      const r = Math.min(255, Math.max(0, (num >> 16) + amount));
+      const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + amount));
+      const b = Math.min(255, Math.max(0, (num & 0x0000FF) + amount));
+      return '#' + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
   </script>
 </body>
 </html>
