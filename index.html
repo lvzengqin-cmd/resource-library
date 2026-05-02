@@ -104,14 +104,25 @@
     .modal.show { display: flex; }
     .modal-content { background: #1e293b; border-radius: 16px; max-width: 480px; width: 100%; padding: 28px; position: relative; }
     .modal-close { position: absolute; top: 12px; right: 12px; background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer; }
-    .modal-title { font-size: 18px; font-weight: 600; margin-bottom: 20px; color: #f1f5f9; padding-right: 30px; }
+    .modal-close:hover { color: #fff; }
+    .modal-title { font-size: 18px; font-weight: 600; margin-bottom: 20px; color: #f1f5f9; padding-right: 30px; line-height: 1.4; }
     .modal-info { background: rgba(0, 0, 0, 0.3); border-radius: 10px; padding: 18px; margin-bottom: 18px; }
     .modal-info p { margin-bottom: 10px; color: #94a3b8; font-size: 13px; line-height: 1.5; word-break: break-all; }
     .modal-info p:last-child { margin-bottom: 0; }
     .modal-info strong { color: #fff; }
-    .copy-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; }
+    /* 新样式：双按钮布局 */
+    .modal-buttons { display: flex; gap: 12px; margin-top: 18px; }
+    .btn-copy { flex: 1; padding: 14px; background: linear-gradient(135deg, #475569, #334155); color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-copy:hover { background: linear-gradient(135deg, #64748b, #475569); transform: scale(1.02); }
+    .btn-jump { flex: 1; padding: 14px; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-jump:hover { transform: scale(1.02); box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4); }
     .copy-success { text-align: center; color: #10b981; margin-top: 12px; font-size: 13px; display: none; }
     .copy-success.show { display: block; }
+    /* 移动端适配 */
+    .modal-buttons { flex-direction: column; }
+    @media (min-width: 480px) {
+      .modal-buttons { flex-direction: row; }
+    }
     @media (max-width: 768px) {
       .hero { padding: 100px 0 40px; }
       .hero-title { font-size: 28px; }
@@ -123,6 +134,9 @@
       .community-grid { grid-template-columns: 1fr; }
       .category-tabs { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
       .category-tab { flex-shrink: 0; }
+      .modal-content { padding: 20px; margin: 10px; }
+      .modal-buttons { flex-direction: column; }
+      .btn-copy, .btn-jump { padding: 12px; font-size: 13px; }
     }
   </style>
 </head>
@@ -272,7 +286,8 @@
     </div>
   </footer>
 
-  <div class="modal" id="resourceModal">
+  <!-- 资源详情弹窗 -->
+  <div class="modal" id="resourceModal" onclick="handleModalClick(event)">
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal()">×</button>
       <h3 class="modal-title" id="modalTitle">资源标题</h3>
@@ -283,19 +298,29 @@
         <p><strong>提取码：</strong><span id="modalCode">----</span></p>
         <p><strong>浏览次数：</strong><span id="modalViews">0</span></p>
       </div>
-      <button class="copy-btn" onclick="copyLink()">复制链接和提取码</button>
+      <div class="modal-buttons">
+        <button class="btn-copy" onclick="copyLink()">
+          <span>📋</span>
+          <span id="copyBtnText">复制链接和提取码</span>
+        </button>
+        <button class="btn-jump" id="jumpBtn" onclick="jumpToLink()">
+          <span id="jumpBtnIcon">🚀</span>
+          <span id="jumpBtnText">直接跳转</span>
+        </button>
+      </div>
       <p class="copy-success" id="copySuccess">✅ 已复制到剪贴板！</p>
     </div>
   </div>
 
-  <div class="modal" id="communityModal">
+  <!-- 社群弹窗 -->
+  <div class="modal" id="communityModal" onclick="handleModalClick(event)">
     <div class="modal-content">
       <button class="modal-close" onclick="closeCommunityModal()">×</button>
       <h3 class="modal-title" id="communityModalTitle">社群信息</h3>
       <div class="modal-info">
         <p id="communityModalContent">内容</p>
       </div>
-      <button class="copy-btn" onclick="copyCommunityInfo()">复制信息</button>
+      <button class="btn-copy" style="width:100%" onclick="copyCommunityInfo()">📋 复制信息</button>
       <p class="copy-success" id="communityCopySuccess">✅ 已复制！</p>
     </div>
   </div>
@@ -309,6 +334,7 @@
     let currentCommunityInfo = '';
     let allResources = [];
     let categoryResources = {};
+    let isLoading = false;
 
     document.addEventListener('DOMContentLoaded', function() {
       loadAllResources();
@@ -319,9 +345,15 @@
       });
     });
 
+    // 加载所有资源（分批加载）
     async function loadAllResources() {
+      if (isLoading) return;
+      isLoading = true;
+      
+      // 显示加载状态
+      document.getElementById('featuredGrid').innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>正在加载资源...</p></div>';
+      
       try {
-        // 加载所有数据（分批加载，每批1000条）
         let allData = [];
         let page = 0;
         let hasMore = true;
@@ -330,13 +362,19 @@
           const response = await fetch(`${SUPABASE_URL}/rest/v1/resources?select=*&order=views.desc&limit=1000&offset=${page * 1000}`, {
             headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
           });
-          if (!response.ok) throw new Error('获取数据失败');
+          
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          
           const data = await response.json();
           
-          if (data.length > 0) {
+          if (data && data.length > 0) {
             allData = allData.concat(data);
             page++;
-            if (data.length < 1000) hasMore = false;
+            if (data.length < 1000) {
+              hasMore = false;
+            }
           } else {
             hasMore = false;
           }
@@ -351,7 +389,7 @@
           categoryResources[cat] = allResources.filter(r => r.category === cat).slice(0, 8);
         });
         
-        document.getElementById('totalCount').textContent = allResources.length;
+        document.getElementById('totalCount').textContent = allResources.length.toLocaleString();
         
         // 精选推荐显示前6个
         renderResources(allResources.slice(0, 6), 'featuredGrid');
@@ -365,10 +403,13 @@
         const emptyHtml = '<div class="empty-state"><div class="empty-icon">😅</div><h3 class="empty-title">加载失败</h3><p class="empty-desc">请检查网络连接后刷新重试</p></div>';
         document.getElementById('featuredGrid').innerHTML = emptyHtml;
         document.getElementById('categoryGrid').innerHTML = emptyHtml;
+        document.getElementById('totalCount').textContent = '?';
+      } finally {
+        isLoading = false;
       }
     }
 
-    // 优化搜索：模糊匹配（标题任意位置包含关键词即可）
+    // 搜索功能（模糊匹配）
     function performSearch() {
       const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
       currentSearch = keyword;
@@ -383,21 +424,29 @@
         r.title && r.title.toLowerCase().includes(keyword)
       );
 
-      document.getElementById('totalCount').textContent = results.length;
+      document.getElementById('totalCount').textContent = results.length.toLocaleString();
       renderResources(results, 'featuredGrid');
       renderResources(results, 'categoryGrid');
-      document.getElementById('categoryTitle').textContent = `搜索"${keyword}"的结果 (${results.length}条)`;
+      document.getElementById('categoryTitle').textContent = `搜索"${escapeHtml(keyword)}"的结果 (${results.length}条)`;
       document.getElementById('resources').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function handleSearch(event) { if (event.key === 'Enter') performSearch(); }
+    function handleSearch(event) { 
+      if (event.key === 'Enter') performSearch(); 
+    }
 
+    // 分类选择
     function selectCategory(category) {
       currentCategory = category;
+      
+      // 更新标签样式
       document.querySelectorAll('.category-tab').forEach(tab => {
         tab.classList.remove('active');
-        if (tab.textContent.includes(category) || (category === '全部' && tab.textContent === '全部')) tab.classList.add('active');
+        if (tab.textContent.includes(category) || (category === '全部' && tab.textContent === '全部')) {
+          tab.classList.add('active');
+        }
       });
+      
       document.getElementById('searchInput').value = '';
       currentSearch = '';
       document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
@@ -421,105 +470,234 @@
       }
     }
 
+    // 获取网盘信息
     function getPlatformInfo(link) {
-      if (!link) return { name: '网盘', color: '#64748b' };
+      if (!link) return { name: '网盘', color: '#64748b', icon: '📦', jumpText: '直接跳转' };
+      
       const l = link.toLowerCase();
-      if (l.includes('quark') || l.includes('夸克') || link.includes('pan.quark.cn')) return { name: '夸克网盘', color: '#10b981' };
-      if (l.includes('xunlei') || l.includes('迅雷') || link.includes('pan.xunlei')) return { name: '迅雷网盘', color: '#f59e0b' };
-      if (l.includes('uc') || l.includes('uccloud') || link.includes('drive.uc.cn')) return { name: 'UC网盘', color: '#6366f1' };
-      if (l.includes('baidu') || link.includes('pan.baidu')) return { name: '百度网盘', color: '#2563eb' };
-      if (l.includes('alipan') || l.includes('阿里云') || link.includes('aliyundrive')) return { name: '阿里云盘', color: '#f97316' };
-      return { name: '夸克网盘', color: '#10b981' };
+      
+      if (l.includes('quark') || l.includes('夸克') || link.includes('pan.quark.cn')) {
+        return { name: '夸克网盘', color: '#10b981', icon: '🚀', jumpText: '打开夸克' };
+      }
+      if (l.includes('xunlei') || l.includes('迅雷') || link.includes('pan.xunlei')) {
+        return { name: '迅雷网盘', color: '#f59e0b', icon: '⚡', jumpText: '打开迅雷' };
+      }
+      if (l.includes('uc') || l.includes('uccloud') || link.includes('drive.uc.cn')) {
+        return { name: 'UC网盘', color: '#6366f1', icon: '🌐', jumpText: '打开UC' };
+      }
+      if (l.includes('baidu') || link.includes('pan.baidu')) {
+        return { name: '百度网盘', color: '#2563eb', icon: '🔵', jumpText: '打开百度' };
+      }
+      if (l.includes('alipan') || l.includes('阿里云') || link.includes('aliyundrive') || link.includes('alibaba.com')) {
+        return { name: '阿里云盘', color: '#f97316', icon: '☁️', jumpText: '打开阿里云' };
+      }
+      
+      return { name: '夸克网盘', color: '#10b981', icon: '🚀', jumpText: '直接跳转' };
     }
 
+    // 渲染资源列表
     function renderResources(resources, containerId) {
       const container = document.getElementById(containerId);
       if (!resources || resources.length === 0) {
         container.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;"><div class="empty-icon">🔍</div><h3 class="empty-title">暂无相关资源</h3><p class="empty-desc">试试其他关键词，或联系管理员添加</p></div>';
         return;
       }
+      
       container.innerHTML = resources.map(r => {
         const p = getPlatformInfo(r.pan_link);
         const hot = r.views > 100;
-        return '<div class="resource-card" onclick="showResourceDetail(' + r.id + ')"><div class="card-badges"><span class="card-badge badge-platform" style="background:' + p.color + '20;color:' + p.color + ';">' + p.name + '</span><span class="card-badge badge-category">' + r.category + '</span>' + (hot ? '<span class="card-badge badge-hot">🔥 热门</span>' : '') + '</div><div class="card-content"><h3 class="card-title">' + escapeHtml(r.title) + '</h3><p class="card-desc">' + escapeHtml(r.description || '暂无描述') + '</p><div class="card-footer"><div class="card-meta"><span>👁 ' + (r.views || 0) + '</span><span>📅 ' + formatDate(r.created_at) + '</span></div><span class="card-link">查看详情 →</span></div></div></div>';
+        const title = escapeHtml(r.title || '无标题');
+        const desc = escapeHtml(r.description || '暂无描述');
+        const views = r.views || 0;
+        const date = formatDate(r.created_at);
+        
+        return `<div class="resource-card" onclick="showResourceDetail(${r.id})">
+          <div class="card-badges">
+            <span class="card-badge badge-platform" style="background:${p.color}20;color:${p.color};">${p.icon} ${p.name}</span>
+            <span class="card-badge badge-category">${escapeHtml(r.category || '其他')}</span>
+            ${hot ? '<span class="card-badge badge-hot">🔥 热门</span>' : ''}
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">${title}</h3>
+            <p class="card-desc">${desc}</p>
+            <div class="card-footer">
+              <div class="card-meta">
+                <span>👁 ${views}</span>
+                <span>📅 ${date}</span>
+              </div>
+              <span class="card-link">查看详情 →</span>
+            </div>
+          </div>
+        </div>`;
       }).join('');
     }
 
+    // 显示资源详情
     function showResourceDetail(id) {
       const r = allResources.find(x => x.id === id);
       if (!r) return;
+      
       currentResource = r;
       const p = getPlatformInfo(r.pan_link);
-      document.getElementById('modalTitle').textContent = r.title;
+      
+      document.getElementById('modalTitle').textContent = r.title || '无标题';
       document.getElementById('modalPlatform').textContent = p.name;
-      document.getElementById('modalCategory').textContent = r.category;
-      document.getElementById('modalLink').textContent = r.pan_link;
+      document.getElementById('modalCategory').textContent = r.category || '其他';
+      document.getElementById('modalLink').textContent = r.pan_link || '无链接';
       document.getElementById('modalCode').textContent = r.extract_code || '无';
       document.getElementById('modalViews').textContent = r.views || 0;
+      
+      // 更新跳转按钮样式和文字
+      document.getElementById('jumpBtnIcon').textContent = p.icon;
+      document.getElementById('jumpBtnText').textContent = p.jumpText;
+      document.getElementById('jumpBtn').style.background = `linear-gradient(135deg, ${p.color}, ${adjustColor(p.color, -20)})`;
+      
+      // 显示弹窗
       document.getElementById('resourceModal').classList.add('show');
+      
+      // 增加浏览次数
       incrementViews(id);
     }
 
+    // 增加浏览次数
     async function incrementViews(id) {
       const r = allResources.find(x => x.id === id);
       if (!r) return;
+      
       r.views = (r.views || 0) + 1;
+      
       try {
         await fetch(`${SUPABASE_URL}/rest/v1/resources?id=eq.${id}`, {
           method: 'PATCH',
-          headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+          headers: { 
+            'apikey': SUPABASE_KEY, 
+            'Authorization': `Bearer ${SUPABASE_KEY}`, 
+            'Content-Type': 'application/json' 
+          },
           body: JSON.stringify({ views: r.views })
         });
-      } catch (e) { console.error('更新浏览次数失败:', e); }
+      } catch (e) { 
+        console.error('更新浏览次数失败:', e); 
+      }
     }
 
+    // 复制链接
     function copyLink() {
       if (!currentResource) return;
-      navigator.clipboard.writeText('链接：' + currentResource.pan_link + '\n提取码：' + (currentResource.extract_code || '无')).then(() => {
+      
+      const link = currentResource.pan_link || '';
+      const code = currentResource.extract_code || '无';
+      const text = `链接：${link}\n提取码：${code}`;
+      
+      navigator.clipboard.writeText(text).then(() => {
         document.getElementById('copySuccess').classList.add('show');
-        setTimeout(() => document.getElementById('copySuccess').classList.remove('show'), 2000);
+        setTimeout(() => {
+          document.getElementById('copySuccess').classList.remove('show');
+        }, 2000);
+      }).catch(err => {
+        // 降级方案
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        document.getElementById('copySuccess').classList.add('show');
+        setTimeout(() => {
+          document.getElementById('copySuccess').classList.remove('show');
+        }, 2000);
       });
     }
 
-    function closeModal() { document.getElementById('resourceModal').classList.remove('show'); currentResource = null; }
-    document.getElementById('resourceModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+    // 跳转到网盘链接
+    function jumpToLink() {
+      if (!currentResource || !currentResource.pan_link) return;
+      
+      const link = currentResource.pan_link;
+      
+      // 直接在新标签页打开链接
+      window.open(link, '_blank');
+      
+      // 关闭弹窗
+      closeModal();
+    }
 
+    // 关闭弹窗
+    function closeModal() { 
+      document.getElementById('resourceModal').classList.remove('show'); 
+      currentResource = null; 
+    }
+
+    // 处理弹窗点击（点击背景关闭）
+    function handleModalClick(event) {
+      if (event.target.classList.contains('modal')) {
+        if (event.target.id === 'resourceModal') {
+          closeModal();
+        } else if (event.target.id === 'communityModal') {
+          closeCommunityModal();
+        }
+      }
+    }
+
+    // 社群弹窗
     function showCommunityModal(title, content) {
       currentCommunityInfo = content;
       document.getElementById('communityModalTitle').textContent = title;
       document.getElementById('communityModalContent').textContent = content;
       document.getElementById('communityModal').classList.add('show');
     }
-    function closeCommunityModal() { document.getElementById('communityModal').classList.remove('show'); currentCommunityInfo = ''; }
+    
+    function closeCommunityModal() { 
+      document.getElementById('communityModal').classList.remove('show'); 
+      currentCommunityInfo = ''; 
+    }
+    
     function copyCommunityInfo() {
       navigator.clipboard.writeText(currentCommunityInfo).then(() => {
         document.getElementById('communityCopySuccess').classList.add('show');
-        setTimeout(() => document.getElementById('communityCopySuccess').classList.remove('show'), 2000);
+        setTimeout(() => {
+          document.getElementById('communityCopySuccess').classList.remove('show');
+        }, 2000);
       });
     }
-    document.getElementById('communityModal').addEventListener('click', function(e) { if (e.target === this) closeCommunityModal(); });
 
+    // 提交反馈
     function submitFeedback(event) {
       event.preventDefault();
+      
       const title = document.getElementById('feedbackTitle').value.trim();
-      if (!title) { alert('请填写资源名称'); return; }
+      if (!title) { 
+        alert('请填写资源名称'); 
+        return; 
+      }
+      
+      const contact = document.getElementById('feedbackContact').value.trim();
+      const desc = document.getElementById('feedbackDesc').value.trim();
+      
+      console.log('反馈内容：', { title, contact, desc });
+      
+      // 显示成功提示
       document.getElementById('feedbackForm').style.display = 'none';
       document.getElementById('formSuccess').classList.add('show');
+      
+      // 重置表单
       setTimeout(() => {
         document.getElementById('feedbackForm').reset();
         document.getElementById('feedbackForm').style.display = 'block';
         document.getElementById('formSuccess').classList.remove('show');
       }, 3000);
-      console.log('反馈内容：', { title, contact: document.getElementById('feedbackContact').value.trim(), desc: document.getElementById('feedbackDesc').value.trim() });
     }
 
+    // 更新在线人数
     function updateOnlineCount() {
       let base = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
       const offset = Math.floor(Math.random() * 30) - 15;
       const count = Math.max(50, base + offset);
       document.getElementById('onlineCount').textContent = (count * 100).toLocaleString();
     }
+    
     setInterval(updateOnlineCount, 5000);
+    
     document.addEventListener('visibilitychange', function() {
       let base = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
       base = document.hidden ? Math.max(50, base - 1) : Math.min(300, base + 1);
@@ -527,8 +705,33 @@
       updateOnlineCount();
     });
 
-    function escapeHtml(text) { if (!text) return ''; const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
-    function formatDate(ds) { if (!ds) return '--'; const d = new Date(ds); return (d.getMonth() + 1) + '月' + d.getDate() + '日'; }
+    // 工具函数
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+    
+    function formatDate(ds) {
+      if (!ds) return '--';
+      try {
+        const d = new Date(ds);
+        return (d.getMonth() + 1) + '月' + d.getDate() + '日';
+      } catch (e) {
+        return '--';
+      }
+    }
+    
+    // 颜色调整函数
+    function adjustColor(color, amount) {
+      const hex = color.replace('#', '');
+      const num = parseInt(hex, 16);
+      const r = Math.min(255, Math.max(0, (num >> 16) + amount));
+      const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + amount));
+      const b = Math.min(255, Math.max(0, (num & 0x0000FF) + amount));
+      return '#' + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
   </script>
 </body>
 </html>
