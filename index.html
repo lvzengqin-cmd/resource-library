@@ -5,11 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CY资源宝库 - 发现你想要的资源</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
@@ -22,313 +18,88 @@
     ::-webkit-scrollbar-track { background: rgba(30, 41, 59, 0.5); }
     ::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.3); border-radius: 4px; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-    /* 导航栏 */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 16px 0;
-      transition: all 0.3s;
-    }
-    .navbar.scrolled {
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(20px);
-      padding: 10px 0;
-    }
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 16px 0; transition: all 0.3s; }
+    .navbar.scrolled { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); padding: 10px 0; }
     .navbar-inner { display: flex; align-items: center; justify-content: space-between; }
     .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .logo-icon {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-    .logo-text {
-      font-size: 18px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9, #7dd3fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+    .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, #38bdf8, #0ea5e9); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .logo-text { font-size: 18px; font-weight: 700; background: linear-gradient(135deg, #38bdf8, #0ea5e9, #7dd3fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .nav-right { display: flex; align-items: center; gap: 12px; }
-    .nav-link {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 14px;
-      transition: color 0.2s;
-      padding: 6px 12px;
-      border-radius: 6px;
-    }
+    .nav-link { color: #94a3b8; text-decoration: none; font-size: 14px; transition: color 0.2s; padding: 6px 12px; border-radius: 6px; }
     .nav-link:hover { color: #38bdf8; background: rgba(14, 165, 233, 0.1); }
-
-    /* Hero */
     .hero { padding: 120px 0 50px; text-align: center; }
-    .hero-title {
-      font-size: 42px;
-      font-weight: 800;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, #fff 0%, #38bdf8 50%, #0ea5e9 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+    .hero-title { font-size: 42px; font-weight: 800; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, #38bdf8 50%, #0ea5e9 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .hero-subtitle { font-size: 16px; color: #94a3b8; margin-bottom: 30px; }
-
-    /* 搜索框 */
     .search-box { max-width: 600px; margin: 0 auto 24px; }
-    .search-container {
-      display: flex;
-      background: rgba(30, 41, 59, 0.8);
-      border: 2px solid rgba(14, 165, 233, 0.3);
-      border-radius: 14px;
-      padding: 5px;
-      transition: all 0.3s;
-    }
+    .search-container { display: flex; background: rgba(30, 41, 59, 0.8); border: 2px solid rgba(14, 165, 233, 0.3); border-radius: 14px; padding: 5px; transition: all 0.3s; }
     .search-container:focus-within { border-color: #0ea5e9; box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2); }
-    .search-input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      padding: 12px 16px;
-      font-size: 15px;
-      color: #fff;
-      outline: none;
-    }
+    .search-input { flex: 1; background: transparent; border: none; padding: 12px 16px; font-size: 15px; color: #fff; outline: none; }
     .search-input::placeholder { color: #64748b; }
-    .search-btn {
-      background: linear-gradient(135deg, #0ea5e9, #0284c7);
-      color: #fff;
-      border: none;
-      padding: 12px 28px;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
+    .search-btn { background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff; border: none; padding: 12px 28px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
     .search-btn:hover { transform: scale(1.02); box-shadow: 0 6px 16px rgba(14, 165, 233, 0.3); }
-
-    /* 分类标签 */
     .category-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
-    .category-tab {
-      padding: 6px 16px;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 50px;
-      color: #94a3b8;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .category-tab:hover, .category-tab.active {
-      background: rgba(14, 165, 233, 0.2);
-      border-color: #0ea5e9;
-      color: #0ea5e9;
-    }
-
-    /* 统计 */
+    .category-tab { padding: 6px 16px; background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50px; color: #94a3b8; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+    .category-tab:hover, .category-tab.active { background: rgba(14, 165, 233, 0.2); border-color: #0ea5e9; color: #0ea5e9; }
     .stats { display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; }
     .stat-item { text-align: center; }
     .stat-value { font-size: 28px; font-weight: 700; color: #38bdf8; }
     .stat-label { font-size: 12px; color: #64748b; }
-
-    /* 区域标题 */
     .section { padding: 40px 0; }
     .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
     .section-title { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; }
     .view-all { color: #0ea5e9; font-size: 13px; text-decoration: none; }
     .view-all:hover { color: #38bdf8; }
-
-    /* 资源网格 */
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
-
-    /* 资源卡片 */
-    .resource-card {
-      position: relative;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid #1e293b;
-      border-radius: 12px;
-      overflow: hidden;
-      transition: all 0.3s;
-      cursor: pointer;
-    }
-    .resource-card:hover {
-      border-color: rgba(14, 165, 233, 0.3);
-      box-shadow: 0 10px 24px rgba(14, 165, 233, 0.1);
-      transform: translateY(-2px);
-    }
+    .resource-card { position: relative; background: rgba(30, 41, 59, 0.5); border: 1px solid #1e293b; border-radius: 12px; overflow: hidden; transition: all 0.3s; cursor: pointer; }
+    .resource-card:hover { border-color: rgba(14, 165, 233, 0.3); box-shadow: 0 10px 24px rgba(14, 165, 233, 0.1); transform: translateY(-2px); }
     .card-badges { position: absolute; top: 10px; right: 10px; display: flex; gap: 5px; z-index: 2; }
     .card-badge { padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: 500; }
     .badge-platform { background: rgba(16, 185, 129, 0.2); color: #34d399; }
     .badge-category { background: rgba(14, 165, 233, 0.2); color: #38bdf8; }
     .badge-hot { background: rgba(239, 68, 68, 0.2); color: #f87171; }
     .card-content { padding: 16px; }
-    .card-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #f1f5f9;
-      margin-bottom: 8px;
-      line-height: 1.4;
-      padding-right: 70px;
-    }
-    .card-desc {
-      font-size: 12px;
-      color: #94a3b8;
-      margin-bottom: 12px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 12px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
+    .card-title { font-size: 14px; font-weight: 600; color: #f1f5f9; margin-bottom: 8px; line-height: 1.4; padding-right: 70px; }
+    .card-desc { font-size: 12px; color: #94a3b8; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
     .card-meta { display: flex; align-items: center; gap: 12px; font-size: 11px; color: #64748b; }
-    .card-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 6px 12px;
-      background: rgba(14, 165, 233, 0.15);
-      color: #0ea5e9;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    /* 空状态 */
+    .card-link { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; background: rgba(14, 165, 233, 0.15); color: #0ea5e9; border-radius: 6px; font-size: 12px; font-weight: 500; }
     .empty-state { text-align: center; padding: 50px 20px; }
     .empty-icon { font-size: 56px; margin-bottom: 16px; }
     .empty-title { font-size: 18px; font-weight: 600; color: #f1f5f9; margin-bottom: 8px; }
     .empty-desc { font-size: 13px; color: #64748b; }
-
-    /* 加载状态 */
     .loading { text-align: center; padding: 40px; color: #64748b; }
-    .loading-spinner {
-      width: 36px;
-      height: 36px;
-      border: 3px solid rgba(14, 165, 233, 0.3);
-      border-top-color: #0ea5e9;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 12px;
-    }
+    .loading-spinner { width: 36px; height: 36px; border: 3px solid rgba(14, 165, 233, 0.3); border-top-color: #0ea5e9; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 12px; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* 社群区域 */
     .community-section { padding: 40px 0; border-top: 1px solid rgba(255, 255, 255, 0.1); }
     .community-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-    .community-card {
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid #1e293b;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      transition: all 0.3s;
-    }
+    .community-card { background: rgba(30, 41, 59, 0.5); border: 1px solid #1e293b; border-radius: 12px; padding: 20px; text-align: center; transition: all 0.3s; }
     .community-card:hover { border-color: rgba(14, 165, 233, 0.3); transform: translateY(-2px); }
     .community-icon { font-size: 40px; margin-bottom: 12px; }
     .community-title { font-size: 16px; font-weight: 600; color: #f1f5f9; margin-bottom: 8px; }
     .community-desc { font-size: 13px; color: #94a3b8; margin-bottom: 16px; }
-    .community-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 16px;
-      background: rgba(14, 165, 233, 0.15);
-      color: #0ea5e9;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      border: none;
-      transition: all 0.2s;
-    }
+    .community-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: rgba(14, 165, 233, 0.15); color: #0ea5e9; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; transition: all 0.2s; }
     .community-btn:hover { background: rgba(14, 165, 233, 0.25); }
-
-    /* 反馈区域 */
     .feedback-section { padding: 40px 0; border-top: 1px solid rgba(255, 255, 255, 0.1); }
-    .feedback-box {
-      max-width: 600px;
-      margin: 0 auto;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid #1e293b;
-      border-radius: 16px;
-      padding: 30px;
-      text-align: center;
-    }
+    .feedback-box { max-width: 600px; margin: 0 auto; background: rgba(30, 41, 59, 0.5); border: 1px solid #1e293b; border-radius: 16px; padding: 30px; text-align: center; }
     .feedback-icon { font-size: 48px; margin-bottom: 16px; }
     .feedback-title { font-size: 20px; font-weight: 600; color: #f1f5f9; margin-bottom: 10px; }
     .feedback-desc { font-size: 14px; color: #94a3b8; margin-bottom: 24px; }
     .feedback-form { text-align: left; }
     .form-group { margin-bottom: 16px; }
     .form-label { display: block; font-size: 13px; color: #94a3b8; margin-bottom: 6px; }
-    .form-input, .form-textarea {
-      width: 100%;
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid #334155;
-      border-radius: 8px;
-      padding: 12px 14px;
-      font-size: 14px;
-      color: #fff;
-    }
+    .form-input, .form-textarea { width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid #334155; border-radius: 8px; padding: 12px 14px; font-size: 14px; color: #fff; }
     .form-input:focus, .form-textarea:focus { outline: none; border-color: #0ea5e9; }
     .form-input::placeholder, .form-textarea::placeholder { color: #64748b; }
     .form-textarea { min-height: 100px; resize: vertical; }
-    .form-submit {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #0ea5e9, #0284c7);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
+    .form-submit { width: 100%; padding: 14px; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
     .form-submit:hover { transform: scale(1.02); }
     .form-success { text-align: center; padding: 20px; color: #10b981; display: none; }
     .form-success.show { display: block; }
-
-    /* 页脚 */
     .footer { padding: 30px 0; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1); }
-    .online-users {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      margin-bottom: 16px;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid rgba(14, 165, 233, 0.2);
-      border-radius: 50px;
-      font-size: 12px;
-      color: #94a3b8;
-    }
-    .online-indicator {
-      width: 7px;
-      height: 7px;
-      background: #10b981;
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
+    .online-users { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; margin-bottom: 16px; background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 50px; font-size: 12px; color: #94a3b8; }
+    .online-indicator { width: 7px; height: 7px; background: #10b981; border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
     .footer-text { font-size: 13px; color: #64748b; }
-
-    /* 模态框 */
     .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
     .modal.show { display: flex; }
     .modal-content { background: #1e293b; border-radius: 16px; max-width: 480px; width: 100%; padding: 28px; position: relative; }
@@ -341,8 +112,6 @@
     .copy-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; }
     .copy-success { text-align: center; color: #10b981; margin-top: 12px; font-size: 13px; display: none; }
     .copy-success.show { display: block; }
-
-    /* 移动端 */
     @media (max-width: 768px) {
       .hero { padding: 100px 0 40px; }
       .hero-title { font-size: 28px; }
@@ -358,7 +127,6 @@
   </style>
 </head>
 <body>
-  <!-- 导航栏 -->
   <nav class="navbar">
     <div class="container">
       <div class="navbar-inner">
@@ -376,21 +144,16 @@
     </div>
   </nav>
 
-  <!-- Hero -->
   <section class="hero">
     <div class="container">
       <h1 class="hero-title">发现你想要的资源</h1>
       <p class="hero-subtitle">海量学习资料、视频教程，一键搜索，即刻获取</p>
-      
-      <!-- 搜索框 -->
       <div class="search-box">
         <div class="search-container">
           <input type="text" class="search-input" id="searchInput" placeholder="输入关键词搜索资源..." onkeyup="handleSearch(event)">
           <button class="search-btn" onclick="performSearch()">🔍 搜索</button>
         </div>
       </div>
-
-      <!-- 分类标签 -->
       <div class="category-tabs" id="categoryTabs">
         <span class="category-tab active" onclick="selectCategory('全部')">全部</span>
         <span class="category-tab" onclick="selectCategory('短剧')">🎬 短剧</span>
@@ -399,8 +162,6 @@
         <span class="category-tab" onclick="selectCategory('素材')">🎨 素材</span>
         <span class="category-tab" onclick="selectCategory('文档')">📄 文档</span>
       </div>
-
-      <!-- 统计 -->
       <div class="stats">
         <div class="stat-item">
           <div class="stat-value" id="totalCount">--</div>
@@ -418,7 +179,6 @@
     </div>
   </section>
 
-  <!-- 精选推荐 -->
   <section class="section" id="resources">
     <div class="container">
       <div class="section-header">
@@ -431,7 +191,6 @@
     </div>
   </section>
 
-  <!-- 交流社群 -->
   <section class="community-section" id="community">
     <div class="container">
       <div class="section-header">
@@ -460,7 +219,6 @@
     </div>
   </section>
 
-  <!-- 浏览分类 -->
   <section class="section" id="categories">
     <div class="container">
       <div class="section-header">
@@ -476,7 +234,6 @@
     </div>
   </section>
 
-  <!-- 资源反馈 -->
   <section class="feedback-section" id="feedback">
     <div class="container">
       <div class="feedback-box">
@@ -505,7 +262,6 @@
     </div>
   </section>
 
-  <!-- 页脚 -->
   <footer class="footer">
     <div class="container">
       <div class="online-users">
@@ -516,7 +272,6 @@
     </div>
   </footer>
 
-  <!-- 资源详情模态框 -->
   <div class="modal" id="resourceModal">
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal()">×</button>
@@ -533,7 +288,6 @@
     </div>
   </div>
 
-  <!-- 社群模态框 -->
   <div class="modal" id="communityModal">
     <div class="modal-content">
       <button class="modal-close" onclick="closeCommunityModal()">×</button>
@@ -547,373 +301,179 @@
   </div>
 
   <script>
-    // ========== Supabase 配置 ==========
     const SUPABASE_URL = 'https://musrilmjolaquhnfqjdu.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_OR14RWa1W_BkxTk160EECg_7YS7xafd';
-
-    // ========== 全局状态 ==========
     let currentCategory = '全部';
     let currentSearch = '';
     let currentResource = null;
     let currentCommunityInfo = '';
     let allResources = [];
 
-    // ========== 初始化 ==========
     document.addEventListener('DOMContentLoaded', function() {
       loadAllResources();
       updateOnlineCount();
-      
       window.addEventListener('scroll', function() {
         const navbar = document.querySelector('.navbar');
-        if (window.scrollY > 50) {
-          navbar.classList.add('scrolled');
-        } else {
-          navbar.classList.remove('scrolled');
-        }
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
       });
     });
 
-    // ========== 加载所有资源 ==========
     async function loadAllResources() {
       try {
-        const response = await fetch(
-          `${SUPABASE_URL}/rest/v1/resources?select=*&order=views.desc`,
-          {
-            headers: {
-              'apikey': SUPABASE_KEY,
-              'Authorization': `Bearer ${SUPABASE_KEY}`
-            }
-          }
-        );
-
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/resources?select=*&order=views.desc`, {
+          headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+        });
         if (!response.ok) throw new Error('获取数据失败');
-
         allResources = await response.json();
-        
         document.getElementById('totalCount').textContent = allResources.length;
-
-        // 精选推荐显示6个热门
-        const featured = allResources.slice(0, 6);
-        renderResources(featured, 'featuredGrid');
-
-        // 分类区域初始显示全部（取前20条）
-        const initialAll = allResources.slice(0, 20);
-        renderResources(initialAll, 'categoryGrid');
+        renderResources(allResources.slice(0, 6), 'featuredGrid');
+        renderResources(allResources.slice(0, 20), 'categoryGrid');
         document.getElementById('categoryTitle').textContent = '浏览分类';
-
       } catch (error) {
         console.error('加载资源失败:', error);
-        document.getElementById('featuredGrid').innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">😅</div>
-            <h3 class="empty-title">加载失败</h3>
-            <p class="empty-desc">请检查网络连接后刷新重试</p>
-          </div>
-        `;
-        document.getElementById('categoryGrid').innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">😅</div>
-            <h3 class="empty-title">加载失败</h3>
-            <p class="empty-desc">请检查网络连接后刷新重试</p>
-          </div>
-        `;
+        const emptyHtml = '<div class="empty-state"><div class="empty-icon">😅</div><h3 class="empty-title">加载失败</h3><p class="empty-desc">请检查网络连接后刷新重试</p></div>';
+        document.getElementById('featuredGrid').innerHTML = emptyHtml;
+        document.getElementById('categoryGrid').innerHTML = emptyHtml;
       }
     }
 
-    // ========== 搜索功能（模糊匹配） ==========
     function performSearch() {
-      const input = document.getElementById('searchInput');
-      const keyword = input.value.trim().toLowerCase();
+      const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
       currentSearch = keyword;
-      
-      if (!keyword) {
-        loadAllResources();
-        return;
-      }
-
-      // 模糊搜索：匹配标题任意位置
-      const results = allResources.filter(r => 
-        r.title && r.title.toLowerCase().includes(keyword)
-      );
-
+      if (!keyword) { loadAllResources(); return; }
+      const results = allResources.filter(r => r.title && r.title.toLowerCase().includes(keyword));
       document.getElementById('totalCount').textContent = results.length;
-
-      // 搜索结果显示在精选推荐区域
       renderResources(results, 'featuredGrid');
-      
-      // 分类区域也显示搜索结果
       renderResources(results.slice(0, 20), 'categoryGrid');
-      document.getElementById('categoryTitle').textContent = `搜索"${keyword}"的结果`;
-      
-      // 滚动到精选推荐
+      document.getElementById('categoryTitle').textContent = '搜索"' + keyword + '"的结果';
       document.getElementById('resources').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function handleSearch(event) {
-      if (event.key === 'Enter') {
-        performSearch();
-      }
-    }
+    function handleSearch(event) { if (event.key === 'Enter') performSearch(); }
 
-    // ========== 分类选择 ==========
     function selectCategory(category) {
       currentCategory = category;
-      
-      // 更新标签样式
       document.querySelectorAll('.category-tab').forEach(tab => {
         tab.classList.remove('active');
-        if (tab.textContent.includes(category) || (category === '全部' && tab.textContent === '全部')) {
-          tab.classList.add('active');
-        }
+        if (tab.textContent.includes(category) || (category === '全部' && tab.textContent === '全部')) tab.classList.add('active');
       });
-
-      // 清空搜索框
       document.getElementById('searchInput').value = '';
       currentSearch = '';
-
-      // 滚动到分类区域
       document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
-
-      // 更新标题
-      const categoryNames = {
-        '全部': '浏览分类',
-        '短剧': '🎬 短剧资源',
-        '教程': '📚 学习教程',
-        '软件': '💻 软件工具',
-        '素材': '🎨 设计素材',
-        '文档': '📄 文档资料'
-      };
+      const categoryNames = { '全部': '浏览分类', '短剧': '🎬 短剧资源', '教程': '📚 学习教程', '软件': '💻 软件工具', '素材': '🎨 设计素材', '文档': '📄 文档资料' };
       document.getElementById('categoryTitle').textContent = categoryNames[category] || category;
-
-      // 筛选并显示
-      if (category === '全部') {
-        renderResources(allResources.slice(0, 20), 'categoryGrid');
-      } else {
-        const filtered = allResources.filter(r => r.category === category);
-        renderResources(filtered, 'categoryGrid');
-      }
+      if (category === '全部') renderResources(allResources.slice(0, 20), 'categoryGrid');
+      else renderResources(allResources.filter(r => r.category === category), 'categoryGrid');
     }
 
-    // ========== 识别网盘平台 ==========
     function getPlatformInfo(link) {
       if (!link) return { name: '网盘', color: '#64748b' };
-      const linkLower = link.toLowerCase();
-      
-      if (linkLower.includes('quark') || linkLower.includes('夸克') || link.includes('pan.quark.cn')) {
-        return { name: '夸克网盘', color: '#10b981' };
-      } else if (linkLower.includes('xunlei') || linkLower.includes('迅雷') || link.includes('pan.xunlei')) {
-        return { name: '迅雷网盘', color: '#f59e0b' };
-      } else if (linkLower.includes('uc') || linkLower.includes('uccloud') || link.includes('drive.uc.cn')) {
-        return { name: 'UC网盘', color: '#6366f1' };
-      } else if (linkLower.includes('baidu') || link.includes('pan.baidu')) {
-        return { name: '百度网盘', color: '#2563eb' };
-      } else if (linkLower.includes('alipan') || linkLower.includes('阿里云') || link.includes('aliyundrive')) {
-        return { name: '阿里云盘', color: '#f97316' };
-      }
-      
-      return { name: '夸克网盘', color: '#10b981' }; // 默认夸克
+      const l = link.toLowerCase();
+      if (l.includes('quark') || l.includes('夸克') || link.includes('pan.quark.cn')) return { name: '夸克网盘', color: '#10b981' };
+      if (l.includes('xunlei') || l.includes('迅雷') || link.includes('pan.xunlei')) return { name: '迅雷网盘', color: '#f59e0b' };
+      if (l.includes('uc') || l.includes('uccloud') || link.includes('drive.uc.cn')) return { name: 'UC网盘', color: '#6366f1' };
+      if (l.includes('baidu') || link.includes('pan.baidu')) return { name: '百度网盘', color: '#2563eb' };
+      if (l.includes('alipan') || l.includes('阿里云') || link.includes('aliyundrive')) return { name: '阿里云盘', color: '#f97316' };
+      return { name: '夸克网盘', color: '#10b981' };
     }
 
-    // ========== 渲染资源 ==========
     function renderResources(resources, containerId) {
       const container = document.getElementById(containerId);
-
       if (!resources || resources.length === 0) {
-        container.innerHTML = `
-          <div class="empty-state" style="grid-column: 1/-1;">
-            <div class="empty-icon">🔍</div>
-            <h3 class="empty-title">暂无相关资源</h3>
-            <p class="empty-desc">试试其他关键词，或联系管理员添加</p>
-          </div>
-        `;
+        container.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;"><div class="empty-icon">🔍</div><h3 class="empty-title">暂无相关资源</h3><p class="empty-desc">试试其他关键词，或联系管理员添加</p></div>';
         return;
       }
-
-      container.innerHTML = resources.map(resource => {
-        const platform = getPlatformInfo(resource.pan_link);
-        const isHot = resource.views > 100;
-        
-        return `
-          <div class="resource-card" onclick="showResourceDetail(${resource.id})">
-            <div class="card-badges">
-              <span class="card-badge badge-platform" style="background: ${platform.color}20; color: ${platform.color};">
-                ${platform.name}
-              </span>
-              <span class="card-badge badge-category">${resource.category}</span>
-              ${isHot ? '<span class="card-badge badge-hot">🔥 热门</span>' : ''}
-            </div>
-            <div class="card-content">
-              <h3 class="card-title">${escapeHtml(resource.title)}</h3>
-              <p class="card-desc">${escapeHtml(resource.description || '暂无描述')}</p>
-              <div class="card-footer">
-                <div class="card-meta">
-                  <span>👁 ${resource.views || 0}</span>
-                  <span>📅 ${formatDate(resource.created_at)}</span>
-                </div>
-                <span class="card-link">查看详情 →</span>
-              </div>
-            </div>
-          </div>
-        `;
+      container.innerHTML = resources.map(r => {
+        const p = getPlatformInfo(r.pan_link);
+        const hot = r.views > 100;
+        return '<div class="resource-card" onclick="showResourceDetail(' + r.id + ')"><div class="card-badges"><span class="card-badge badge-platform" style="background:' + p.color + '20;color:' + p.color + ';">' + p.name + '</span><span class="card-badge badge-category">' + r.category + '</span>' + (hot ? '<span class="card-badge badge-hot">🔥 热门</span>' : '') + '</div><div class="card-content"><h3 class="card-title">' + escapeHtml(r.title) + '</h3><p class="card-desc">' + escapeHtml(r.description || '暂无描述') + '</p><div class="card-footer"><div class="card-meta"><span>👁 ' + (r.views || 0) + '</span><span>📅 ' + formatDate(r.created_at) + '</span></div><span class="card-link">查看详情 →</span></div></div></div>';
       }).join('');
     }
 
-    // ========== 显示资源详情 ==========
     function showResourceDetail(id) {
-      const resource = allResources.find(r => r.id === id);
-      if (!resource) return;
-      
-      currentResource = resource;
-      const platform = getPlatformInfo(resource.pan_link);
-      
-      document.getElementById('modalTitle').textContent = resource.title;
-      document.getElementById('modalPlatform').textContent = platform.name;
-      document.getElementById('modalCategory').textContent = resource.category;
-      document.getElementById('modalLink').textContent = resource.pan_link;
-      document.getElementById('modalCode').textContent = resource.extract_code || '无';
-      document.getElementById('modalViews').textContent = resource.views || 0;
-      
+      const r = allResources.find(x => x.id === id);
+      if (!r) return;
+      currentResource = r;
+      const p = getPlatformInfo(r.pan_link);
+      document.getElementById('modalTitle').textContent = r.title;
+      document.getElementById('modalPlatform').textContent = p.name;
+      document.getElementById('modalCategory').textContent = r.category;
+      document.getElementById('modalLink').textContent = r.pan_link;
+      document.getElementById('modalCode').textContent = r.extract_code || '无';
+      document.getElementById('modalViews').textContent = r.views || 0;
       document.getElementById('resourceModal').classList.add('show');
-      
-      // 增加浏览次数
       incrementViews(id);
     }
 
-    // ========== 增加浏览次数 ==========
     async function incrementViews(id) {
-      const resource = allResources.find(r => r.id === id);
-      if (!resource) return;
-      
-      resource.views = (resource.views || 0) + 1;
-      
+      const r = allResources.find(x => x.id === id);
+      if (!r) return;
+      r.views = (r.views || 0) + 1;
       try {
-        await fetch(
-          `${SUPABASE_URL}/rest/v1/resources?id=eq.${id}`,
-          {
-            method: 'PATCH',
-            headers: {
-              'apikey': SUPABASE_KEY,
-              'Authorization': `Bearer ${SUPABASE_KEY}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ views: resource.views })
-          }
-        );
-      } catch (error) {
-        console.error('更新浏览次数失败:', error);
-      }
+        await fetch(`${SUPABASE_URL}/rest/v1/resources?id=eq.${id}`, {
+          method: 'PATCH',
+          headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ views: r.views })
+        });
+      } catch (e) { console.error('更新浏览次数失败:', e); }
     }
 
-    // ========== 复制链接 ==========
     function copyLink() {
       if (!currentResource) return;
-      
-      const text = `链接：${currentResource.pan_link}\n提取码：${currentResource.extract_code || '无'}`;
-      navigator.clipboard.writeText(text).then(() => {
+      navigator.clipboard.writeText('链接：' + currentResource.pan_link + '\n提取码：' + (currentResource.extract_code || '无')).then(() => {
         document.getElementById('copySuccess').classList.add('show');
-        setTimeout(() => {
-          document.getElementById('copySuccess').classList.remove('show');
-        }, 2000);
+        setTimeout(() => document.getElementById('copySuccess').classList.remove('show'), 2000);
       });
     }
 
-    // ========== 关闭模态框 ==========
-    function closeModal() {
-      document.getElementById('resourceModal').classList.remove('show');
-      currentResource = null;
-    }
+    function closeModal() { document.getElementById('resourceModal').classList.remove('show'); currentResource = null; }
+    document.getElementById('resourceModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 
-    document.getElementById('resourceModal').addEventListener('click', function(e) {
-      if (e.target === this) closeModal();
-    });
-
-    // ========== 社群模态框 ==========
     function showCommunityModal(title, content) {
       currentCommunityInfo = content;
       document.getElementById('communityModalTitle').textContent = title;
       document.getElementById('communityModalContent').textContent = content;
       document.getElementById('communityModal').classList.add('show');
     }
-
-    function closeCommunityModal() {
-      document.getElementById('communityModal').classList.remove('show');
-      currentCommunityInfo = '';
-    }
-
+    function closeCommunityModal() { document.getElementById('communityModal').classList.remove('show'); currentCommunityInfo = ''; }
     function copyCommunityInfo() {
       navigator.clipboard.writeText(currentCommunityInfo).then(() => {
         document.getElementById('communityCopySuccess').classList.add('show');
-        setTimeout(() => {
-          document.getElementById('communityCopySuccess').classList.remove('show');
-        }, 2000);
+        setTimeout(() => document.getElementById('communityCopySuccess').classList.remove('show'), 2000);
       });
     }
+    document.getElementById('communityModal').addEventListener('click', function(e) { if (e.target === this) closeCommunityModal(); });
 
-    document.getElementById('communityModal').addEventListener('click', function(e) {
-      if (e.target === this) closeCommunityModal();
-    });
-
-    // ========== 提交反馈 ==========
     function submitFeedback(event) {
       event.preventDefault();
-      
       const title = document.getElementById('feedbackTitle').value.trim();
-      const contact = document.getElementById('feedbackContact').value.trim();
-      const desc = document.getElementById('feedbackDesc').value.trim();
-      
-      if (!title) {
-        alert('请填写资源名称');
-        return;
-      }
-
+      if (!title) { alert('请填写资源名称'); return; }
       document.getElementById('feedbackForm').style.display = 'none';
       document.getElementById('formSuccess').classList.add('show');
-
       setTimeout(() => {
         document.getElementById('feedbackForm').reset();
         document.getElementById('feedbackForm').style.display = 'block';
         document.getElementById('formSuccess').classList.remove('show');
       }, 3000);
-
-      console.log('反馈内容：', { title, contact, desc });
+      console.log('反馈内容：', { title, contact: document.getElementById('feedbackContact').value.trim(), desc: document.getElementById('feedbackDesc').value.trim() });
     }
 
-    // ========== 在线人数 ==========
     function updateOnlineCount() {
-      let baseCount = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
-      const randomOffset = Math.floor(Math.random() * 30) - 15;
-      const onlineCount = Math.max(50, baseCount + randomOffset);
-      document.getElementById('onlineCount').textContent = (onlineCount * 100).toLocaleString();
+      let base = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
+      const offset = Math.floor(Math.random() * 30) - 15;
+      const count = Math.max(50, base + offset);
+      document.getElementById('onlineCount').textContent = (count * 100).toLocaleString();
     }
-
     setInterval(updateOnlineCount, 5000);
-
     document.addEventListener('visibilitychange', function() {
-      let baseCount = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
-      if (document.hidden) {
-        baseCount = Math.max(50, baseCount - 1);
-      } else {
-        baseCount = Math.min(300, baseCount + 1);
-      }
-      localStorage.setItem('onlineBaseCount', baseCount);
+      let base = parseInt(localStorage.getItem('onlineBaseCount')) || 156;
+      base = document.hidden ? Math.max(50, base - 1) : Math.min(300, base + 1);
+      localStorage.setItem('onlineBaseCount', base);
       updateOnlineCount();
     });
 
-    // ========== 工具函数 ==========
-    function escapeHtml(text) {
-      if (!text) return '';
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    }
-
-    function formatDate(dateString) {
-      if (!dateString) return '--';
-      const date = new Date(dateString);
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      return `${month}月${day}日`;
-    }
+    function escapeHtml(text) { if (!text) return ''; const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
+    function formatDate(ds) { if (!ds) return '--'; const d = new Date(ds); return (d.getMonth() + 1) + '月' + d.getDate() + '日'; }
   </script>
 </body>
 </html>
