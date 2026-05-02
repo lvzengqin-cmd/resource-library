@@ -499,8 +499,8 @@
     document.addEventListener('DOMContentLoaded', function() {
       // 初始加载：只加载热门资源（6条）
       loadFeaturedResources();
-      // 获取总数（轻量级请求）
-      fetchTotalCount();
+      // 默认显示短剧分类
+      loadCategoryResources('短剧');
       updateOnlineCount();
       window.addEventListener('scroll', function() {
         const navbar = document.querySelector('.navbar');
@@ -513,12 +513,23 @@
     // 获取资源总数（轻量级count请求）
     async function fetchTotalCount() {
       try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/resources?select=id&limit=1&offset=0`, {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/resources?select=id&limit=0`, {
           headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
         });
-        // 从header获取总数
-        const total = response.headers.get('content-range')?.split('/')[1] || '5万+';
-        document.getElementById('totalCount').textContent = total.includes('/') ? parseInt(total.split('/')[1]).toLocaleString() : total;
+        // 从header获取总数，格式: content-range: 0-0/12345
+        const contentRange = response.headers.get('content-range');
+        if (contentRange) {
+          const parts = contentRange.split('/');
+          if (parts.length > 1) {
+            const total = parseInt(parts[1]);
+            if (!isNaN(total)) {
+              document.getElementById('totalCount').textContent = total.toLocaleString();
+              return;
+            }
+          }
+        }
+        // 如果header解析失败，使用默认显示
+        document.getElementById('totalCount').textContent = '5万+';
       } catch (e) {
         document.getElementById('totalCount').textContent = '5万+';
       }
@@ -531,6 +542,19 @@
           `${SUPABASE_URL}/rest/v1/resources?select=*&order=views.desc&limit=6&offset=0`,
           { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
         );
+        
+        // 从header获取总数
+        const contentRange = response.headers.get('content-range');
+        if (contentRange) {
+          const parts = contentRange.split('/');
+          if (parts.length > 1) {
+            const total = parseInt(parts[1]);
+            if (!isNaN(total) && total > 0) {
+              document.getElementById('totalCount').textContent = total.toLocaleString();
+            }
+          }
+        }
+        
         const data = await response.json();
         if (data && data.length > 0) {
           renderResources(data, 'featuredGrid');
