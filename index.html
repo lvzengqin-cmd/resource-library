@@ -517,7 +517,7 @@
     });
 
     // 获取资源总数
-    async function fetchResourceCount() {
+    async async function fetchResourceCount() {
       // 默认显示5万+
       document.getElementById('totalCount').textContent = '5万+';
       
@@ -543,7 +543,7 @@
     }
 
     // 加载热门推荐（初始只加载6条）
-    async async function loadFeaturedResources() {
+    async async async function loadFeaturedResources() {
       try {
         // 使用 Preload 获取总数，一次请求搞定
         const response = await fetch(
@@ -581,7 +581,7 @@
     }
 
     // 按需加载分类资源（服务端过滤）
-    async function loadCategoryResources(category, page = 1, append = false) {
+    async async function loadCategoryResources(category, page = 1, append = false) {
       if (isLoading) return;
       isLoading = true;
       
@@ -630,7 +630,7 @@
     }
 
     // 搜索资源（服务端过滤，支持模糊搜索）
-    async function searchResources(keyword, page = 1, append = false) {
+    async async function searchResources(keyword, page = 1, append = false) {
       if (isLoading) return;
       isLoading = true;
       
@@ -870,7 +870,7 @@
     }
 
     // 获取资源详情
-    async function fetchResourceDetail(id) {
+    async async function fetchResourceDetail(id) {
       try {
         const response = await fetch(
           `${SUPABASE_URL}/rest/v1/resources?id=eq.${id}&select=*`,
@@ -908,7 +908,7 @@
       incrementViews(id || r.id);
     }
 
-    async function incrementViews(id) {
+    async async function incrementViews(id) {
       // 只更新浏览量，不操作本地缓存
       try {
         await fetch(`${SUPABASE_URL}/rest/v1/resources?id=eq.${id}`, {
