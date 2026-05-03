@@ -5,64 +5,71 @@
   <!-- 首页 -->
   <url>
     <loc>https://www.cybaoku.com/</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-05-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  <!-- 精选推荐 -->
+  <!-- 资源页 -->
   <url>
     <loc>https://www.cybaoku.com/#resources</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-05-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
-  <!-- 短剧资源 -->
+  <!-- 分类页 -->
   <url>
     <loc>https://www.cybaoku.com/#categories</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-05-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" media="only screen and (max-width: 768px)" href="https://www.cybaoku.com/#categories"/>
   </url>
-  <!-- 教程资源 -->
+  <!-- 短剧 -->
   <url>
-    <loc>https://www.cybaoku.com/#教程</loc>
-    <lastmod>2026-05-02</lastmod>
+    <loc>https://www.cybaoku.com/#shortdrama</loc>
+    <lastmod>2026-05-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- 软件资源 -->
+  <!-- 教程 -->
   <url>
-    <loc>https://www.cybaoku.com/#软件</loc>
-    <lastmod>2026-05-02</lastmod>
+    <loc>https://www.cybaoku.com/#tutorials</loc>
+    <lastmod>2026-05-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- 素材资源 -->
+  <!-- 软件 -->
   <url>
-    <loc>https://www.cybaoku.com/#素材</loc>
-    <lastmod>2026-05-02</lastmod>
+    <loc>https://www.cybaoku.com/#software</loc>
+    <lastmod>2026-05-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- 文档资源 -->
+  <!-- 素材 -->
   <url>
-    <loc>https://www.cybaoku.com/#文档</loc>
-    <lastmod>2026-05-02</lastmod>
+    <loc>https://www.cybaoku.com/#materials</loc>
+    <lastmod>2026-05-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- 社群 -->
+  <!-- 文档 -->
+  <url>
+    <loc>https://www.cybaoku.com/#documents</loc>
+    <lastmod>2026-05-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- 社区 -->
   <url>
     <loc>https://www.cybaoku.com/#community</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-05-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <!-- 反馈 -->
   <url>
     <loc>https://www.cybaoku.com/#feedback</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-05-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
