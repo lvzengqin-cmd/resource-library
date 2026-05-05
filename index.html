@@ -732,7 +732,14 @@
       try {
         const offset = (page - 1) * PAGE_SIZE;
         // 使用ilike进行模糊搜索（服务端过滤）
-        const url = `${SUPABASE_URL}/rest/v1/resources?select=*&title=ilike.*${encodeURIComponent(keyword)}*&order=views.desc&limit=${PAGE_SIZE}&offset=${offset}`;
+        let url = `${SUPABASE_URL}/rest/v1/resources?select=*&title=ilike.*${encodeURIComponent(keyword)}*&order=views.desc&limit=${PAGE_SIZE}&offset=${offset}`;
+        
+        // 添加日期筛选
+        if (currentDateFilter) {
+          const startDate = currentDateFilter + 'T00:00:00';
+          const endDate = currentDateFilter + 'T23:59:59';
+          url += `&created_at=gte.${startDate}&created_at=lte.${endDate}`;
+        }
         
         const response = await fetch(url, {
           headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
