@@ -107,6 +107,71 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .load-more-hint { grid-column: 1/-1; text-align: center; padding: 20px; color: #64748b; font-size: 13px; animation: pulse 2s infinite; }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    
+    /* 日期筛选器样式 */
+    .date-filter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .date-filter-label {
+      color: #94a3b8;
+      font-size: 13px;
+    }
+    .date-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .date-input {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      border-radius: 8px;
+      padding: 8px 36px 8px 12px;
+      font-size: 13px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .date-input:focus {
+      outline: none;
+      border-color: #0ea5e9;
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+    }
+    .date-input::-webkit-calendar-picker-indicator {
+      position: absolute;
+      right: 8px;
+      cursor: pointer;
+      filter: invert(1);
+      opacity: 0.6;
+    }
+    .date-clear-btn {
+      padding: 8px 14px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 8px;
+      color: #f87171;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .date-clear-btn:hover {
+      background: rgba(239, 68, 68, 0.25);
+    }
+    .date-info {
+      color: #38bdf8;
+      font-size: 12px;
+      padding: 4px 10px;
+      background: rgba(14, 165, 233, 0.15);
+      border-radius: 20px;
+    }
+    .date-active .date-input {
+      border-color: #0ea5e9;
+      background: rgba(14, 165, 233, 0.1);
+    }
     .empty-icon { font-size: 56px; margin-bottom: 16px; }
     .empty-title { font-size: 18px; font-weight: 600; color: #f1f5f9; margin-bottom: 8px; }
     .empty-desc { font-size: 13px; color: #64748b; }
@@ -400,6 +465,14 @@
       <div class="section-header">
         <h2 class="section-title"><span>📂</span><span id="categoryTitle">浏览分类</span></h2>
       </div>
+      <div class="date-filter">
+        <span class="date-filter-label">📅 按日期筛选：</span>
+        <div class="date-input-wrapper">
+          <input type="date" class="date-input" id="dateFilter" max="">
+          <button class="date-clear-btn" id="dateClearBtn" onclick="clearDateFilter()" style="display:none;">✕ 清除</button>
+        </div>
+        <span class="date-info" id="dateInfo" style="display:none;"></span>
+      </div>
       <div class="resources-grid" id="categoryGrid">
         <div class="empty-state">
           <div class="empty-icon">👆</div>
@@ -499,8 +572,18 @@
     let hasMoreData = true;
     const PAGE_SIZE = 12;  // 每次加载12条
     let cachedResources = {};  // 缓存已加载的数据
+    let currentDateFilter = '';  // 当前日期筛选
 
     document.addEventListener('DOMContentLoaded', function() {
+      // 初始化日期输入框最大值为今天
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('dateFilter').max = today;
+      
+      // 日期选择事件
+      document.getElementById('dateFilter').addEventListener('change', function(e) {
+        handleDateFilter(e.target.value);
+      });
+      
       // 初始加载：只加载热门资源（6条）
       loadFeaturedResources();
       // 默认显示短剧分类
@@ -596,6 +679,13 @@
         
         // 服务端过滤：只获取指定分类
         url += `&category=eq.${encodeURIComponent(category)}`;
+        
+        // 添加日期筛选
+        if (currentDateFilter) {
+          const startDate = currentDateFilter + 'T00:00:00';
+          const endDate = currentDateFilter + 'T23:59:59';
+          url += `&created_at=gte.${startDate}&created_at=lte.${endDate}`;
+        }
         
         const response = await fetch(url, {
           headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
@@ -774,9 +864,9 @@
       };
       document.getElementById('categoryTitle').textContent = categoryNames[category] || category;
       
-      // 根据分类加载数据
+      // 根据分类加载数据（会携带日期筛选）
       if (category === '全部') {
-        loadCategoryResources('短剧');  // 默认显示短剧
+        loadCategoryResources('短剧');
       } else {
         loadCategoryResources(category);
       }
@@ -1081,6 +1171,45 @@
       const b = Math.min(255, Math.max(0, (num & 0x0000FF) + amount));
       return '#' + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
     }
+    
+    // 处理日期筛选
+    function handleDateFilter(date) {
+      currentDateFilter = date;
+      currentPage = 1;
+      hasMoreData = true;
+      
+      const dateFilterEl = document.getElementById('dateFilter');
+      const dateClearBtn = document.getElementById('dateClearBtn');
+      const dateInfo = document.getElementById('dateInfo');
+      
+      if (date) {
+        // 格式化日期显示
+        const dateObj = new Date(date);
+        const formattedDate = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
+        
+        dateFilterEl.parentElement.classList.add('date-active');
+        dateClearBtn.style.display = 'inline-block';
+        dateInfo.style.display = 'inline-block';
+        dateInfo.textContent = `📅 筛选：${formattedDate}`;
+      } else {
+        dateFilterEl.parentElement.classList.remove('date-active');
+        dateClearBtn.style.display = 'none';
+        dateInfo.style.display = 'none';
+      }
+      
+      // 重新加载当前分类/搜索结果
+      if (currentSearch) {
+        searchResources(currentSearch);
+      } else if (currentCategory) {
+        loadCategoryResources(currentCategory);
+      }
+    }
+    
+    // 清除日期筛选
+    function clearDateFilter() {
+      document.getElementById('dateFilter').value = '';
+      handleDateFilter('');
+    }
   
 // 返回首页
 function returnToHomepage() {
@@ -1092,6 +1221,13 @@ function returnToHomepage() {
   currentPage = 1;
   hasMoreData = true;
   isLoading = false;
+  
+  // 清除日期筛选
+  document.getElementById('dateFilter').value = '';
+  document.getElementById('dateClearBtn').style.display = 'none';
+  document.getElementById('dateInfo').style.display = 'none';
+  document.getElementById('dateFilter').parentElement.classList.remove('date-active');
+  currentDateFilter = '';
   
   // 恢复首页区域显示
   const resourcesSec = document.getElementById('resources');
