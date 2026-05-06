@@ -4,7 +4,10 @@
 
 ## 网站地址
 
-https://lvzengqin-cmd.vercel.app
+https://www.cybaoku.com
+
+<!-- SEO Meta: 资源导航、学习资料、免费资源、网盘资源 -->
+<!-- Last SEO Update: 2026-05-06 -->
 
 ## 功能特点
 
@@ -17,7 +20,7 @@ https://lvzengqin-cmd.vercel.app
 
 - 前端：HTML5 + CSS3 + JavaScript
 - 后端：Supabase (Serverless)
-- 托管：Vercel
+- 托管：GitHub Pages + Vercel
 
 ## 数据同步
 
