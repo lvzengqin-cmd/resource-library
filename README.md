@@ -7,7 +7,7 @@
 https://www.cybaoku.com
 
 <!-- SEO Meta: 资源导航、学习资料、免费资源、网盘资源 -->
-<!-- Last SEO Update: 2026-05-06 -->
+<!-- Last SEO Update: 2026-05-07
 
 ## 功能特点
 
