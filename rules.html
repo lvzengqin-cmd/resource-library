@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>警报规则配置 - AlertHub</title>
+  <meta name="description" content="专业的警报通知系统，支持邮件、Telegram、Webhook多渠道批量推送">
+  
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #0ea5e9;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --accent-yellow: #f59e0b;
+      --accent-purple: #a855f7;
+      --border-color: #334155;
+      --card-bg: rgba(30, 41, 59, 0.7);
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a0f1a 0%, #0f172a 50%, #1a2332 100%);
+      min-height: 100vh;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+    
+    /* 导航栏 */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 16px 0;
+    }
+    
+    .navbar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    
+    .logo-text {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    
+    .logo-text span {
+      color: var(--accent-blue);
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    
+    .nav-link:hover {
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.05);
+    }
+    
+    .nav-link.active {
+      color: var(--accent-blue);
+      background: rgba(14, 165, 233, 0.1);
+    }
+    
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+    }
+    
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    
+    /* 主内容区 */
+    .main-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 100px 24px 40px;
+    }
+    
+    /* 页面标题 */
+    .page-header {
+      margin-bottom: 32px;
+    }
+    
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    
+    .page-subtitle {
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+    
+    /* 统计卡片 */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    
+    .stat-icon.blue { background: rgba(14, 165, 233, 0.15); }
+    .stat-icon.green { background: rgba(16, 185, 129, 0.15); }
+    .stat-icon.purple { background: rgba(168, 85, 247, 0.15); }
+    .stat-icon.yellow { background: rgba(245, 158, 11, 0.15); }
+    
+    .stat-info h3 {
+      font-size: 24px;
+      font-weight: 700;
+    }
+    
+    .stat-info p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    
+    /* 标签页 */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--bg-secondary);
+      padding: 4px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      width: fit-content;
+    }
+    
+    .tab {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      background: transparent;
+    }
+    
+    .tab:hover {
+      color: var(--text-primary);
+    }
+    
+    .tab.active {
+      background: var(--accent-blue);
+      color: white;
+    }
+    
+    /* 工具栏 */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .search-box {
+      position: relative;
+    }
+    
+    .search-box input {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 16px 10px 40px;
+      font-size: 14px;
+      color: var(--text-primary);
+      width: 280px;
+      transition: all 0.2s;
+    }
+    
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+    }
+    
+    .search-box::before {
+      content: "🔍";
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      opacity: 0.5;
+    }
+    
+    .filter-dropdown {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 14px;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+    
+    /* 规则列表 */
+    .rules-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .rule-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.2s;
+    }
+    
+    .rule-card:hover {
+      border-color: rgba(14, 165, 233, 0.3);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    
+    .rule-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    
+    .rule-info {
+      flex: 1;
+    }
+    
+    .rule-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .rule-badge {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    
+    .badge-active {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-green);
+    }
+    
+    .badge-paused {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-yellow);
+    }
+    
+    .rule-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+    
+    .rule-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    .rule-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .rule-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .action-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      font-size: 16px;
+    }
+    
+    .action-btn:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+    
+    .action-btn.delete:hover {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: var(--accent-red);
+      color: var(--accent-red);
+    }
+    
+    /* 规则详情 */
+    .rule-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 6px;
+      font-size: 12px;
+    }
+    
+    .detail-item .icon {
+      font-size: 14px;
+    }
+    
+    .channel-badge {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    
+    .channel-email {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+    }
+    
+    .channel-telegram {
+      background: rgba(14, 165, 233, 0.15);
+      color: #38bdf8;
+    }
+    
+    .channel-webhook {
+      background: rgba(168, 85, 247, 0.15);
+      color: #c084fc;
+    }
+    
+    /* 联系人区域 */
+    .contacts-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 32px;
+    }
+    
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    
+    .contact-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    
+    .contact-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    
+    .contact-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .contact-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    
+    .avatar-email { background: rgba(239, 68, 68, 0.15); }
+    .avatar-telegram { background: rgba(14, 165, 233, 0.15); }
+    .avatar-webhook { background: rgba(168, 85, 247, 0.15); }
+    
+    .contact-name {
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
+    .contact-type {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    .contact-value {
+      font-size: 13px;
+      color: var(--text-secondary);
+      background: rgba(0,0,0,0.2);
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      word-break: break-all;
+    }
+    
+    .contact-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .contact-actions .btn {
+      flex: 1;
+      justify-content: center;
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+    
+    /* 模态框 */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .modal-overlay.show {
+      display: flex;
+    }
+    
+    .modal {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .modal-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-close:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--text-primary);
+    }
+    
+    .modal-body {
+      padding: 24px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+    }
+    
+    .form-input {
+      width: 100%;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 14px;
+      color: var(--text-primary);
+      transition: all 0.2s;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+    }
+    
+    .form-input::placeholder {
+      color: var(--text-muted);
+    }
+    
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .channel-selector {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .channel-option {
+      flex: 1;
+      min-width: 120px;
+      padding: 16px;
+      background: var(--bg-primary);
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    
+    .channel-option:hover {
+      border-color: var(--text-muted);
+    }
+    
+    .channel-option.selected {
+      border-color: var(--accent-blue);
+      background: rgba(14, 165, 233, 0.1);
+    }
+    
+    .channel-option .icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+    
+    .channel-option .name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .modal-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+    
+    /* 批量操作 */
+    .batch-actions {
+      display: none;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: rgba(14, 165, 233, 0.1);
+      border: 1px solid var(--accent-blue);
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .batch-actions.show {
+      display: flex;
+    }
+    
+    .batch-info {
+      flex: 1;
+      font-size: 14px;
+    }
+    
+    .batch-info strong {
+      color: var(--accent-blue);
+    }
+    
+    /* 标签 */
+    .tag-input-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      min-height: 50px;
+    }
+    
+    .tag {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: var(--bg-tertiary);
+      border-radius: 20px;
+      font-size: 13px;
+    }
+    
+    .tag-remove {
+      cursor: pointer;
+      opacity: 0.7;
+    }
+    
+    .tag-remove:hover {
+      opacity: 1;
+    }
+    
+    .tag-input {
+      flex: 1;
+      min-width: 150px;
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+    }
+    
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .navbar-inner {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      
+      .nav-links {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 8px;
+      }
+      
+      .main-content {
+        padding: 140px 16px 40px;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .toolbar-left {
+        flex-wrap: wrap;
+      }
+      
+      .search-box input {
+        width: 100%;
+      }
+      
+      .contacts-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .modal {
+        margin: 10px;
+      }
+    }
+    
+    /* 空状态 */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+    
+    .empty-state .icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+    
+    .empty-state h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+    }
+    
+    .empty-state p {
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    
+    /* 切换开关 */
+    .toggle-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+    }
+    
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-tertiary);
+      transition: 0.3s;
+      border-radius: 24px;
+    }
+    
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+    
+    .toggle-switch input:checked + .toggle-slider {
+      background: var(--accent-blue);
+    }
+    
+    .toggle-switch input:checked + .toggle-slider:before {
+      transform: translateX(20px);
+    }
+    
+    /* 复制按钮 */
+    .copy-btn {
+      padding: 6px 12px;
+      background: rgba(14, 165, 233, 0.15);
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      border-radius: 6px;
+      color: var(--accent-blue);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .copy-btn:hover {
+      background: rgba(14, 165, 233, 0.25);
+    }
+    
+    .copy-btn.copied {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.3);
+      color: var(--accent-green);
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">🔔</div>
+        <span class="logo-text">Alert<span>Hub</span></span>
+      </a>
+      
+      <div class="nav-links">
+        <a href="#" class="nav-link">仪表盘</a>
+        <a href="#" class="nav-link active">规则配置</a>
+        <a href="#" class="nav-link">联系人</a>
+        <a href="#" class="nav-link">消息日志</a>
+        <a href="#" class="nav-link">设置</a>
+      </div>
+      
+      <div class="nav-actions">
+        <button class="btn btn-primary" onclick="openCreateRuleModal()">
+          <span>+</span> 新建规则
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主内容 -->
+  <main class="main-content">
+    <!-- 页面标题 -->
+    <div class="page-header">
+      <h1 class="page-title">警报规则配置</h1>
+      <p class="page-subtitle">管理你的通知规则，支持邮件、Telegram、Webhook 多渠道批量推送</p>
+    </div>
+
+    <!-- 统计卡片 -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon blue">📋</div>
+        <div class="stat-info">
+          <h3 id="ruleCount">8</h3>
+          <p>活跃规则</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green">👥</div>
+        <div class="stat-info">
+          <h3 id="contactCount">156</h3>
+          <p>联系人</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon purple">📨</div>
+        <div class="stat-info">
+          <h3 id="emailCount">45</h3>
+          <p>邮箱渠道</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon yellow">📱</div>
+        <div class="stat-info">
+          <h3>24h</h3>
+          <p>最近推送</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 标签页 -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('rules')">规则列表</button>
+      <button class="tab" onclick="switchTab('contacts')">联系人管理</button>
+      <button class="tab" onclick="switchTab('channels')">渠道配置</button>
+      <button class="tab" onclick="switchTab('logs')">发送日志</button>
+    </div>
+
+    <!-- 规则列表区域 -->
+    <div id="rulesTab">
+      <!-- 工具栏 -->
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <div class="search-box">
+            <input type="text" placeholder="搜索规则名称..." id="ruleSearch" oninput="filterRules()">
+          </div>
+          <select class="filter-dropdown" id="statusFilter" onchange="filterRules()">
+            <option value="">全部状态</option>
+            <option value="active">仅活跃</option>
+            <option value="paused">已暂停</option>
+          </select>
+          <select class="filter-dropdown" id="channelFilter" onchange="filterRules()">
+            <option value="">全部渠道</option>
+            <option value="email">邮箱</option>
+            <option value="telegram">Telegram</option>
+            <option value="webhook">Webhook</option>
+          </select>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn-secondary" onclick="testAllRules()">🧪 测试全部</button>
+        </div>
+      </div>
+
+      <!-- 批量操作栏 -->
+      <div class="batch-actions" id="batchActions">
+        <span class="batch-info">已选择 <strong id="selectedCount">0</strong> 个规则</span>
+        <button class="btn btn-secondary" onclick="batchEnable()">✅ 批量启用</button>
+        <button class="btn btn-secondary" onclick="batchDisable()">⏸️ 批量暂停</button>
+        <button class="btn btn-secondary" onclick="batchDelete()">🗑️ 批量删除</button>
+        <button class="btn btn-secondary" onclick="clearSelection()">取消</button>
+      </div>
+
+      <!-- 规则列表 -->
+      <div class="rules-list" id="rulesList">
+        <!-- 规则卡片将通过JS动态生成 -->
+      </div>
+    </div>
+
+    <!-- 联系人管理区域 -->
+    <div id="contactsTab" style="display: none;">
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <div class="search-box">
+            <input type="text" placeholder="搜索联系人..." id="contactSearch" oninput="filterContacts()">
+          </div>
+          <select class="filter-dropdown" id="contactTypeFilter" onchange="filterContacts()">
+            <option value="">全部类型</option>
+            <option value="email">邮箱</option>
+            <option value="telegram">Telegram</option>
+            <option value="webhook">Webhook</option>
+          </select>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn-primary" onclick="openAddContactModal()">
+            <span>+</span> 添加联系人
+          </button>
+        </div>
+      </div>
+      
+      <div class="contacts-section">
+        <h3 class="section-title">📇 联系人列表 <span id="contactListCount">(156)</span></h3>
+        <div class="contacts-grid" id="contactsList">
+          <!-- 联系人卡片将通过JS动态生成 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 渠道配置区域 -->
+    <div id="channelsTab" style="display: none;">
+      <div class="contacts-section">
+        <h3 class="section-title">⚙️ 渠道配置</h3>
+        
+        <div class="contacts-grid">
+          <!-- 邮箱配置 -->
+          <div class="contact-card">
+            <div class="contact-header">
+              <div class="contact-info">
+                <div class="contact-avatar avatar-email">📧</div>
+                <div>
+                  <div class="contact-name">邮箱 SMTP</div>
+                  <div class="contact-type">邮件发送渠道</div>
+                </div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="contact-value" id="smtpConfig">smtp.gmail.com:587 | 已配置</div>
+            <div class="contact-actions">
+              <button class="btn btn-secondary" onclick="editChannel('email')">编辑</button>
+              <button class="btn btn-secondary" onclick="testChannel('email')">测试</button>
+            </div>
+          </div>
+
+          <!-- Telegram配置 -->
+          <div class="contact-card">
+            <div class="contact-header">
+              <div class="contact-info">
+                <div class="contact-avatar avatar-telegram">✈️</div>
+                <div>
+                  <div class="contact-name">Telegram Bot</div>
+                  <div class="contact-type">Telegram 推送渠道</div>
+                </div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="contact-value" id="telegramConfig">Bot Token: ****abc123 | 已连接</div>
+            <div class="contact-actions">
+              <button class="btn btn-secondary" onclick="editChannel('telegram')">编辑</button>
+              <button class="btn btn-secondary" onclick="testChannel('telegram')">测试</button>
+            </div>
+          </div>
+
+          <!-- Webhook配置 -->
+          <div class="contact-card">
+            <div class="contact-header">
+              <div class="contact-info">
+                <div class="contact-avatar avatar-webhook">🔗</div>
+                <div>
+                  <div class="contact-name">Webhook</div>
+                  <div class="contact-type">自定义回调渠道</div>
+                </div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="contact-value" id="webhookConfig">支持 HTTP/HTTPS POST 请求</div>
+            <div class="contact-actions">
+              <button class="btn btn-secondary" onclick="editChannel('webhook')">编辑</button>
+              <button class="btn btn-secondary" onclick="testChannel('webhook')">测试</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 发送日志区域 -->
+    <div id="logsTab" style="display: none;">
+      <div class="contacts-section">
+        <h3 class="section-title">📊 最近发送记录</h3>
+        <div id="logsList">
+          <div class="empty-state">
+            <div class="icon">📋</div>
+            <h3>暂无发送记录</h3>
+            <p>当有警报触发时，这里会显示发送记录</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 创建规则模态框 -->
+  <div class="modal-overlay" id="createRuleModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">创建新规则</h3>
+        <button class="modal-close" onclick="closeModal('createRuleModal')">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">规则名称 *</label>
+          <input type="text" class="form-input" id="ruleName" placeholder="例如：服务器异常警报">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">触发条件 (Webhook URL)</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" class="form-input" id="webhookUrl" placeholder="https://your-domain.com/webhook/alert" style="flex: 1;">
+            <button class="copy-btn" onclick="copyWebhookUrl()">复制</button>
+          </div>
+          <small style="color: var(--text-muted); margin-top: 4px; display: block;">向此URL发送POST请求即可触发规则</small>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">规则描述</label>
+          <textarea class="form-input form-textarea" id="ruleDesc" placeholder="描述此规则的用途..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">通知渠道</label>
+          <div class="channel-selector">
+            <div class="channel-option selected" data-channel="email" onclick="toggleChannel(this)">
+              <div class="icon">📧</div>
+              <div class="name">邮箱</div>
+            </div>
+            <div class="channel-option selected" data-channel="telegram" onclick="toggleChannel(this)">
+              <div class="icon">✈️</div>
+              <div class="name">Telegram</div>
+            </div>
+            <div class="channel-option selected" data-channel="webhook" onclick="toggleChannel(this)">
+              <div class="icon">🔗</div>
+              <div class="name">Webhook</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">选择接收人</label>
+          <div class="tag-input-container" id="recipientTags">
+            <span class="tag">张三 <span class="tag-remove" onclick="removeTag(this)">×</span></span>
+            <span class="tag">李四 <span class="tag-remove" onclick="removeTag(this)">×</span></span>
+            <input type="text" class="tag-input" placeholder="输入名称后按回车添加..." id="recipientInput" onkeypress="addRecipient(event)">
+          </div>
+          <small style="color: var(--text-muted); margin-top: 4px; display: block;">可添加多个接收人，警报会同时发送给所有人</small>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">消息模板</label>
+          <textarea class="form-input form-textarea" id="messageTemplate" placeholder="{{title}}
+
+{{message}}
+
+时间: {{time}}
+来源: {{source}}">可用变量: {{title}}, {{message}}, {{time}}, {{source}}, {{level}}</textarea>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="ruleEnabled" checked style="width: 18px; height: 18px;">
+              立即启用此规则
+            </label>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('createRuleModal')">取消</button>
+        <button class="btn btn-primary" onclick="createRule()">创建规则</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 添加联系人模态框 -->
+  <div class="modal-overlay" id="addContactModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">添加联系人</h3>
+        <button class="modal-close" onclick="closeModal('addContactModal')">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">联系人名称 *</label>
+          <input type="text" class="form-input" id="contactName" placeholder="例如：运维团队">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">联系方式类型</label>
+          <div class="channel-selector">
+            <div class="channel-option selected" data-type="email" onclick="selectContactType(this)">
+              <div class="icon">📧</div>
+              <div class="name">邮箱</div>
+            </div>
+            <div class="channel-option" data-type="telegram" onclick="selectContactType(this)">
+              <div class="icon">✈️</div>
+              <div class="name">Telegram</div>
+            </div>
+            <div class="channel-option" data-type="webhook" onclick="selectContactType(this)">
+              <div class="icon">🔗</div>
+              <div class="name">Webhook</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" id="contactValueLabel">邮箱地址 *</label>
+          <input type="text" class="form-input" id="contactValue" placeholder="email@example.com">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">备注</label>
+          <input type="text" class="form-input" id="contactNote" placeholder="可选备注信息">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="contactEnabled" checked style="width: 18px; height: 18px;">
+              启用此联系人
+            </label>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('addContactModal')">取消</button>
+        <button class="btn btn-primary" onclick="addContact()">添加联系人</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 示例数据
+    let rules = [
+      {
+        id: 1,
+        name: '服务器异常告警',
+        description: '监控服务器CPU、内存、磁盘使用率，超过阈值时发送警报',
+        status: 'active',
+        channels: ['email', 'telegram', 'webhook'],
+        recipients: ['运维团队', '开发组'],
+        triggers: 1250,
+        lastTrigger: '2小时前',
+        createdAt: '2024-01-15'
+      },
+      {
+        id: 2,
+        name: '网站下线通知',
+        description: '当监控的网站无法访问时立即发送警报',
+        status: 'active',
+        channels: ['telegram'],
+        recipients: ['运维团队'],
+        triggers: 45,
+        lastTrigger: '1天前',
+        createdAt: '2024-02-20'
+      },
+      {
+        id: 3,
+        name: '订单支付失败',
+        description: '监听支付回调，支付失败时通知相关人员',
+        status: 'active',
+        channels: ['email', 'webhook'],
+        recipients: ['财务组', '技术组'],
+        triggers: 890,
+        lastTrigger: '30分钟前',
+        createdAt: '2024-03-01'
+      },
+      {
+        id: 4,
+        name: 'GitLab CI 失败通知',
+        description: 'CI/CD 流水线失败时自动通知开发人员',
+        status: 'paused',
+        channels: ['telegram'],
+        recipients: ['开发组'],
+        triggers: 320,
+        lastTrigger: '3天前',
+        createdAt: '2024-03-10'
+      },
+      {
+        id: 5,
+        name: '数据库连接数告警',
+        description: 'MySQL连接数超过500时发送警报',
+        status: 'active',
+        channels: ['email', 'telegram'],
+        recipients: ['DBA团队'],
+        triggers: 78,
+        lastTrigger: '5小时前',
+        createdAt: '2024-03-15'
+      },
+      {
+        id: 6,
+        name: '安全扫描报告',
+        description: '每日安全扫描结果汇总推送',
+        status: 'active',
+        channels: ['email'],
+        recipients: ['安全组'],
+        triggers: 30,
+        lastTrigger: '1天前',
+        createdAt: '2024-03-20'
+      }
+    ];
+
+    let contacts = [
+      { id: 1, name: '运维团队', type: 'email', value: 'ops@company.com', status: 'active' },
+      { id: 2, name: '开发组', type: 'telegram', value: '@dev_alerts', status: 'active' },
+      { id: 3, name: '财务组', type: 'email', value: 'finance@company.com', status: 'active' },
+      { id: 4, name: '安全组', type: 'webhook', value: 'https://security.internal/api/alerts', status: 'active' },
+      { id: 5, name: 'DBA团队', type: 'telegram', value: '@dba_team', status: 'active' },
+      { id: 6, name: '技术总监', type: 'email', value: 'cto@company.com', status: 'active' }
+    ];
+
+    let selectedRules = new Set();
+    let currentContactType = 'email';
+
+    // 初始化
+    document.addEventListener('DOMContentLoaded', () => {
+      renderRules();
+      renderContacts();
+      updateStats();
+    });
+
+    // 渲染规则列表
+    function renderRules() {
+      const container = document.getElementById('rulesList');
+      const search = document.getElementById('ruleSearch').value.toLowerCase();
+      const statusFilter = document.getElementById('statusFilter').value;
+      const channelFilter = document.getElementById('channelFilter').value;
+
+      let filtered = rules.filter(rule => {
+        const matchSearch = rule.name.toLowerCase().includes(search) || 
+                          rule.description.toLowerCase().includes(search);
+        const matchStatus = !statusFilter || rule.status === statusFilter;
+        const matchChannel = !channelFilter || rule.channels.includes(channelFilter);
+        return matchSearch && matchStatus && matchChannel;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="icon">📋</div>
+            <h3>暂无规则</h3>
+            <p>点击右上角"新建规则"开始配置你的第一个警报规则</p>
+            <button class="btn btn-primary" onclick="openCreateRuleModal()">+ 创建规则</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(rule => `
+        <div class="rule-card" data-id="${rule.id}">
+          <div class="rule-header">
+            <div class="rule-info">
+              <div class="rule-name">
+                ${rule.name}
+                <span class="rule-badge ${rule.status === 'active' ? 'badge-active' : 'badge-paused'}">
+                  ${rule.status === 'active' ? '● 活跃' : '○ 已暂停'}
+                </span>
+              </div>
+              <p class="rule-desc">${rule.description}</p>
+              <div class="rule-meta">
+                <span>📅 ${rule.createdAt}</span>
+                <span>🔥 触发 ${rule.triggers} 次</span>
+                <span>⏱️ ${rule.lastTrigger}</span>
+              </div>
+            </div>
+            <div class="rule-actions">
+              <button class="action-btn" onclick="toggleRuleStatus(${rule.id})" title="${rule.status === 'active' ? '暂停' : '启用'}">
+                ${rule.status === 'active' ? '⏸️' : '▶️'}
+              </button>
+              <button class="action-btn" onclick="testRule(${rule.id})" title="测试">🧪</button>
+              <button class="action-btn" onclick="editRule(${rule.id})" title="编辑">✏️</button>
+              <button class="action-btn delete" onclick="deleteRule(${rule.id})" title="删除">🗑️</button>
+            </div>
+          </div>
+          <div class="rule-details">
+            ${rule.channels.map(ch => `
+              <span class="channel-badge channel-${ch}">
+                ${ch === 'email' ? '📧 邮箱' : ch === 'telegram' ? '✈️ Telegram' : '🔗 Webhook'}
+              </span>
+            `).join('')}
+            <span style="color: var(--text-muted); font-size: 12px; margin-left: auto;">
+              接收人: ${rule.recipients.join(', ')}
+            </span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 渲染联系人列表
+    function renderContacts() {
+      const container = document.getElementById('contactsList');
+      const search = document.getElementById('contactSearch')?.value?.toLowerCase() || '';
+      const typeFilter = document.getElementById('contactTypeFilter')?.value || '';
+
+      let filtered = contacts.filter(c => {
+        const matchSearch = c.name.toLowerCase().includes(search) || c.value.toLowerCase().includes(search);
+        const matchType = !typeFilter || c.type === typeFilter;
+        return matchSearch && matchType;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state" style="grid-column: 1/-1;">
+            <div class="icon">👥</div>
+            <h3>暂无联系人</h3>
+            <p>点击"添加联系人"添加你的第一个接收人</p>
+          </div>
+        `;
+        return;
+      }
+
+      document.getElementById('contactListCount').textContent = `(${filtered.length})`;
+
+      container.innerHTML = filtered.map(c => `
+        <div class="contact-card">
+          <div class="contact-header">
+            <div class="contact-info">
+              <div class="contact-avatar avatar-${c.type}">
+                ${c.type === 'email' ? '📧' : c.type === 'telegram' ? '✈️' : '🔗'}
+              </div>
+              <div>
+                <div class="contact-name">${c.name}</div>
+                <div class="contact-type">${c.type === 'email' ? '邮箱' : c.type === 'telegram' ? 'Telegram' : 'Webhook'}</div>
+              </div>
+            </div>
+            <span class="rule-badge ${c.status === 'active' ? 'badge-active' : 'badge-paused'}" style="font-size: 10px;">
+              ${c.status === 'active' ? '●' : '○'}
+            </span>
+          </div>
+          <div class="contact-value">${c.value}</div>
+          <div class="contact-actions">
+            <button class="btn btn-secondary" onclick="editContact(${c.id})">编辑</button>
+            <button class="btn btn-secondary" onclick="deleteContact(${c.id})">删除</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 筛选规则
+    function filterRules() {
+      renderRules();
+    }
+
+    // 筛选联系人
+    function filterContacts() {
+      renderContacts();
+    }
+
+    // 切换标签页
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      document.getElementById('rulesTab').style.display = tab === 'rules' ? 'block' : 'none';
+      document.getElementById('contactsTab').style.display = tab === 'contacts' ? 'block' : 'none';
+      document.getElementById('channelsTab').style.display = tab === 'channels' ? 'block' : 'none';
+      document.getElementById('logsTab').style.display = tab === 'logs' ? 'block' : 'none';
+
+      if (tab === 'contacts') renderContacts();
+    }
+
+    // 打开创建规则模态框
+    function openCreateRuleModal() {
+      document.getElementById('createRuleModal').classList.add('show');
+    }
+
+    // 打开添加联系人模态框
+    function openAddContactModal() {
+      document.getElementById('addContactModal').classList.add('show');
+    }
+
+    // 关闭模态框
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('show');
+    }
+
+    // 切换通知渠道选择
+    function toggleChannel(el) {
+      el.classList.toggle('selected');
+    }
+
+    // 选择联系人类型
+    function selectContactType(el) {
+      document.querySelectorAll('#addContactModal .channel-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      currentContactType = el.dataset.type;
+      
+      const label = document.getElementById('contactValueLabel');
+      const input = document.getElementById('contactValue');
+      
+      if (currentContactType === 'email') {
+        label.textContent = '邮箱地址 *';
+        input.placeholder = 'email@example.com';
+      } else if (currentContactType === 'telegram') {
+        label.textContent = 'Telegram ID/群组 *';
+        input.placeholder = '@username 或 Chat ID';
+      } else {
+        label.textContent = 'Webhook URL *';
+        input.placeholder = 'https://your-domain.com/webhook';
+      }
+    }
+
+    // 添加接收人
+    function addRecipient(e) {
+      if (e.key === 'Enter' && e.target.value.trim()) {
+        const name = e.target.value.trim();
+        const tag = document.createElement('span');
+        tag.className = 'tag';
+        tag.innerHTML = `${name} <span class="tag-remove" onclick="removeTag(this)">×</span>`;
+        e.target.before(tag);
+        e.target.value = '';
+      }
+    }
+
+    // 移除标签
+    function removeTag(el) {
+      el.parentElement.remove();
+    }
+
+    // 复制Webhook URL
+    function copyWebhookUrl() {
+      const url = document.getElementById('webhookUrl').value;
+      if (url) {
+        navigator.clipboard.writeText(url);
+        alert('已复制到剪贴板！');
+      }
+    }
+
+    // 创建规则
+    function createRule() {
+      const name = document.getElementById('ruleName').value.trim();
+      if (!name) {
+        alert('请输入规则名称');
+        return;
+      }
+
+      const selectedChannels = [];
+      document.querySelectorAll('#createRuleModal .channel-option.selected').forEach(el => {
+        selectedChannels.push(el.dataset.channel);
+      });
+
+      if (selectedChannels.length === 0) {
+        alert('请至少选择一个通知渠道');
+        return;
+      }
+
+      const newRule = {
+        id: Date.now(),
+        name: name,
+        description: document.getElementById('ruleDesc').value || '暂无描述',
+        status: document.getElementById('ruleEnabled').checked ? 'active' : 'paused',
+        channels: selectedChannels,
+        recipients: [],
+        triggers: 0,
+        lastTrigger: '从未',
+        createdAt: new Date().toISOString().split('T')[0]
+      };
+
+      rules.unshift(newRule);
+      renderRules();
+      updateStats();
+      closeModal('createRuleModal');
+      
+      // 清空表单
+      document.getElementById('ruleName').value = '';
+      document.getElementById('ruleDesc').value = '';
+      document.getElementById('webhookUrl').value = '';
+      document.getElementById('messageTemplate').value = '';
+    }
+
+    // 添加联系人
+    function addContact() {
+      const name = document.getElementById('contactName').value.trim();
+      const value = document.getElementById('contactValue').value.trim();
+      
+      if (!name || !value) {
+        alert('请填写完整信息');
+        return;
+      }
+
+      const newContact = {
+        id: Date.now(),
+        name: name,
+        type: currentContactType,
+        value: value,
+        status: document.getElementById('contactEnabled').checked ? 'active' : 'paused'
+      };
+
+      contacts.push(newContact);
+      renderContacts();
+      updateStats();
+      closeModal('addContactModal');
+      
+      // 清空表单
+      document.getElementById('contactName').value = '';
+      document.getElementById('contactValue').value = '';
+      document.getElementById('contactNote').value = '';
+    }
+
+    // 切换规则状态
+    function toggleRuleStatus(id) {
+      const rule = rules.find(r => r.id === id);
+      if (rule) {
+        rule.status = rule.status === 'active' ? 'paused' : 'active';
+        renderRules();
+      }
+    }
+
+    // 测试规则
+    function testRule(id) {
+      const rule = rules.find(r => r.id === id);
+      if (rule) {
+        alert(`正在向 ${rule.name} 的 ${rule.channels.length} 个渠道发送测试消息...`);
+      }
+    }
+
+    // 编辑规则
+    function editRule(id) {
+      alert(`编辑规则 ${id} - 功能开发中`);
+    }
+
+    // 删除规则
+    function deleteRule(id) {
+      if (confirm('确定要删除此规则吗？')) {
+        rules = rules.filter(r => r.id !== id);
+        renderRules();
+        updateStats();
+      }
+    }
+
+    // 编辑联系人
+    function editContact(id) {
+      alert(`编辑联系人 ${id} - 功能开发中`);
+    }
+
+    // 删除联系人
+    function deleteContact(id) {
+      if (confirm('确定要删除此联系人吗？')) {
+        contacts = contacts.filter(c => c.id !== id);
+        renderContacts();
+        updateStats();
+      }
+    }
+
+    // 批量操作
+    function batchEnable() {
+      selectedRules.forEach(id => {
+        const rule = rules.find(r => r.id === id);
+        if (rule) rule.status = 'active';
+      });
+      clearSelection();
+      renderRules();
+    }
+
+    function batchDisable() {
+      selectedRules.forEach(id => {
+        const rule = rules.find(r => r.id === id);
+        if (rule) rule.status = 'paused';
+      });
+      clearSelection();
+      renderRules();
+    }
+
+    function batchDelete() {
+      if (confirm(`确定要删除选中的 ${selectedRules.size} 个规则吗？`)) {
+        rules = rules.filter(r => !selectedRules.has(r.id));
+        clearSelection();
+        renderRules();
+        updateStats();
+      }
+    }
+
+    function clearSelection() {
+      selectedRules.clear();
+      document.getElementById('batchActions').classList.remove('show');
+      document.querySelectorAll('.rule-card').forEach(c => c.style.borderColor = '');
+    }
+
+    // 测试所有规则
+    function testAllRules() {
+      alert('正在向所有活跃规则的渠道发送测试消息...');
+    }
+
+    // 渠道配置
+    function editChannel(type) {
+      alert(`编辑 ${type === 'email' ? '邮箱' : type === 'telegram' ? 'Telegram' : 'Webhook'} 配置 - 功能开发中`);
+    }
+
+    function testChannel(type) {
+      alert(`向 ${type === 'email' ? '邮箱' : type === 'telegram' ? 'Telegram' : 'Webhook'} 渠道发送测试消息...`);
+    }
+
+    // 更新统计
+    function updateStats() {
+      document.getElementById('ruleCount').textContent = rules.length;
+      document.getElementById('contactCount').textContent = contacts.length;
+      document.getElementById('emailCount').textContent = contacts.filter(c => c.type === 'email').length;
+    }
+
+    // 点击模态框外部关闭
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
