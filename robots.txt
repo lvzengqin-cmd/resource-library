@@ -1,2 +1,8 @@
-Last updated: Fri May 22 09:02:05 CST 2026
-# SEO自动更新 - 2026-05-24 09:03:49
+User-agent: *
+Allow: /
+Disallow: /rules.html
+
+Sitemap: https://www.cybaoku.com/sitemap.xml
+
+# CY资源宝库 - 每日SEO自动更新
+# 自动更新: 2026-05-26 09:02:33
